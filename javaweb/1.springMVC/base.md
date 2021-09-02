@@ -2,6 +2,8 @@
 
 #### @Controller
 
+添加在类上，表示这是控制器对象。在tomcat启动的时候，把这个类作为一个控制器加载到spring的Bean工厂，如果不加这个注解，在springboot中就不会起作用
+
 添加在类上，表示这是控制器 Controller 对象。属性如下：
 
 - `name` 属性：该 Controller 对象的 Bean 名字。允许空。
