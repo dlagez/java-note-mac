@@ -1,12 +1,12 @@
 ## 个人信息
 
 - 张鹏/男/1998/湖北武汉/英语四级
-- 手机：17607127124，邮箱：mr.roczhang@gmail.com
+- 手机：17607127124，邮箱：mr.roczhang@outlook.com
 - Github：[https://github.com/dlagez](https://github.com/Snailclimb)
 
 ## 求职意向
 
-- 期望职位：Java后端开发，实习
+- 期望职位：Java后端开发
 - 期望城市：武汉
 
 ## 教育经历
@@ -21,12 +21,14 @@
 
 - **计算机基础** ：掌握数据结构和算法，熟悉操作系统、计网。
 - **Linux** : 熟练使用 Linux（大学使用centos三年，研究生使用ubuntu一年）。
-- **Java**：熟练掌握 Java 基础知识：集合、多线程、锁、线程安全、IO、网络通信。
-- **JVM**：熟悉JVM体系、类加载过程、GC、JVM调优。
-- **数据库**：熟练掌握增删改查、索引、SQL 优化、读写分离&分库分表、事务等。熟悉reids的使用。
-- **框架**：使用过 Spring、Spring MVC、 SpringBoot、MyBatis、JPA、Spring Security 等主流开发框架
+- **Java**：熟练掌握 Java 基础知识：集合、多线程、锁、IO、线程安全、网络通信。
+- **常用的算法**：数组、链表、二叉树等相关的算法。排序、查找等等。
+- **JVM**：熟悉JVM体系、类加载过程、GC。
+- **数据库**：熟练掌握增删改查、索引、事务等。熟悉reids的使用。
+- **框架**：使用过 Spring、Spring MVC、MyBatis、 SpringBoot等主流开发框架
 - **工具**：熟练掌握 Git、Maven、Docker、tomcat
-- **前端**：熟悉 Html、JavaScript ，有 semantic-ui、bootstrap 的实际开发经验
+- **前端**：熟悉 Html、JavaScript ，有 semantic-ui、bootstrap 的开发经验
+- **其他语言**：熟悉python，完成过基于神经网络的图像分类和目标识别，网络爬虫等等。
 
 ## 项目经历 
 
@@ -35,14 +37,17 @@
 2019-05~202-06 
 
 - **项目描述** : 基于BS架构的旅游管理系统，提供旅游线路展示、旅游线路查询、收藏等等功能。使用了Html、JavaScript、Ajax、Maven、mysql等等技术。
-- **工作内容** : 大部分为常规的web开发，主要使用了redis缓存技术，对于经常请求的数据进行了缓存处理。
+- **工作内容** : 大部分为常规的web开发，主要使用了redis缓存技术，对于经常请求的数据进行了缓存处理，数据的分页显示等等。系统架构是基于MVC三层架构。集成了密码加密MD5工具和邮件发送工具。
 
-### 博客系统（为了学习框架）
+### 博客系统（为了学习springboot框架）
 
 2021-05~2021-07  
 
 - **项目描述** : 一个博客系统，博客的发布、查询、分类等等操作。主要使用了semantic-ui、thymeleaf、SpringBoot、SpringSecurity、Spring Data Jpa、mysql。
-- **工作内容** :主要是框架的使用，数据库的增删改查。主要难点是数据库表的设计、集成Markdown插件、搜索功能。
+
+- **工作内容** :主要是框架的使用，数据库的增删改查。主要难点是数据库表的设计、集成Markdown插件、搜索功能。持久层使用的是mybatis。
+
+  项目链接：https://github.com/dlagez/blog
 
 ## 个人评价
 

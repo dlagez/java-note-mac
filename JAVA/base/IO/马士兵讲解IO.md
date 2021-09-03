@@ -95,3 +95,4 @@ NIO有两个层级：
 每来一个客户端都会放到fd8内核内存空间里面堆积
 
 <img src="%E9%A9%AC%E5%A3%AB%E5%85%B5%E8%AE%B2%E8%A7%A3IO.assets/image-20210901204931034.png" alt="image-20210901204931034" style="zoom: 67%;" />
+
