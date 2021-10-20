@@ -48,7 +48,15 @@ get_pklist_and_col_mapping函数里面使用match方法来匹配case。当entity
 
 ## 语句分析任务：
 
-### expr [链接](https://sparkbyexamples.com/pyspark/pyspark-sql-expr-expression-function/)
+分析下面的代码：
+
+```scala
+.withColumn("bsn_ar_reorg_cd", expr("if((cc.cc_BUSINESS_AREA is null and io.io_BUSINESS_AREA is null and M.BUSINESS_AREA is null),'BAUnknown',if((cc.cc_BUSINESS_AREA is null and io.io_BUSINESS_AREA is null) ,M.BUSINESS_AREA,if(cc.cc_BUSINESS_AREA is null,io.io_BUSINESS_AREA,cc.cc_BUSINESS_AREA)))"))
+```
+
+
+
+### expr： [链接](https://sparkbyexamples.com/pyspark/pyspark-sql-expr-expression-function/)
 
 是一个SQL函数，用于执行类似SQL的表达式
 
@@ -82,7 +90,7 @@ if((cc.cc_BUSINESS_AREA is null and io.io_BUSINESS_AREA is null and M.BUSINESS_A
 
 ### 
 
-
+## 代码：
 
 ```scala
 package com.dxc.edl.ing.compass
