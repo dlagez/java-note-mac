@@ -142,3 +142,13 @@ git diff
 ```console
 git diff --staged
 ```
+
+
+
+两个电脑同时记笔记：
+
+我有这样一个需求，就是我的mac和工作的笔记使用的是同一个git仓库。他两修改肯定会找成冲突。
+
+解决方案：在mac上面可以随时修改，但是不要add和commit，在add和commit之前将仓库pull一下。
+
+（add之前要保证一个mac或者公司电脑上的修改全部push到github上面）。之后再提交mac上的修改。

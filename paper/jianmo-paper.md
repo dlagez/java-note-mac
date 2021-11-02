@@ -1,3 +1,5 @@
+# 第一问
+
 核偏最小二乘方法：
 
 A Kernel-Based Multivariate Feature Selection Method for Microarray Data Classification 这个摘要写的值的借鉴。
@@ -19,6 +21,10 @@ A Kernel Partial Least Square Based Feature Selection Method
 
 
 
+
+# 第二问：
+
+使用多种方法进行对比：朴素贝叶斯、最近邻、决策树、随机森林、支持向量机、神经网络等，最后选择神经网络（SVM）
 
 scikit的多层感知机的使用。
 
