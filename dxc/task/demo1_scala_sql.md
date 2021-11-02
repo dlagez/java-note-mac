@@ -1,21 +1,21 @@
-| case序号 | table name                  | 状态            | 注释                                                         | assign  |
-| -------- | --------------------------- | --------------- | ------------------------------------------------------------ | ------- |
-| 1        | ing_plrs_blk                | ok              | 复杂转换的例子                                               | lixiang |
-| 2        | ing_plrs_bsn_ar_hrchy       |                 |                                                              | xiewang |
-| 3        | ing_plrs_co_cd              | ok              |                                                              | roc     |
-| 4        | ing_plrs_cst_cntr           | ok              | from_unixtime(unix_timestamp()) - > current_timestamp        | roc     |
-| 5        | ing_plrs_ctry_hrchy         |                 |                                                              | roc     |
-| 6        | ing_plrs_exch_rate          | review          | will check on 10/25 ，<br />to_date -> convert(datetime2(0), po_document_date) as [po_dcmt_dt]，还有几个函数没有转换过来 | roc     |
-| 7        | ing_plrs_fnctl_ar_hrchy     |                 |                                                              | roc     |
-| 8        | ing_plrs_gl_accts           |                 |                                                              | xiewang |
-| 9        | ing_plrs_inrn_ords          | ok              |                                                              | roc     |
-| 10       | ing_plrs_mgmt_geo           | **review**， ok | if 参考 case when的写法，已完成。                            | roc     |
-| 11       | ing_plrs_mru_hrchy          |                 |                                                              | roc     |
-| 12       | ing_plrs_mru_lvl0           | ok              |                                                              | roc     |
-| 13       | ing_plrs_mstr_coa           | ok              |                                                              | roc     |
-| 14       | ing_plrs_pft_cntr_hrchy     | review          | 一些语句逻辑还需要改正10/28                                  | roc     |
-| 15       | ing_plrs_wwas_athzn         | **review**，ok  | if 参考 case when的写法，以改完<br />10/26 多层if case 嵌套需要confirm | roc     |
-| 16       | ing_plrs_wwas_athzn_bsn_cse | **review**，ok  | if 参考 case when的写法，以改完                              | roc     |
+| case序号 | table name                  | 状态            | 注释                                                         | assign   |
+| -------- | --------------------------- | --------------- | ------------------------------------------------------------ | -------- |
+| 1        | ing_plrs_blk                | ok              | 复杂转换的例子                                               | lixiang* |
+| 2        | ing_plrs_bsn_ar_hrchy       | ok              | 发给我一起打包了                                             | xiewang* |
+| 3        | ing_plrs_co_cd              | ok              |                                                              | roc      |
+| 4        | ing_plrs_cst_cntr           | ok              | from_unixtime(unix_timestamp()) - > current_timestamp        | roc      |
+| 5        | ing_plrs_ctry_hrchy         | ok10/31         |                                                              | roc*     |
+| 6        | ing_plrs_exch_rate          | review          | will check on 10/25 ，<br />to_date -> convert(datetime2(0), po_document_date) as [po_dcmt_dt]，还有几个函数没有转换过来 | roc      |
+| 7        | ing_plrs_fnctl_ar_hrchy     | ok11/1          | 还有几个函数没翻译过来                                       | roc*     |
+| 8        | ing_plrs_gl_accts           | ok              | 发给我一起打包了                                             | xiewang* |
+| 9        | ing_plrs_inrn_ords          | ok              |                                                              | roc      |
+| 10       | ing_plrs_mgmt_geo           | **review**， ok | if 参考 case when的写法，已完成。                            | roc      |
+| 11       | ing_plrs_mru_hrchy          | ok              | 复杂                                                         | roc*     |
+| 12       | ing_plrs_mru_lvl0           | ok              |                                                              | roc      |
+| 13       | ing_plrs_mstr_coa           | ok              |                                                              | roc      |
+| 14       | ing_plrs_pft_cntr_hrchy     | ok              | 一些语句逻辑还需要改正10/28                                  | roc*     |
+| 15       | ing_plrs_wwas_athzn         | **review**，ok  | if 参考 case when的写法，以改完<br />10/26 多层if case 嵌套需要confirm | roc      |
+| 16       | ing_plrs_wwas_athzn_bsn_cse | **review**，ok  | if 参考 case when的写法，以改完                              | roc      |
 
   
 
@@ -70,8 +70,8 @@ CONVERT(DECIMAL(20,4), accountingrate)*0.0001
 |      | lit(null)                                                    | null                                                         |
 |      | split                                                        | split                                                        |
 |      | coalesce                                                     | coalesce                                                     |
-|      |                                                              |                                                              |
-|      |                                                              |                                                              |
+|      | .withColumn("L1", coalesce(col("PARENTLINEAGE_LIST")(1), lit("0"))) | coalesce(SUBSTRING_INDEX(SUBSTRING_INDEX(PARENTLINEAGE_LIST, ".", 1), ".", -1), "0") AS [L1], |
+|      | cndList: _*                                                  | 表示使用列表的字段                                           |
 |      |                                                              |                                                              |
 
 ## spark function：

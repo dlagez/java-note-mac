@@ -6,9 +6,7 @@ WIN
 
 
 
-# install 
-
-## sqlserver: 
+## install sqlserver: 
 
 - articles:https://www.sqlservercentral.com/articles/docker-desktop-on-windows-10-for-sql-server-step-by-step
 - docker link: https://hub.docker.com/_/microsoft-mssql-server
@@ -22,5 +20,11 @@ docker run --name sqlserver -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Dlagez3133.." -e 
 
 // test
 docker exec -it sqlserver /opt/mssql-tools/bin/sqlcmd -S localhost -U sa
+
+// exec
+exec -it sqlserver "bash"
+
+// can't into 
+docker exec -it sqlserver /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Dlagez3133..
 ```
 
