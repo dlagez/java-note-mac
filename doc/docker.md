@@ -26,5 +26,33 @@ exec -it sqlserver "bash"
 
 // can't into 
 docker exec -it sqlserver /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Dlagez3133..
+
+登录名是：sa 密码password
+```
+
+
+
+## install mysql
+
+```
+docker pull mysql:8.0.27
+docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=password -d mysql:8.0.27 # run image
+docker exec -it mysql bash # inside a Docker container
+docker logs mysql # get log
+mysql -u root -p # inside m
+```
+
+
+
+## install postgresql 
+
+https://hub.docker.com/_/postgres
+
+```cmd
+docker pull postgres:9.4.26
+#  -e TZ=PRC 设置时区为中国
+docker run -p 15432:5432 --name postgres -e POSTGRES_PASSWORD=password -e TZ=PRC -d postgres:9.4.26
+
+# 默认用户名是postgres 密码password
 ```
 

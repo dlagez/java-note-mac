@@ -1,3 +1,23 @@
+```sql
+SELECT DISTINCT prod_id, prod_price, prod_name # 去重 
+FROM Products
+where prod_price = 3.49
+LIMIT 5 # 限制
+-- first by price and then by name, DESC represent reverse the result
+-- must be the last in the select statement
+ORDER BY prod_price DESC, prod_name 
+```
+
+wildcards
+
+```
+%  匹配任意数量的字符
+_ 匹配单个字符
+[JM]% 匹配任意一个以J或M开头的字符串
+```
+
+
+
 ### CHARINDEX (Transact-SQL) :[link](https://docs.microsoft.com/en-us/sql/t-sql/functions/charindex-transact-sql?view=sql-server-ver15)
 
 This function searches for one character expression inside a second character expression, returning the starting position of the first expression if found.
