@@ -16,3 +16,11 @@ result = pd.concat(frames, axis=1)
 result.plot.scatter(x='SsLi', y='pIC50')
 ```
 
+折线图：
+
+```python
+index = [i for i in range(474)]
+plt.plot(index)
+plt.show()
+```
+

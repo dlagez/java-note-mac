@@ -1,3 +1,5 @@
+ndarray是numpy的对象。
+
 - np.random.randn(10, 10)  创建一个10*10的数组 
 
 ### 切片：
@@ -8,7 +10,12 @@
 data_numpy[:, 1:]
 ```
 
+### 数据的持久化
 
+```
+np.save('data', data)
+data = np.load('data.npy')
+```
 
 将pandas数据编程numpy数据：
 
