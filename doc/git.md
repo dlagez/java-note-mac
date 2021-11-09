@@ -1,4 +1,4 @@
-在本地已经新建了项目，想关联到github。
+### 关联github
 
 ```
 1.在github先创建一个空项目，不要任何设置。
@@ -21,36 +21,36 @@ git remote add origin git@github.com:dlagez/demo_JAVA.git
 6. git remote rm origin
 ```
 
-查看文件的差异：
+### add 加 commit
 
 ```
-git diff 文件名
+git commit -a -m 'made a change'
+```
+
+### 远程仓库的重命名与移除
+
+```   console
+git remote rename pb paul  # 重命名
+git remote remove paul     # 移除远程分支
+```
+
+### 从远程仓库抓取数据
+
+它只会抓取数据，并不会合并分支
+
+```console
+git fetch <remote>
+```
+
+自动抓取后合并该远程分支到当前分支
+
+```
+git pull 
 ```
 
 
 
 ### 版本回退：
-
-git log 可以查看commit的版本。用`git reflog`查看命令历史
-
-```bash
-roczhang@roczhang-mac mall % git log
-commit ec90e2258b414c188d6dbe42b9deb395cdcf89ad (HEAD -> master)
-Author: roczhang <1587839905@qq.com>
-Date:   Thu Sep 9 19:23:50 2021 +0800
-
-    add readme
-
-commit c01552ec72a354f7df3d45ad922d50cca8510294 (origin/master)
-Author: roczhang <1587839905@qq.com>
-Date:   Thu Sep 9 19:16:35 2021 +0800
-
-    初始化项目基本骨架
-```
-
-add readme时当前版本。用`HEAD`表示当前版本，上一个版本就是`HEAD^`，上上一个版本就是`HEAD^^`，当然往上100个版本写100个`^`比较容易数不过来，所以写成`HEAD~100`。
-
-比如我现在开发项目发现错了很多地方。想删除修改。把项目回退到上一次提交的版本，也就是当前版本。
 
 ```
 git reset --hard HEAD
@@ -60,95 +60,71 @@ git reset --hard HEAD
 
 ### 撤销修改
 
-1.你修改了一个文件，但是发现改错了，想丢弃修改类容
+你修改了一个文件，但是发现改错了，想丢弃修改类容（使用分支保存已经做的工作是封号的方法）
 
 ```
 git checkout -- readme.txt
 ```
 
-2.我修改了文件，并且已经add到暂存区了。
-
-用命令`git reset HEAD <file>`可以把暂存区的修改撤销掉（unstage），重新放回工作区：
+### 取消暂存的文件
 
 ```
 git reset HEAD readme.txt
 ```
 
-然后丢弃修改和上面一样
+### 删除缓存区文件
+
+已经add到暂存区的文件移除：该文件从暂存区移除，本地不会删除。
 
 ```
-git checkout -- readme.txt
+git rm -r --cached src/
 ```
-
-
-
-### 删除文件
-
-如果有大文件，或者无用的文件已经add了，但是想删除它怎么办（保留文件在电脑里面）
-
-此时我们add了两个文件到暂存区。
-
-```
-roczhang@roczhang-mac git-demo % git status
-On branch master
-
-No commits yet
-
-Changes to be committed:
-  (use "git rm --cached <file>..." to unstage)
-	new file:   readme.md
-	new file:   src/test.txt
-```
-
-```
-roczhang@roczhang-mac git-demo % git rm -r --cached src/ 
-
-rm 'src/test.txt'
-```
-
-再次查看时已经显示src文件夹没有被跟踪了。
-
-```
-roczhang@roczhang-mac git-demo % git status
-On branch master
-
-No commits yet
-
-Changes to be committed:
-  (use "git rm --cached <file>..." to unstage)
-	new file:   readme.md
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	src/
-```
-
-下次提交时，该文件将消失并且不再被跟踪
 
 
 
 ### 查看修改
 
+此命令比较的是工作目录中当前文件和暂存区域快照之间的差异
+
 ```console
 git diff
 ```
 
-此命令比较的是工作目录中当前文件和暂存区域快照之间的差异
-
-如果已经进行add操作了，使用git diff没有显示的。
-
-查看已经add文件的差异使用：
+查看已经add文件与暂存的文件差异：
 
 ```console
 git diff --staged
 ```
 
+### 查看提交历史
+
+```
+git log
+git log -p -2                      # 显示每次提交所引入的差异 -2 选项来只显示最近的两次提交
+git log --oneline --decorate       # 简单的查看提交记录
+git log --oneline --decorate --graph --all      # 查看提交记录图
+git log --stat                     # 查看每次提交的变化
+```
 
 
-两个电脑同时记笔记：
 
-我有这样一个需求，就是我的mac和工作的笔记使用的是同一个git仓库。他两修改肯定会找成冲突。
+## 分支
 
-解决方案：在mac上面可以随时修改，但是不要add和commit，在add和commit之前将仓库pull一下。
+```
+git branch testing           # 新建一个分只
+git checkout testing         #切换分支
+git checkout -b hotfix       # 新建并转换到这个分支
+git branch                   # 查看分支
+git merge testing            # 此时在分支master中，使用master分支合并其他分支
+git branch -d hotfix         # 删除分支
+```
 
-（add之前要保证一个mac或者公司电脑上的修改全部push到github上面）。之后再提交mac上的修改。
+提交分支到github
+
+```
+# 先切换到分支中
+git branch testing
+# 再提交
+git push origin testing
+```
+
