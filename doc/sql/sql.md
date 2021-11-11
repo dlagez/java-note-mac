@@ -211,3 +211,6 @@ FROM customers LEFT JOIN orders on customers.cust_id = orders.cust_id
 GROUP BY customers.cust_id;
 ```
 
+### 组合查询
+
+UNOIN的作用于WHERE类似，UNION ALL将不去重。
