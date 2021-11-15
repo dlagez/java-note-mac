@@ -1,15 +1,15 @@
-
-
-### 表操作
+## 表操作
 
 ```
 DESCRIBE Customers;     # structure of a table
 
 ```
 
-主键自增
+### 创建表
 
-注意，如果中间制定了主键的数，后面自增会
+### 主键自增
+
+注意，如果中间指定了主键的数，后面自增会
 
 ```sql
 CREATE TABLE animals (
@@ -49,6 +49,30 @@ CREATE TABLE child (
     FOREIGN KEY (parent_id) REFERENCES parent(id) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=INNODB;
 ```
+
+### 更新表：
+
+增加一列
+
+```sql
+ALTER TABLE vendors
+ADD vend_phone CHAR(20);
+```
+
+删除一列
+
+```sql
+ALTER TABLE vendors
+DROP COLUMN vend_phone;
+```
+
+定义外键
+
+```sql
+ALTER TABLE orderitems ADD CONSTRAINT fk_orderitems_orders FOREIGN KEY (order_num) REFERENCES orders (order_num);
+```
+
+
 
 ### 检索数据
 
@@ -214,3 +238,223 @@ GROUP BY customers.cust_id;
 ### 组合查询
 
 UNOIN的作用于WHERE类似，UNION ALL将不去重。
+
+```sql
+SELECT vend_id, prod_id, prod_price
+FROM products
+WHERE prod_price <= 5
+UNION
+SELECT vend_id, prod_id, prod_price
+FROM products
+WHERE vend_id IN (1001, 1002);
+```
+
+和下面单条语句结果类似（这里是一样的）
+
+```sql
+SELECT vend_id, prod_id, prod_price
+FROM products
+WHERE prod_price <= 5 OR vend_id IN (1001, 1002);
+```
+
+### 全文搜索：
+
+MyISAM支持全文搜索，而InnoDB不支持全文搜索。
+
+Match() 指定被搜索的列，Against() 指定要使用的搜索表达式。Against() 按匹配等级来排序，相关性越高排序越靠前。
+
+```sql
+SELECT note_text
+FROM productnotes
+WHERE MATCH(note_text) AGAINST('rabbit');
+```
+
+#### 布尔操作符
+
+AGAINST里面的参数，以-开头的是要排除的选项。*表达多个字符匹配，和正则表达式类似。
+
+```sql
+SELECT note_text
+FROM productnotes
+WHERE MATCH(note_text) AGAINST('heavy -rope*' IN BOOLEAN MODE);
+```
+
+### 插入数据
+
+```sql
+INSERT INTO customers
+    (cust_id, cust_name, cust_address, cust_city, cust_state, cust_zip, cust_country, cust_contact, cust_email) 
+VALUES
+    (10001, 'Coyote Inc.', '200 Maple Lane', 'Detroit', 'MI', '44444', 'USA', 'Y Lee', 'ylee@coyote.com'),
+    (10001, 'Coyote Inc.', '200 Maple Lane', 'Detroit', 'MI', '44444', 'USA', 'Y Lee', 'ylee@coyote.com');
+```
+
+### 更新数据
+
+```sql
+UPDATE customers
+SET cust_name = 'The Fudds',
+    cust_email = 'roczhang@outlook.com'
+WHERE cust_id = 10005;
+```
+
+### 删除数据
+
+```sql
+DELETE FROM customers
+WHERE cust_id = 10001;
+```
+
+注意删除和更新数据要格外小心，不带 where 子句的语句将会作用于整个表。
+
+### 重命名表
+
+```sql
+rename table customer2 to customer
+```
+
+
+
+## 视图
+
+试图不包含数据，它就像是一个函数，每个使用视图的时候它都会执行一次sql语句。
+
+创建视图，它就相当于一个临时的表
+
+```sql
+CREATE VIEW productcustomers AS
+SELECT cust_name, cust_contact, prod_id
+FROM customers, orders, orderitems
+WHERE customers.cust_id = orders.cust_id AND orderitems.order_num = orders.order_num;
+```
+
+在这个临时表上可以进行查询操作。
+
+```sql
+SELECT cust_name, cust_contact
+FROM productcustomers
+WHERE prod_id = 'TNT2';
+```
+
+
+
+## 存储过程
+
+创建、使用、删除
+
+```sql
+CREATE PROCEDURE productpricing()
+BEGIN
+    SELECT AVG(prod_price) AS priceaverage
+    FROM products;
+end;
+
+CALL productpricing();
+
+DROP PROCEDURE productpricing;
+```
+
+带输出参数
+
+```sql
+# out 表示从存储过程中传出
+# in 同理，传入存储过程中
+CREATE PROCEDURE productpricing1(
+    OUT pl DECIMAL(8, 2),
+    OUT ph DECIMAL(8, 2),
+    OUT pa DECIMAL(8, 2)
+)
+BEGIN
+    SELECT MIN(prod_price)
+    INTO pl
+    FROM products;
+    SELECT MAX(prod_price)
+    INTO ph
+    FROM products;
+    SELECT AVG(prod_price)
+    INTO pa
+    FROM products;
+end;
+
+# 这里的参数是输出的参数，作为变量可以查询。
+CALL productpricing1(@pricelow,
+                    @pricehigh,
+                    @priceaverage);
+
+SELECT @priceaverage
+```
+
+带输入输出参数
+
+```sql
+CREATE PROCEDURE ordertotal(
+    IN onumber INT,
+    OUT ototal DECIMAL(8, 2)
+)
+BEGIN
+    SELECT SUM(item_price * quantity)
+    FROM orderitems
+    WHERE order_num = onumber
+    INTO ototal;
+end;
+
+CALL ordertotal(20005, @total);
+SELECT @total;
+```
+
+复杂的proceduce
+
+```sql
+CREATE PROCEDURE ordertotal2(
+    IN onumber INT,
+    IN taxable BOOLEAN,
+    OUT ototal DECIMAL(8, 2)
+) COMMENT 'Obtain order total, optionally adding tax'
+BEGIN
+    DECLARE total DECIMAL(8, 2);
+    DECLARE taxrate INT DEFAULT 6;
+    SELECT SUM(item_price * quantity)
+    FROM orderitems
+    WHERE order_num = onumber
+    INTO total;
+    -- 把营业税增加到合计
+    IF taxable THEN
+        SELECT total + (total/100 * taxrate) INTO total;
+    end if;
+
+    SELECT total INTO ototal;
+end;
+
+# 将boolean设置为false，不带税 0为false 1为true
+CALL ordertotal2(20005, 0, @total);
+SELECT @total;
+
+# 将boolean设置为true， 带税
+CALL ordertotal2(20005, 1, @total);
+SELECT @total;
+```
+
+
+
+## 游标
+
+是一个存储在mysql服务器上的数据库查询，在存储了游标之后，可以根据需要滚动或浏览其中的数据。
+
+
+
+## 触发器
+
+
+
+## 事务
+
+保证成批的mysql操作要么完全执行，要么完全不执行。
+
+```sql
+START TRANSACTION;
+DELETE FROM orders;
+SELECT * FROM orders;
+ROLLBACK; / COMMIT; 回滚或者提交
+SELECT * FROM orders;
+```
+

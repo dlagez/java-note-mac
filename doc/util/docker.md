@@ -56,3 +56,7 @@ docker run -p 15432:5432 --name postgres -e POSTGRES_PASSWORD=password -e TZ=PRC
 # 默认用户名是postgres 密码password
 ```
 
+
+
+## install elasticsearch
+
