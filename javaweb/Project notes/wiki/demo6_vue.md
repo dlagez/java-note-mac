@@ -302,3 +302,80 @@ export default {
 </script>
 ```
 
+使用组件并加入数据
+
+```html
+<template>
+  <a-layout>
+    <a-layout-content
+        :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
+    >
+      <a-list item-layout="vertical" size="large" :grid="{ gutter: 20, column: 3 }" :data-source="ebooks">
+        <template #footer>
+          <div>
+            <b>Roc design vue</b>
+            footer part
+          </div>
+        </template>
+        <template #renderItem="{ item }">
+          <a-list-item key="item.name">
+            <template #actions> <!--这里是三个小图标-->
+              <span v-for="{ type, text } in actions" :key="type">
+                <component :is="type" style="margin-right: 8px" />
+                {{ text }}
+              </span>
+            </template>
+
+            <a-list-item-meta :description="item.description">
+              <template #title>
+                <a :href="item.href">{{ item.name }}</a>
+              </template>
+              <template #avatar><a-avatar :src="item.cover" /></template>
+            </a-list-item-meta>
+          </a-list-item>
+        </template>
+      </a-list>
+
+    </a-layout-content>
+  </a-layout>
+</template>
+
+<script>
+// @ is an alias to /src
+import {onMounted, ref} from "vue";
+import HelloWorld from '@/components/HelloWorld.vue'
+import axios from 'axios'
+
+export default {
+  name: 'Home',
+  components: {
+    HelloWorld
+  },
+  setup() {
+    console.log('setup')
+    const ebooks = ref()
+    // 在这里写函数会在页面渲染完之后再执行。可能会拿到数据比较晚会出问题。比如操作数据会出错，因为数据还没有拿到。
+    onMounted(() => {
+      axios.get("http://localhost:8088/ebook").then((response) => {
+        const data = response.data
+        ebooks.value = response.data.content
+        console.log(response)
+      });
+    })
+    return {
+      ebooks,
+      actions: [
+        {type: 'StartOutLined', text: '156'},
+        { type: 'LikeOutlined', text: '156' },
+        { type: 'MessageOutlined', text: '2' },
+      ]
+    }
+  }
+}
+</script>
+
+```
+
+看起来像这个样子
+
+![image-20211122204334868](demo6_vue.assets/image-20211122204334868.png)
