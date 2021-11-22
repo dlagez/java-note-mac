@@ -1,70 +1,37 @@
 创建项目：3步
 
 ```
-vue init webpack demo
+vue create app
 ```
 
-- Vue build ==> 打包方式，回车即可；
-- Install vue-router ==> 是否要安装 vue-router，项目中肯定要使用到 所以Y 回车；
-- Use ESLint to lint your code ==> 是否需要 js 语法检测 目前我们不需要 所以 n 回车；
-- Set up unit tests ==> 是否安装 单元测试工具 目前我们不需要 所以 n 回车；
-- Setup e2e tests with Nightwatch ==> 是否需要 端到端测试工具 目前我们不需要 所以 n 回车；
-
 ```
-npm i # 安装依赖
 npm run dev # 启动项目
 ```
 
+安装插件
+
+npm相关命令：
+
+```
+npm list -g --dept 0 // 查看安装的插件
+npm ls  // 查看本地的c
+npm install --registry=https://registry.npm.taobao.org
+```
+
+
+
 ## 指令：
 
-### v-html
-
-将内容解析为html
-
 ```html
-<p>Using mustaches: {{ rawHtml }}</p>
-<p>Using v-html directive: <span v-html="rawHtml"></span></p>  #使用v-html将值作为html来渲染在页面上
-```
-
-```html
-const RenderHtmlApp = {
-  data() {
-    return {
-      rawHtml: '<span style="color: red">This should be red.</span>'
-    }
-  }
-}
-```
-
-### v-bind
-
-将操作html的属性：[link](https://v3.cn.vuejs.org/guide/template-syntax.html#attribute)  它可以缩写成 :
-
-```html
+<p>Using v-html directive: <span v-html="rawHtml"></span></p>
 <div v-bind:id="dynamicId"></div>
-```
-
-### v-if 
-
-当作条件判断，false将不会渲染该元素
-
-```html
 <p v-if="seen">现在你看到我了</p>
-```
-
-### v-on 
-
-监听dom事件 缩写：@
-
-```html
 <a v-on:click="doSomething"> ... </a>
 ```
 
-
-
 ## Date Property
 
-Vue 在创建新组件实例的过程中调用此函数。它应该返回一个对象，然后 Vue 会通过响应性系统将其包裹起来，并以 `$data` 的形式存储在组件实例中。
+`Vue` 在创建新组件实例的过程中调用此函数。它应该返回一个对象，然后 `Vue` 会通过响应性系统将其包裹起来，并以 `$data` 的形式存储在组件实例中。
 
 ```js
 const app = Vue.createApp({
@@ -87,11 +54,7 @@ vm.$data.count = 6
 console.log(vm.count) // => 6
 ```
 
-
-
 ## 方法
-
-Vue 自动为 `methods` 绑定 `this`，以便于它始终指向组件实例。这将确保方法在用作事件监听或回调时保持正确的 `this` 指向。在定义 `methods` 时应避免使用箭头函数，因为这会阻止 Vue 绑定恰当的 `this` 指向。
 
 ```js
 const app = Vue.createApp({
@@ -105,13 +68,9 @@ const app = Vue.createApp({
     }
   }
 })
-
 const vm = app.mount('#app')
-
 console.log(vm.count) // => 4
-
 vm.increment()
-
 console.log(vm.count) // => 5
 ```
 
@@ -135,8 +94,6 @@ console.log(vm.count) // => 5
   <span>{{ publishedBooksMessage }}</span>
 </div>
 ```
-
-
 
 ```js
 Vue.createApp({
@@ -204,8 +161,6 @@ computed: {
 
 ## 侦听器
 
-没咋看懂，后面需要复习。
-
 
 
 ## Class 与 Style 绑定
@@ -269,8 +224,6 @@ data() {
 }
 ```
 
-
-
 ## v-if vs v-show
 
 一般来说，`v-if` 有更高的切换开销，而 `v-show` 有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用 `v-show` 较好；如果在运行时条件很少改变，则使用 `v-if` 较好。
@@ -290,24 +243,6 @@ v-show 总是渲染，不过使用css来达到隐藏的效果
 
 
 ## v-for 渲染一个数组
-
-```html
-<ul id="array-rendering">
-  <li v-for="item in items">
-    {{ item.message }}
-  </li>
-</ul>
-```
-
-```js
-Vue.createApp({
-  data() {
-    return {
-      items: [{ message: 'Foo' }, { message: 'Bar' }]
-    }
-  }
-}).mount('#array-rendering')
-```
 
 在 `v-for` 块中，我们可以访问所有父作用域的 property。`v-for` 还支持一个可选的第二个参数，即当前项的索引。
 
@@ -458,12 +393,6 @@ Vue.createApp({
 }).mount('#v-model-multiple-checkboxes')
 ```
 
-
-
-## 组件：
-
-比较难，还得慢慢看
-
 ## 组件注册：
 
 ### 全局注册：
@@ -500,6 +429,16 @@ const app = Vue.createApp({
 })
 ```
 
+模块的暴露：
+
+把模块暴露出去，让其他模块能够引用
+
+```js
+export default {
+ name: 'App'
+}
+```
+
 
 
 ## props
@@ -513,77 +452,16 @@ const app = Vue.createApp({
 
 
 
-## vue-cli使用：
+## `vue-router`
 
-build和config都是为webpack做配置。注：node是js的运行环境
+实现页面跳转的功能。相当于 `requestmapping`
 
-build/build.js
-
-```
-// 删除之前大打包过的文件
-rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
-// 重新打包
-webpack(webpackConfig, (err, stats) => {
-```
-
-config/index.js
-
-定义一些变量
-
-```
-host: 'localhost', // can be overwritten by process.env.HOST
-port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
-autoOpenBrowser: false,
-```
-
-App.vue是最外层的父路由，所有子路由都在App.vue下
-
-### src/router/index.js  
-
-- routes中存的就是路由的数组，
-- path就是你要访问你所创建的页面的路径，这里所配置的路由为''/，也就是根路径所以你直接访问localhost:8080就会出现一个App.vue中插入一个HelloWorld.vue的页面（这个相当于路由嵌套）
-- name就是给当前路由命名，可以在其他页面通过$route.name访问到当前页面路由的name
+vue一般都是单页面，只有一个`index.html`，怎么实现页面的跳转呢，就用到了`vue-router`。
 
 ```js
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-
-Vue.use(Router)
-
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
-    }
-  ]
-})
-```
-
-
-
-### 新建vue
-
-在template里面新建文件 demo1.vue，内容如下：
-
-```html
-<template>
-    <div>
-        test
-    </div>
-</template>
-```
-
-然后配置它的路由，先引入这个文件，用import，然后填写要访问这个文件的路由路径，这边写为/test，所有访问这个路由的url为：localhost:8080/#/test
-
-注：vue脚手架默认的路由嵌套就是所有页面都嵌套在App.vue页面下
-
-```js
-import Vue from 'vue'
-import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import HelloWorld from '@/components/HelloWorld' // 引入组件
 import demo1 from '@/components/demo1'
 
 Vue.use(Router)
@@ -591,9 +469,9 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      path: '/',  // 这里是跳转的路径，访问这个路径就可以跳转到这个组件
+      name: 'HelloWorld', // 这里是路由的名字
+      component: HelloWorld  // 这里是路由跳转的组件
     },
     {
       path: '/test',
@@ -603,4 +481,34 @@ export default new Router({
   ]
 })
 ```
+
+## `vuex`
+
+全局数据的使用：`<h1>数量：{{$store.state.count}}</h1>`
+
+计算属性的使用：`<h2>商品总价：{{$store.getters.totalPrice}}</h2>`
+
+mutation 修改数据方法的使用：需要结合点击事件和方法来使用
+
+```js
+<button @click="changeEvent">添加数量</button>
+methods: {
+    changeEvent:function() {
+      // this.$store.commit('setCount')
+      this.$store.commit('setCountNum', 10)
+    }
+  }
+```
+
+异步获取数据：调用获取数据的方法，直接修改数据
+
+```
+mounted: function() {
+    this.$store.dispatch('getDz')
+  }
+```
+
+
+
+###  
 

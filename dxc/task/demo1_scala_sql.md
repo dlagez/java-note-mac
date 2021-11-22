@@ -77,6 +77,9 @@ CONVERT(DECIMAL(20,4), accountingrate)*0.0001
 |      | .withColumn("L1", coalesce(col("PARENTLINEAGE_LIST")(1), lit("0"))) | coalesce(SUBSTRING_INDEX(SUBSTRING_INDEX(PARENTLINEAGE_LIST, ".", 1), ".", -1), "0") AS [L1], |
 |      | cndList: _*                                                  | 表示使用列表的字段                                           |
 |      | from_unixtime(unix_timestamp(lit("1899-01-01 00:00:00"), "yyyy-MM-dd hh:mm:ss")) | convert(datetime2(0), '1899-01-01 00:00:00', 20)             |
+|      | https://docs.microsoft.com/en-us/sql/mdx/instr-mdx?view=sql-server-ver15 | Instr  返回一个字符串在另一个字符串中第一次出现的位置。      |
+|      |                                                              |                                                              |
+|      |                                                              |                                                              |
 
 ## spark function：
 

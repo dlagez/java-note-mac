@@ -60,3 +60,27 @@ docker run -p 15432:5432 --name postgres -e POSTGRES_PASSWORD=password -e TZ=PRC
 
 ## install elasticsearch
 
+```bash
+docker pull elasticsearch:7.6.2
+docker run -d --name elasticsearch  -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.6.2
+
+// docker run -d --name elasticsearch --net elasticsearch -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.6.2
+```
+
+
+
+## install redis
+
+```
+docker pull redis
+docker run -itd --name redis -p 6379:6379 redis
+docker exec -it redis /bin/bash
+
+```
+
+## install kibana
+
+```
+docker pull kibana:7.6.2
+docker run -d --name kibana -p 5601:5601 kibana:7.6.2
+```
