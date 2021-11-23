@@ -48,6 +48,22 @@ git fetch <remote>
 git pull 
 ```
 
+### 已经提交到github的文件夹取消追踪,
+
+ 虽然会追踪, 但是还是需要在.gitignore里面设置一下,不然一直报红.
+
+```
+git rm -r --cached dir
+```
+
+### 合并提交
+
+这次的改动比较小, 和上次的提交合并, 这个message会覆盖上次的信息.
+
+```
+git commit -a --amend -m "my message here"
+```
+
 
 
 ### 版本回退：

@@ -40,7 +40,25 @@ SELECT CHARINDEX ( 'Test',
 
 理解：在第二个参数里面寻找第一个参数，如果存在，则返回在第一个参数的起始位置，索引从0开始。
 
+### RIGHT [Link](https://docs.microsoft.com/en-us/azure/databricks/sql/language-manual/functions/right)
 
+Returns the rightmost len characters from the string str.
+
+```
+> SELECT right('Spark SQL', 3);
+ SQL
+```
+
+返回最右边的数.
+
+### REPLICATE
+
+```
+Select Replicate('abc',2) 
+abcabc
+```
+
+重复第一个参数
 
 ### SUBSTRING (Transact-SQL): [link](https://docs.microsoft.com/en-us/sql/t-sql/functions/substring-transact-sql?view=sql-server-ver15)
 
@@ -51,6 +69,9 @@ SELECT name, SUBSTRING(name, 1, 1) AS Initial ,
 SUBSTRING(name, 3, 2) AS ThirdAndFourthCharacters
 FROM sys.databases  
 WHERE database_id < 5;
+
+src_nm='ES' AND LEFT(CAST(wbs_ky as VARCHAR(16)) + REPLICATE('0', 16), 16) = LEFT(CAST(REPLACE(REPLACE(wbs_atr_1_cd, '.', ''), '-', '') as VARCHAR(16)) + REPLICATE('0', 16), 16)
+
 ```
 
 | name   | Initial | ThirdAndFourthCharacters |

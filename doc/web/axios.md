@@ -8,9 +8,7 @@ npm install axios
 
 vue 3.x
 
-不设置全局axios，单独页面引入：
-
-请求本地的8080会报跨域的问题，这里先试一试网上的api，可以获取到数据。
+### 单独使用
 
 ```html
 <template>
@@ -44,6 +42,75 @@ export default {
 </script>
 
 ```
+
+### 配置全局url
+
+项目目录加入`.env.dev`文件。配置`url`，在`main.js`里面读取配置的值。
+
+`.env.dev`
+
+```
+NODE_ENV=development
+VUE_APP_SERVER=http://localhost:8088
+```
+
+`main.js` 读取变量并配置`baseUrl`
+
+```js
+import axios from "axios";
+axios.defaults.baseURL = process.env.VUE_APP_SERVER; // 全局配置后端请求的url
+```
+
+### 配置拦截器
+
+拦截请求参数和返回数据
+
+```js
+import axios from "axios";
+
+
+/**
+ * axios 拦截器
+ */
+axios.interceptors.request.use(function (config) {
+    console.log('请求参数：', config);
+    return config;
+}, error => {
+    return Promise.reject(error);
+});
+
+axios.interceptors.response.use(function (response) {
+    console.log('返回结果：', response);
+    return response;
+}, error => {
+    console.log('返回错误：', error);
+    return Promise.reject(error);
+});
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
