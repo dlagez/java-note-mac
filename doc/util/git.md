@@ -131,6 +131,7 @@ git branch testing           # 新建一个分只
 git checkout testing         #切换分支
 git checkout -b hotfix       # 新建并转换到这个分支
 git branch                   # 查看分支
+git branch -a                # c
 git merge testing            # 此时在分支master中，使用master分支合并其他分支
 git branch -d hotfix         # 删除分支
 ```
