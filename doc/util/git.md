@@ -82,10 +82,11 @@ git reset --hard HEAD
 git checkout -- readme.txt
 ```
 
-### 取消暂存的文件
+### 取消暂存commit的文件
 
 ```
 git reset HEAD readme.txt
+git commit --amend
 ```
 
 ### 删除缓存区文件
@@ -144,4 +145,8 @@ git branch testing
 # 再提交
 git push origin testing
 ```
+
+
+
+
 
