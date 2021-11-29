@@ -1,19 +1,19 @@
 设置端口
 
-```
+```properties
 server.port: 8888
 server.context-path: /demo
 ```
 
 设置log
 
-```
+```properties
 logging.file.name=log
 ```
 
 mybatis yml
 
-```
+```properties
 # mybatis 配置内容
 mybatis:
   config-location: classpath:mybatis-config.xml # 配置 MyBatis 配置文件路径
@@ -21,9 +21,15 @@ mybatis:
   type-aliases-package: com.example.mybatisxml.dataobject # 配置数据库实体包路径
 ```
 
+打印sql语句
+
+```properties
+logging.level.com.roc.wiki.mapper=trace  # 将某个包的日志级别降低
+```
+
 redis
 
-```
+```properties
 spring:
   # 对应 RedisProperties 类
   redis:
