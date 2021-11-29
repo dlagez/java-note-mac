@@ -84,3 +84,9 @@ chmod 777 file
 chmod -R 777 的
 ```
 
+### 压缩与解压
+
+```
+!tar -zcvf images.tar.gz /content/PyTorch-GAN/implementations/acgan/images
+```
+
