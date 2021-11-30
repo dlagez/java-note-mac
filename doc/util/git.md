@@ -86,7 +86,7 @@ git checkout -- readme.txt
 
 ```
 git reset HEAD readme.txt
-git commit --amend
+git commit --amend -m 'ad'
 ```
 
 ### 删除缓存区文件

@@ -18,3 +18,13 @@ public UserVO get(@PathVariable("id") Integer id) {
 }
 ```
 
+### @RequestBody 前端提交的数据使用json格式，必须使用这个注解
+
+```
+@PostMapping("/ebook/save")
+public CommonResp save(@RequestBody EbookSaveReq req) {
+    CommonResp resp = new CommonResp<>();
+    ebookService.save(req);
+    return resp;
+}
+```
