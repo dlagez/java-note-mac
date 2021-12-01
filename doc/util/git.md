@@ -76,10 +76,10 @@ git reset --hard HEAD
 
 ### 撤销修改
 
-你修改了一个文件，但是发现改错了，想丢弃修改类容（使用分支保存已经做的工作是封号的方法）
+你修改了一个文件，但是发现改错了，想丢弃修改类容（使用分支保存已经做的工作是更好的方法）
 
 ```
-git checkout -- readme.txt
+git checkout --readme.txt
 ```
 
 ### 取消暂存commit的文件
@@ -101,16 +101,14 @@ git rm -r --cached src/
 
 ### 查看修改
 
-此命令比较的是工作目录中当前文件和暂存区域快照之间的差异
+此命令比较的是
 
 ```console
-git diff
-```
-
-查看已经add文件与暂存的文件差异：
-
-```console
-git diff --staged
+git diff 工作目录中当前文件和暂存区域快照之间的差异
+git diff --staged 查看已经add文件与暂存的文件差异：
+git diff branchNmae 工作区与某分支的差异
+git diff HEAD 工作区与HEAD指针指向的内容差异
+git diff branch1 branch2 查看两个分支的差异 显示branch1的不同，比如branch1多出数据会显示绿色++
 ```
 
 ### 查看提交历史

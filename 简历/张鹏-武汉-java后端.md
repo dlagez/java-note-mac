@@ -24,10 +24,10 @@
 - **Java**：熟练掌握 Java 基础知识：集合：ArrayList、HashMap等，IO。熟悉：多线程、锁、线程安全、网络通信。
 - **常用的算法**：数组、链表、二叉树等相关的算法。排序、查找等等。
 - **JVM**：熟悉JVM体系、类加载过程、GC。
-- **数据库**：熟练掌握增删改查、索引、事务等。熟悉reids的使用。
-- **框架**：使用过 Spring、Spring MVC、MyBatis、 SpringBoot等主流开发框架
+- **数据库**：熟练掌握增删改查、索引、存储过程开发、事务等。熟悉reids的使用。
+- **框架**：使用过MyBatis、 SpringBoot等主流开发框架
 - **工具**：熟练掌握 Git、Maven、Docker、tomcat
-- **前端**：熟悉 Html、JavaScript ，有 semantic-ui、bootstrap 的开发经验
+- **前端**：熟悉 Html、JavaScript ，有 semantic-ui、bootstrap 、vue的开发经验
 - **其他语言**：熟悉python，完成过基于神经网络的图像分类和目标识别，网络爬虫等等。
 
 ## 项目经历 
@@ -53,9 +53,26 @@
 
 2021-08~至今  
 
-- **项目描述** : 一套电商系统，目前在完成后端的编码，已经使用了mysql，mybatis，Swagger-UI，redis缓存，SpringSecurity+JWT认证和授权。
+- **项目描述** : 一套电商系统，目前在完成后端的编码，已经使用了mysql，mybatis，Swagger-UI，redis缓存，SpringSecurity+JWT认证和授权。商城项目由于比较复杂，目前开发停止了。
 
   项目链接：https://github.com/dlagez/mall
+
+### wiki项目
+
+2021-10~至今  
+
+- **项目描述** : WIKI知识库系统,前端：vue3, 后端使用springboot，具体介绍可以去github查看。
+
+  项目链接：https://github.com/dlagez/wiki
+
+## 实习经历 dxc techology
+
+2021-10~至今   
+
+**实习工作**：
+
+- 由于公司业务需求，负责数据库的迁移， oracle 转 sqlserver，源代码是spark，主要编写spark代码转sql存储过程的代码。主要的收获是其中sqlserver中没有oracle的一些函数需要自己编写，时间格式的转换，坏数据的处理，以及代码逻辑的转换。
+- vue的学习，vue的项目我没有support，帮我领导看一下代码，讨论解决一些bug。并且尝试在开发一些模块中了解项目。
 
 ## 个人评价
 
