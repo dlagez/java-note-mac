@@ -88,5 +88,6 @@ chmod -R 777 的
 
 ```
 !tar -zcvf images.tar.gz /content/PyTorch-GAN/implementations/acgan/images
+!unrar x /content/anime-WGAN-resnet-pytorch/data/faces.rar
 ```
 
