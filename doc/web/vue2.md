@@ -16,9 +16,10 @@ npm相关命令：
 npm list -g --dept 0 // 查看安装的插件
 npm ls  // 查看本地的c
 npm install --registry=https://registry.npm.taobao.org
+
+npm config get registry  // 查看npm当前镜像源
+npm config set registry https://registry.npm.taobao.org/  // 设置源
 ```
-
-
 
 ## 指令：
 

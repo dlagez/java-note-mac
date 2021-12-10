@@ -1,5 +1,19 @@
 默认用户名：postgres 密码password
 
+进入到plsql数据库：
+
+```
+psql -U 用户名 -d 数据库名
+```
+
+执行sql文件
+
+```
+ \i /temp.sql
+```
+
+
+
 ### 创建数据库
 
 ```sql
