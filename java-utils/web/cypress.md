@@ -83,3 +83,34 @@ Assert the input reflects the new value
 注意事项：
 
 我们的测试跨越了两个页面，在第二个页面没有加载完成之前，测试代码会停止运行
+
+### `cy.intercept(url)`
+
+它用来发送请求的。
+
+```js
+// spying
+cy.intercept('/users/**')
+cy.intercept('GET', '/users*')
+cy.intercept({
+  method: 'GET',
+  url: '/users*',
+  hostname: 'localhost',
+})
+
+// spying and response stubbing
+cy.intercept('POST', '/users*', {
+  statusCode: 201,
+  body: {
+    name: 'Peter Pan',
+  },
+})
+
+// spying, dynamic stubbing, request modification, etc.
+cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
+  /* do something with request and/or response */
+})
+```
+
+.get() 元素选择器
+
