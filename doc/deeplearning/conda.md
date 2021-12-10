@@ -43,3 +43,10 @@ python -m ipykernel install --name bigdata --display-name "bigdata"
 ```
 
 - `--display-name`指定jupyter notebook中显示的名字
+
+升级包
+
+```
+onda update package
+```
+
