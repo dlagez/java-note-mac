@@ -114,3 +114,34 @@ cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
 
 .get() 元素选择器
 
+如果是静态数据，可以直接根据css，button的类型，以及id查询。
+
+如：css
+
+```
+cy.get('.v-textarea textarea').first().type('zyang43@dxc.com')
+```
+
+button
+
+```
+cy.get('button[type=submit]').first().click()
+```
+
+如果是从服务器动态获取的数据，首先需要使用`wait`等待数据请求和html的渲染。
+
+```
+cy.wait(1000) 
+```
+
+然后使用相对位置来获取元素。比如我请求后端的元素会放在tbody中，我可以先获取tbody，然后获取第一个tr即可。
+
+```
+    cy.get('.v-data-table')
+        .find('tbody').first()
+        .find('tr').first()
+        .find('td').last().within(() => {
+          cy.get('button[type=button]').click({force: true})
+        })
+```
+
