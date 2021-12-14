@@ -55,6 +55,8 @@ sudo ufw delete allow 80 # 关闭防火墙
 sudo lsof -i:端口号
 ```
 
+## 文件操作
+
 ### 设置文件夹权限
 
 解释一下，其实整个命令的形式是
@@ -91,3 +93,8 @@ chmod -R 777 的
 !unrar x /content/anime-WGAN-resnet-pytorch/data/faces.rar
 ```
 
+### 查看文件夹下面的文件的数量
+
+```
+ls -l /content/gan_resnet/data/faces | grep "^-" | wc -l
+```
