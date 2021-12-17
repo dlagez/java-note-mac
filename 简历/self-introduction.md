@@ -16,4 +16,12 @@ to be honset, I'am not famaily with RPA, so I got some information about RPA bef
 - 或许他用的是别名：Maybe he used an alias
 - 我懂你的意思了：I see what you mean
 - personally speaking it is easier to learn
+- 我的听力可能会比我的口语好。My listening may be better than my oral English
+- 我经常在youtub上看视频I often watch videos about oral English on YouTube
+- I'm sorry, Please wait a moment
+- See you． 再见。
+-  I see． 我明白了。
+- I agree。 我同意。
+- what country are you come from. 
+- can you hear me 你可以听见我说话吗。yes, I can hear you
 

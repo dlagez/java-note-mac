@@ -27,7 +27,7 @@ exec -it sqlserver "bash"
 // can't into 
 docker exec -it sqlserver /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Dlagez3133..
 
-登录名是：sa 密码password
+登录名是：sa 密码Dlagez3133..
 ```
 
 
