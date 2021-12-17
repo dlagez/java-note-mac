@@ -2,6 +2,7 @@
 
 ```
 sudo xattr -cr /Volumes/roczhang/download/V2RayX.app
+sudo xattr -cr /Applications/V2RayX.app
 ```
 
 安装pytorch：

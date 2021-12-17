@@ -146,5 +146,23 @@ git push origin testing
 
 
 
+图床使用token
 
+```
+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
+```
+
+
+
+加速：gh表示github，dlagez表示你的账户名，img表示仓库名。
+
+```
+https://cdn.jsdelivr.net/gh/dlagez/img@master
+```
+
+typora命令：
+
+```
+/usr/local/bin/node /usr/local/bin/picgo upload
+```
 

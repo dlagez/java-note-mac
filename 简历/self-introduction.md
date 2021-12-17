@@ -15,5 +15,5 @@ to be honset, I'am not famaily with RPA, so I got some information about RPA bef
 - 我的同事曾经和你一起工作过：My colleague has worked with you before，he name is lixiang, do you remember he
 - 或许他用的是别名：Maybe he used an alias
 - 我懂你的意思了：I see what you mean
-- 
+- personally speaking it is easier to learn
 

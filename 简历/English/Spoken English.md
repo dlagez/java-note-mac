@@ -31,3 +31,27 @@ it's too early now, I haven't graduated. but i have a girlfriend. i've planned t
 - personally speaking
 - as far as i'm concerned 
 - in my opinion 
+
+## strategy for continuing an english conversation
+
+我同意你的说法：i agree 100
+
+that's a nice dress you're waring today!
+
+Did you get a new haircut? that looks good on you!
+
+this is a nice way to make the other person maybe to spend more time with you 
+
+给我们留言，让我们知道 leave us a comment and let us know
+
+practice in a place where you fell more confortable maybe if you hava some private space to practice, just repeat them get your mouth used to saying the words the way that the native speakers do.
+
+when you listen to native speakers try to repeat after them
+
+
+
+给我这么说：can you give me that, Can you give that to me. can you pass that to me
+
+The reason we feel give me or gimme is a little bit rude is because it's a demand, not a request.
+
+对你的同事说是不礼貌的：it's impolite to say to your equal. And it's more impolite to say to your superior.
