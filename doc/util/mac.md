@@ -10,3 +10,6 @@ sudo xattr -cr /Applications/V2RayX.app
 ```
 conda install -c pytorch pytorch
 ```
+
+### rar解压
+

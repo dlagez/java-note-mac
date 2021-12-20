@@ -166,3 +166,9 @@ typora命令：
 /usr/local/bin/node /usr/local/bin/picgo upload
 ```
 
+cdn 加速
+
+```
+https://cdn.jsdelivr.net/gh/dlagez/img@master
+```
+
