@@ -72,23 +72,29 @@ https://scikit-learn.org/stable/auto_examples/inspection/plot_partial_dependence
 
 
 
-# 优化方法
+参考：
 
-核偏最小二乘方法：
+波士顿房价预测：
 
-A Kernel-Based Multivariate Feature Selection Method for Microarray Data Classification 这个摘要写的值的借鉴。
+- https://www.zhihu.com/question/39792141
+- https://www.cnblogs.com/wish-together/p/14764148.html
 
-高维和小样本量及其固有的过度拟合风险，对在微阵列数据分类中构建高效分类器提出了巨大挑战。因此，应在数据分类之前进行特征选择技术以提高预测性能。一般来说，过滤方法可以被认为是主要或辅助选择机制，因为它们的简单性、可扩展性和低计算复杂度。然而，一系列简单的例子表明，过滤方法会导致不太准确的性能，因为它们忽略了特征的依赖关系。尽管很少有出版物专注于通过基于多元的方法揭示特征之间的关系，但这些方法仅通过线性方法描述特征之间的关系。而简单的线性组合关系限制了性能的提升。在本文中，我们使用核方法来发现特征之间以及特征与目标之间的内在非线性相关性。此外，正交分量的数量由内核 Fishers 线性判别分析 (FLDA) 以自适应方式确定，而不是通过手动参数设置。为了揭示我们方法的有效性，我们进行了多次实验，并比较了我们的方法与其他竞争性多变量特征选择器之间的结果。在我们的比较中，我们在两个组数据集上使用了两个分类器（支持向量机、k-最近邻），即两类和多类数据集。实验结果表明，我们的方法的性能优于其他方法，尤其是在三个硬分类数据集上，即王氏乳腺癌、戈登肺腺癌和 Pomeroy 髓母细胞瘤。
+癌症预测：
 
-Extraction Using T-Test Statistics and Kernel Partial Least Squares
+Prediction of breast cancer malignancy using an artificial neural network
 
-在本文中，我们提出了一种基因提取方法，它结合使用两种标准特征提取方法，即 T 检验方法和核偏最小二乘法 (KPLS)。 首先，基于 T 检验方法的预处理步骤用于过滤不相关和嘈杂的基因。 然后使用 KPLS 提取具有高信息量的特征。 最后，提取的特征被送入分类器。 实验在三个基准数据集上进行：乳腺癌、ALL/AML 白血病和结肠癌。 虽然使用 T-test 方法或 KPLS 都不能产生令人满意的结果，但实验结果表明，将这两者结合使用可以显着提高分类精度，并且这种简单的组合可以在所有方面获得最先进的性能。 三个数据集。
+- https://acsjournals.onlinelibrary.wiley.com/doi/abs/10.1002/1097-0142(19941201)74:11%3C2944::AID-CNCR2820741109%3E3.0.CO;2-F
 
-**Simultaneous Dimensionality Reduction and Human Age Estimation via Kernel Partial Least Squares Regression**
+我觉得查论文的方法是有问题的，应该查分子描述对蛋白质结构的预测。而不是癌症的预测，癌症的预测太大了，有用x光预测等等，不是用的分子描述符号。
 
-由于现实中的许多潜在应用，人类年龄估计最近已成为计算机视觉和模式识别领域的一个活跃研究课题。在本文中，我们建议使用核偏最小二乘 (KPLS) 回归进行年龄估计。 KPLS（或线性 PLS）方法与以前的方法相比有几个优点：（1）KPLS 可以在单个学习框架中降低特征维数并同时学习老化函数，而不是单独执行每个任务使用不同的技术； (2) KPLS可以找到少量的潜在变量，例如20个，将数千个特征投影到一个非常低维的子空间中，这可能对实时应用有很大影响； (3) KPLS 回归有一个输出向量，可以包含多个标签，因此可以一起解决几个相关问题，例如年龄估计、性别分类和种族估计。这是首次引入并应用核 PLS 方法以高精度解决计算机视觉中的回归问题。在一个非常大的数据库上的实验结果表明，KPLS 明显优于流行的 SVM 方法，并且在人类年龄估计方面优于最先进的方法。
+搜索关键词：Molecular descriptor nureal network prediction
 
-A Kernel Partial Least Square Based Feature Selection Method
+物理性质预测：
 
-最大相关性和最小冗余（mRMR）已被公认为最好的特征选择方法之一。 本文提出了一种基于核偏最小二乘 (KPLS) 的 mRMR 方法，旨在简化计算并提高高维数据的分类精度。 已经在七个不同维度和实例数量的真实数据集上进行了这种方法的实验，并在四个不同的分类器上测量了性能：朴素贝叶斯、线性判别分析、随机森林和支持向量机。 实验结果显示了所提出的方法优于几种竞争特征选择技术的优势。
+- https://www.sciencedirect.com/science/article/abs/pii/S0169409X03001170
 
+
+
+预测ic50
+
+https://pubs.acs.org/doi/abs/10.1021/ci990125r

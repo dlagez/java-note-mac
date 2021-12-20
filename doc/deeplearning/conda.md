@@ -47,6 +47,6 @@ python -m ipykernel install --name bigdata --display-name "bigdata"
 升级包
 
 ```
-onda update package
+conda update package
 ```
 
