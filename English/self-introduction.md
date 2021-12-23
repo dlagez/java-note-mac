@@ -1,6 +1,6 @@
 Please allow me to introduce myself  让我介绍我自己
 
-Currently I am a graduate student in China，My major is Electronic information，I am now engaged in java development。there are many techs java developer needed to study，such as Java Foundation，git，front end，database, etc.`[ˌet ˈsetərə]` ,
+Currently I am a graduate student in WuHan，My major is Electronic information，I am now engaged in java development。there are many techs java developer needed to study，such as Java Foundation，git，front end，database, etc.`[ˌet ˈsetərə]` ,
 
 to be honset, I'am not famaily with RPA, so I got some information about RPA before this exchange,  I don't think RPA is very difficult to learn after I know a little about it.
 
