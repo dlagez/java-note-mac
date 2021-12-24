@@ -3,6 +3,7 @@
 - 张鹏/男/1998/湖北武汉/英语四级
 - 手机：17607127124，邮箱：mr.roczhang@outlook.com
 - Github：[https://github.com/dlagez](https://github.com/dlagez)
+- 博客链接（访问量40000左右）：https://blog.csdn.net/zphuangtang
 
 ## 求职意向
 
@@ -72,7 +73,8 @@
 **实习工作**：
 
 - 由于公司业务需求，负责数据库的迁移， oracle 转 sqlserver，源代码是spark，主要编写spark代码转sql存储过程的代码。主要的收获是其中sqlserver中没有oracle的一些函数需要自己编写，时间格式的转换，坏数据的处理，以及代码逻辑的转换。
-- vue的学习，vue的项目我没有support，帮我领导看一下代码，讨论解决一些bug。并且尝试在开发一些模块中了解项目。
+- vue的学习，vpc的项目我没有support，帮我领导看一下代码，讨论解决一些bug。并且尝试在开发一些模块中了解项目。
+- 编写cypress的测试代码，由于项目开发完成之后需要测试，所以我需要完成一些模块的流程测试。
 
 ## 个人评价
 
