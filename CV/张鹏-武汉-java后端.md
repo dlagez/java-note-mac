@@ -19,14 +19,14 @@
 
 ## 技能清单
 
-- **计算机基础** ：掌握数据结构和算法，熟悉操作系统、计网。
-- **Linux** : 熟练使用 Linux（大学使用centos三年，研究生使用ubuntu一年）。
+- **计算机基础** ：掌握数据结构（数组、链表、二叉树等...）和算法（排序、查找）。
+- **Linux** : 熟练使用 Linux（大学使用centos三年，研究生使用ubuntu两年）。
 - **Java**：熟练掌握 Java 基础知识：集合：ArrayList、HashMap等，IO。熟悉：多线程、锁、线程安全、网络通信。
 - **常用的算法**：数组(双指针、滑动窗口)、链表(合并链表，链表中点)、二叉树(前中后序遍历、翻转)等相关的算法。快速排序、二分查找等等。
 - **JVM**：熟悉JVM体系、类加载过程、GC。
 - **数据库**：熟练掌握增删改查、索引、存储过程开发、事务等。熟悉reids的使用。
-- **框架**：使用过MyBatis、 SpringBoot等主流开发框架
-- **工具**：熟练掌握 Git(分支、合并、多人合作)、Maven、Docker、tomcat
+- **框架**：使用过MyBatis、 SpringBoot、等主流开发框架
+- **工具**：熟练掌握 Git(分支、合并、多人合作)、Maven、tomcat、Docker
 - **前端**：熟悉 Html、JavaScript ，有 semantic-ui、bootstrap 、vue的开发经验
 - **其他语言**：熟悉python，完成过基于神经网络的图像分类和目标识别，网络爬虫等等。
 
@@ -53,7 +53,7 @@
 
 2021-08~至今  
 
-- **项目描述** : 一套电商系统，目前在完成后端的编码，已经使用了mysql，mybatis，Swagger-UI，redis缓存，SpringSecurity+JWT认证和授权。商城项目由于比较复杂，目前开发停止了。
+- **项目描述** : 一套电商系统，目前在完成后端的编码，已经使用了mysql，mybatis，Swagger-UI，redis缓存，SpringSecurity+JWT认证和授权。商城项目由于比较复杂，只开发了登陆模块之后停止了。
 
   项目链接：https://github.com/dlagez/mall
 
