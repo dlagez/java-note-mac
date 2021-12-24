@@ -163,7 +163,8 @@ https://cdn.jsdelivr.net/gh/dlagez/img@master
 typora命令：
 
 ```
-/usr/local/bin/node /usr/local/bin/picgo upload
+mac-- /usr/local/bin/node /usr/local/bin/picgo upload
+win-- picgo upload
 ```
 
 cdn 加速
