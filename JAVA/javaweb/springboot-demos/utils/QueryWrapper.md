@@ -42,7 +42,7 @@ public UmsAdmin getAdminByUsername(String username) {
 
 它的类图：
 
-![image-20210926140055375](QueryWrapper.assets/image-20210926140055375.png)
+
 
 wapper介绍 ：
 

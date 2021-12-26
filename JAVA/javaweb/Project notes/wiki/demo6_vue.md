@@ -378,4 +378,3 @@ export default {
 
 看起来像这个样子
 
-![image-20211122204334868](demo6_vue.assets/image-20211122204334868.png)
