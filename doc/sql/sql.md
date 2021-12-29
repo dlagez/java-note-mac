@@ -1,8 +1,9 @@
 ## 表操作
 
+查看表结构。
+
 ```
 DESCRIBE Customers;     # structure of a table
-
 ```
 
 ### 创建表
