@@ -76,3 +76,22 @@ for file in file_list:
             print(paragraph.text + '\n')
 ```
 
+
+
+将二维list写入文件
+
+```python
+output = open('/Volumes/roczhang/WHPU/zen/result.txt', 'w')
+for i in range(len(result)):
+    output.write('第' + str(i) + '篇文章!' + '\n')  # 在每篇（每一行开始的时候做一个标记）
+    for j in range(len(result[i])):
+        # print(result[i][j])
+        output.write(str(result[i][j]))  # 写入一行数据
+        output.write(' ')
+    output.write('\n\n')  # 每写完一行数据之后按两次回撤键
+output.close()
+```
+
+效果是这样的
+
+![image-20220107162556713](https://cdn.jsdelivr.net/gh/dlagez/img@master/image-20220107162556713.png)
