@@ -55,8 +55,6 @@ sudo ufw delete allow 80 # 关闭防火墙
 sudo lsof -i:端口号
 ```
 
-## 文件操作
-
 ### 设置文件夹权限
 
 解释一下，其实整个命令的形式是
@@ -91,6 +89,7 @@ chmod -R 777 的
 ```
 !tar -zcvf images.tar.gz /content/PyTorch-GAN/implementations/acgan/images
 !unrar x /content/anime-WGAN-resnet-pytorch/data/faces.rar
+jar -xvf game.war # 解压war包
 ```
 
 ### 查看文件夹下面的文件的数量
@@ -98,3 +97,79 @@ chmod -R 777 的
 ```
 ls -l /content/gan_resnet/data/faces | grep "^-" | wc -l
 ```
+
+### 用户操作
+
+```
+su root # 切换用户
+```
+
+### apt使用
+
+```
+sudo apt-cache search java
+sudo apt list | grep tomcat
+sudo apt-get install java
+sudo apt-get remove java
+sudo apt-get purge XXX  # 卸载软件并删除配置文件
+sudo apt-get autoremove  # 卸载软件并卸载不需要的包
+```
+
+### 软件下载
+
+#### mysql 
+
+腾讯云服务器远程可以登陆：用户：root 密码：password
+
+```
+sudo apt-get install mysql-server
+
+sudo service mysql restart / sudo systemctl restart mysql
+sudo netstat -tap|grep mysql # 查看m是否在运行
+cd /etc/mysql
+sudo cat debian.cnf # 即可查看初始用户名和密码
+# debian-sys-maint JEuTuNNkEiZGGnMU
+
+# 在mysql里面执行
+alter user 'root'@'localhost' identified by 'Dlagez3133..'; #修改root用户的密码
+select user,host,plugin from user; # 可以查看用户的权限情况
+RENAME USER 'root'@'localhost' TO 'root'@'%';  # 改成「%」才能全局访问
+sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf  # 修改 my.cnf MySQL 配置文件 
+#  改成这个样子即可 bind - address = 0.0.0.0
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+sudo ufw allow 3306 # 开启防火墙
+```
+
+#### jdk
+
+```
+sudo apt install openjdk-11-jdk  # java --version 即可查看
+```
+
+#### tomcat
+
+```
+sudo apt install tomcat9
+sudo service tomcat9 start
+sudo service tomcat6 stop
+Tomcat home directory : /usr/share/tomcat6
+Tomcat base directory : /var/lib/tomcat6或/etc/tomcat6
+
+/etc/tomcat6 - 全局配置?
+/usr/share/tomcat6/ - 程序主目录?
+/var/lib/ tomcat6/ - 工作主目录? http应在在这里配置
+
+sudo vim /etc/tomcat9/server.xml  # x
+```
+
+
+
+### 防火墙
+
+tenxun云的防火墙和ubuntu里面的ufw是两个防火墙。
+
+```
+sudo ufw allow 3306
+sudo ufw deny 25
+```
+
