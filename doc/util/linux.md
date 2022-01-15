@@ -173,3 +173,28 @@ sudo ufw allow 3306
 sudo ufw deny 25
 ```
 
+
+
+### 后台运行程序
+
+nohup表示后台运行，>log.txt表示输出到这个文件，不在窗口输出。
+
+```
+nohup java -jar blog-0.0.1-SNAPSHOT.jar >log.txt &
+```
+
+想把它停止的话，查找它的进程号即可
+
+```
+ps -ef|grep xxx.jar
+或者 ps -aux | grep java
+```
+
+查找的结果：
+
+```
+ubuntu@VM-16-10-ubuntu:/roczhang/app$ ps -ef | grep blog-0.0.1-SNAPSHOT.jar 
+ubuntu    416681  415467  6 00:07 pts/0    00:00:20 java -jar blog-0.0.1-SNAPSHOT.jar
+ubuntu    417798  415467  0 00:12 pts/0    00:00:00 grep --color=auto blog-0.0.1-SNAPSHOT.jar
+```
+
