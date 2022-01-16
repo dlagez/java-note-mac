@@ -217,3 +217,203 @@
 效果
 
 ![image-20220115234847620](https://cdn.jsdelivr.net/gh/dlagez/img@master/image-20220115234847620.png)
+
+
+
+### 容器的使用：
+
+```html
+<body>
+<!--普通容器-->
+<div class="ui container">
+    <p>测试测试测试测试测试测试测试测测试测试测试测试测试测试测试测试
+        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试</p>
+</div>
+<!--文字容器，它会凸显文字，文字会比普通文字大，且居中-->
+<div class="ui text container">
+    <p>测试测试测试测试测试测试测试测测试测试测试测试测试测试测试测试
+        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试</p>
+</div>
+<!-- 左右没有边距 -->
+<div class="ui fluid container">
+    <p>测试测试测试测试测试测试测试测测试测试测试测试测试测试测试测试
+        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+        测试测试测试测试测试测试测试测测试测试测试测试测试测试测试测试
+        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试</p>
+</div>
+<!--文字居左显示-->
+<div class="ui right aligned container">
+    <p>测试测试测试测试测试测试测试测测试测试测试测试测试测试测试测试
+        测试测试测试测试测试测试测试测</p>
+</div>
+<!--文字居右显示-->
+<div class="ui left aligned container">
+    <p>测试测试测试测试测试测试测试测测试测试测试测试测试测试测试测试
+        测试测试测试测试测试测试测试测</p>
+</div>
+<!--文字居中显示-->
+<div class="ui center aligned container">
+    <p>测试测试测试测试测试测试测试测测试测试测试测试测试测试测试测试
+        测试测试测试测试测试测试测试测</p>
+</div>
+</body>
+```
+
+效果：
+
+![image-20220116120357469](https://cdn.jsdelivr.net/gh/dlagez/img@master/image-20220116120357469.png)
+
+
+
+
+
+### 输入框
+
+```html
+<body>
+<!--普通容器-->
+<div class="ui input">
+    <input type="text" placeholder="标准输入框">
+</div>
+<br>
+<div class="ui focus input">
+    <input type="text" placeholder="标准输入框">
+</div>
+<div class="ui disabled input">
+    <input type="text" placeholder="标准输入框">
+</div>
+<br>
+<div class="ui transparent input">
+    <input type="text" placeholder="标准输入框">
+</div>
+<br>
+<div class="ui mini input">
+    <input type="text" placeholder="标准输入框">
+</div>
+<br>
+<div class="ui small input">
+    <input type="text" placeholder="标准输入框">
+</div>
+<br>
+<div class="ui large input">
+    <input type="text" placeholder="标准输入框">
+</div>
+
+</body>
+```
+
+效果：
+
+![image-20220116121436984](https://cdn.jsdelivr.net/gh/dlagez/img@master/image-20220116121436984.png)
+
+### 组合输入框
+
+```html
+<div class="ui error input">
+    <input type="text" placeholder="错误">
+</div>
+<!--带图标的输入框-->
+<div class="ui icon input">
+    <input type="text" placeholder="账号">
+    <i class="user icon"></i>
+</div>
+
+<div class="ui left icon input">
+    <i class="lock icon"></i>
+    <input type="text" placeholder="密码">
+</div>
+
+<div class="ui icon loading input">
+    <input type="text" placeholder="搜索">
+</div>
+
+<div class="ui labeled input">
+    <label for="amount" class="ui label">数量</label>
+    <input type="text" placeholder="0.00">
+</div>
+
+<!--label相当于和input输入框并排显示-->
+<div class="ui right labeled input">
+    <div class="ui label">数量</div>
+    <input type="text" id="1" placeholder="0.00">
+    <label for="1" class="ui label">0.00</label>
+</div>
+<!--label的for指向input的id，绑定了关系，点击label，会聚焦到input输入框里面
+ i标签会显示再input输入框里面-->
+<div class="ui left icon right labeled input">
+    <i class="tags icon"></i>
+    <input type="text" id="name" placeholder="标签">
+    <label for="name" class="ui label">标签</label>
+</div>
+
+<!--这里button是按钮，和上面的label不同-->
+<div class="ui action input">
+    <input type="text" placeholder="搜索">
+    <button class="ui button">搜索</button>
+</div>
+```
+
+效果：
+
+![image-20220116130905292](https://cdn.jsdelivr.net/gh/dlagez/img@master/image-20220116130905292.png)
+
+
+
+### 图片：
+
+标准图片如果比较大，会占满容器直到显示器真实大小。我们也可以控制图片显示的大小。
+
+```html
+<!--圆形显示-->
+<img src="/images/wechat.jpg" alt="" class="ui circular small image">
+
+<!--圆角显示-->
+<img src="/images/wechat.jpg" alt="" class="ui rounded image">
+
+<!--占满整个容器的图像，会随浏览器放大缩小-->
+<img src="/images/wechat.jpg" alt="" class="ui fluid image">
+
+
+<!--头像形式的图片-->
+<img src="/images/wechat.jpg" alt="" class="ui avatar image">
+<!--链接样式的图标-->
+<a href="https://baidu.com" class="ui tiny image">
+    <img src="/images/wechat.jpg" alt="">
+</a>
+
+<img src="/images/wechat.jpg" alt="" class="ui large image">
+<br>
+<img src="/images/wechat.jpg" alt="" class="ui small image">
+<br>
+<img src="/images/wechat.jpg" alt="" class="ui tiny image">
+<br>
+<!--原始大小-->
+<img src="/images/wechat.jpg" alt="" class="ui image">
+```
+
+图片比较大，就不放效果图了。
+
+### 标题
+
+两种写法都可以
+
+```html
+    <h1 class="ui header">H1</h1>
+    <h2 class="ui header">H1</h2>
+    <h3 class="ui header">H1</h3>
+
+    <br><br>
+
+    <div class="ui tiny header">tiny</div>
+    <div class="ui small header">small</div>
+    <div class="ui large header">large</div>
+```
+
+组合写法
+
+
+

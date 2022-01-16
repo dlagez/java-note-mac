@@ -1,3 +1,11 @@
+### linux查找命令
+
+```
+ps -aux|grep redis  # 查询进程号
+```
+
+
+
 ### vim查找关键字
 
 可在normal模式下直接按“/”进入查找模式，输入要查找的字符并按下回车，vim会跳到第一个匹配的位置。
@@ -160,6 +168,31 @@ Tomcat base directory : /var/lib/tomcat6或/etc/tomcat6
 /var/lib/ tomcat6/ - 工作主目录? http应在在这里配置
 
 sudo vim /etc/tomcat9/server.xml  # x
+```
+
+#### redis
+
+```
+sudo apt install redis-server
+ps -aux|grep redis
+netstat -nlt|grep 6379 # 命令可以看到redis服务器状态
+sudo /etc/init.d/redis-server status  # 命令可以看到Redis服务器状态
+sudo service redis-server restart
+配置文件为/etc/redis/redis.conf(在线安装推荐)
+
+首先sudo vi /etc/redis/redis.conf
+添加Redis的访问账号
+Redis服务器默认是不需要密码的，假设设置密码为hzlarm。
+去掉requirepass 前面的注释#，在后面添加密码
+requirepass hzlarm
+
+开启Redis的远程连接
+注释掉绑定地址#bind 127.0.0.1
+
+修改Redis的默认端口
+port 6379
+
+redis-cli k
 ```
 
 
