@@ -39,7 +39,11 @@
 
 
 
-示例：
+## npm使用
+
+
+
+## 示例：
 
 ![image-20220115224651953](https://cdn.jsdelivr.net/gh/dlagez/img@master/image-20220115224651953.png)
 
