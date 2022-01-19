@@ -1,6 +1,10 @@
 ### create a project
 
 ```
+vue create blog
+```
+
+```
 Vue CLI v4.5.15
 ? Please pick a preset:
   Default ([Vue 2] babel, eslint)
@@ -11,12 +15,12 @@ Vue CLI v4.5.15
 ```
 Vue CLI v4.5.15
 ? Please pick a preset: Manually select features
-? Check the features needed for your project: (Press <space> to select, <a> to toggle all, <i> to invert selection)
->(*) Choose Vue version
+? Check the features needed for your project:
+ (*) Choose Vue version
  (*) Babel
  ( ) TypeScript
  ( ) Progressive Web App (PWA) Support
- (*) Router
+>(*) Router
  (*) Vuex
  ( ) CSS Pre-processors
  ( ) Linter / Formatter
@@ -29,50 +33,81 @@ Vue CLI v4.5.15
 - `Progressive Web App (PWA) Support `一是给项目添加一些webapp支持
 
 ```
+选择3.x即可
+```
+
+```
 Vue CLI v4.5.15
 ? Please pick a preset: Manually select features
-? Check the features needed for your project: Choose Vue version, Babel, Router, Vuex, CSS Pre-processors
+? Check the features needed for your project: Choose Vue version, Babel, Router, Vuex
 ? Choose a version of Vue.js that you want to start the project with 3.x
-? Use history mode for router? (Requires proper server setup for index fallback in production) (Y/n) n
+? Use history mode for router? (Requires proper server setup for index fallback in production) (Y/n) y
 ```
 
 
 
+这个就是选择Babel, ESLint, etc.配置文件位置，分开还是一起在package.json里面配置。两个都差不多。这里选择第一个。
+
+```
+Vue CLI v4.5.15
+? Please pick a preset: Manually select features
+? Check the features needed for your project: Choose Vue version, Babel, Router, Vuex
+? Choose a version of Vue.js that you want to start the project with 3.x
+? Use history mode for router? (Requires proper server setup for index fallback in production) Yes
+? Where do you prefer placing config for Babel, ESLint, etc.? (Use arrow keys)
+> In dedicated config files
+  In package.json
+```
 
 
-指令：
 
-- v-bind  将这个元素节点的 `title` attribute 和当前活跃实例的 `message` property 保持一致，它一般与默认属性一起使用，比如：`v-bind:id`
+最后就是是否保存这个模板。选择no即可。
+
+```
+Vue CLI v4.5.15
+? Please pick a preset: Manually select features
+? Check the features needed for your project: Choose Vue version, Babel, Router, Vuex
+? Choose a version of Vue.js that you want to start the project with 3.x
+? Use history mode for router? (Requires proper server setup for index fallback in production) Yes
+? Where do you prefer placing config for Babel, ESLint, etc.? In dedicated config files
+? Save this as a preset for future projects? (y/N) n
+```
 
 
 
-语法：Skf12345
+添加包：
 
-取消了data，method等函数。使用setup() 替代。数据需要return出去才能再页面渲染。
+在项目里面使用下面命令
+
+```
+npm install element-plus --save
+```
+
+并在main.js里面添加如下的代码
 
 ```js
-export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  },
-  setup() {
-    console.log('setup')
-    const ebooks = ref()  // 使用ref实现数据的绑定
-    // 在这里写函数会在页面渲染完之后再执行。可能会拿到数据比较晚会出问题。比如操作数据会出错，因为数据还没有拿到。
-    onMounted(() => {
-      axios.get("http://localhost:8088/ebookLikeReq?name=vue").then((response) => {
-        const data = response.data
-        ebooks.value = response.data.content
-        console.log(response)
-      });
-    })
-    return {
-      ebooks
-    }
-  }
-}
-</script>
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
+import store from './store'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+
+createApp(App).use(store).use(router).use(ElementPlus).mount('#app')
 ```
 
-使用 {} 定义一个对象。
+router：
+
+配置按需加载。
+
+```
+  {
+    path: '/about',
+    name: 'About',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  }
+```
+
