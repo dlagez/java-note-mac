@@ -204,6 +204,7 @@ tenxun云的防火墙和ubuntu里面的ufw是两个防火墙。
 ```
 sudo ufw allow 3306
 sudo ufw deny 25
+sudo ufw status verbose
 ```
 
 

@@ -8,7 +8,7 @@ public UserVO get(@RequestParam("id") Integer id) {
 }
 ```
 
-#### @PathVariable
+### @PathVariable
 
 ```java
 浏览器访问：http://localhost:8080/user/3
@@ -18,7 +18,9 @@ public UserVO get(@PathVariable("id") Integer id) {
 }
 ```
 
-### @RequestBody 前端提交的数据使用json格式，必须使用这个注解
+### @RequestBody 
+
+前端提交的数据使用json格式，必须使用这个注解
 
 ```
 @PostMapping("/ebook/save")
@@ -57,5 +59,17 @@ public CommonResp save(@RequestBody EbookSaveReq req) {
 public void fillData(Model model) {
     model.addAttribute("test", "test_value");
 }
+```
+
+
+
+### 获取uri和ip
+
+```java
+ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+HttpServletRequest request = requestAttributes.getRequest();
+request.getRemoteAddr() # 获取ip 127.0.0.1
+request.getRequestURI() # 获取URI  /blog/1
+request.getMethod();  # 获取访问方法名 http://1
 ```
 
