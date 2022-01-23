@@ -97,6 +97,12 @@ git commit --amend -m 'ad'
 git rm -r --cached src/
 ```
 
+使用了amend，推送不上去，这句话执行的后果就是在远程仓库中进行的相关修改会被删除，使远程仓库回到你本地仓库未修改之前的那个版本，   然后上传你基于本地仓库的修改。
+
+```
+git push -u origin master -f
+```
+
 
 
 ### 查看修改
@@ -172,4 +178,8 @@ cdn 加速
 ```
 https://cdn.jsdelivr.net/gh/dlagez/img@master
 ```
+
+
+
+
 

@@ -1,5 +1,7 @@
 merge a
 
+### fold txt to merged txt
+
 将一个文件夹的txt文本合并到一个文本里面。code
 
 ```python
@@ -16,13 +18,12 @@ f.close()
 
 
 
+### list to txt
+
 把列表以txt形式的保存与读取.[code](https://github.com/dlagez/bigdata/blob/master/demo3_/test.py)
 
 ```python
-key_list = ['环境保护', '环保', '污染', '生态', '生态环境', '生态文明', '污染', '减排', '排污', '能耗', '水耗', '污水处理', '污水治理', '污染防治', '节水',
-            '水土保持', '再利用', '节能', '节约', '可持续发展', '新能源', '低碳', '绿色', '绿化', '绿色发展', '空气', '饮水安全', '水质', '化学需氧量', '氨氮',
-            '二氧化硫', '二氧化碳', 'PM10', 'PM2.5', '自然资源', '土地资源', '耕地', '水资源', '矿山', '森林', '海洋', '草原', '土壤', '蓝天', '碧水',
-            '净土', '农业面污染防治', '自然资源资产离任审计', '自然资源资产负债表', '河长制', '湖长制', '中央环境保护督察']
+key_list = ['环境保护', '环保']
 
 with open('/Volumes/roczhang/temp/list.txt', 'w') as f:
     for i in key_list:
@@ -42,7 +43,15 @@ for line in lines:
 
 
 
-word to txt
+{} dict to txt
+
+```
+
+```
+
+
+
+### word to txt
 
 把一个文件夹的word文档转换成相应的txt文件。只会读取文字。[code](https://github.com/dlagez/bigdata/blob/master/demo3_/word_to_txt.py)
 
@@ -78,6 +87,8 @@ for file in file_list:
 
 
 
+### 二维list to txt
+
 将二维list写入文件
 
 ```python
@@ -95,3 +106,43 @@ output.close()
 效果是这样的
 
 ![image-20220107162556713](https://cdn.jsdelivr.net/gh/dlagez/img@master/image-20220107162556713.png)
+
+### list 统计元素个数
+
+```
+from collections import Counter
+a = [1, 2, 3, 1, 1, 2]
+result = Counter(a)
+```
+
+
+
+### {} sorted
+
+按照key排序
+
+```
+my_dict = {'lilee':25, 'age':24, 'phone':12}
+sorted(my_dict.keys())
+输出结果为
+
+['age', 'lilee', 'phone']
+```
+
+key使用lambda匿名函数取value进行排序
+
+```
+
+d = {'lilee':25, 'wangyan':21, 'liqun':32, 'age':19}
+sorted(d.items(), key=lambda item:item[1])
+输出结果为
+
+[('age',19),('wangyan',21),('lilee',25),('liqun',32)]
+如果需要倒序则
+
+sorted(d.items(), key=lambda item:item[1], reverse=True)
+得到的结果就会是
+
+[('liqun',32),('lilee',25),('wangyan',21),('age',19)]
+```
+

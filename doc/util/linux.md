@@ -215,6 +215,8 @@ nohup表示后台运行，>log.txt表示输出到这个文件，不在窗口输�
 
 ```
 nohup java -jar blog-0.0.1-SNAPSHOT.jar >log.txt &
+// s
+nohup java -jar blog-0.0.1-SNAPSHOT.jar &
 ```
 
 想把它停止的话，查找它的进程号即可
@@ -222,6 +224,7 @@ nohup java -jar blog-0.0.1-SNAPSHOT.jar >log.txt &
 ```
 ps -ef|grep xxx.jar
 或者 ps -aux | grep java
+kill -9 1972459
 ```
 
 查找的结果：

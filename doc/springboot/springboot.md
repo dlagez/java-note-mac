@@ -26,3 +26,13 @@ test.hello=Hello4
 private String hello;
 ```
 
+
+
+引入js
+
+```
+<script th:src="@{/js/index.js}"></script>
+```
+
+![image-20220123154744098](https://cdn.jsdelivr.net/gh/dlagez/img@master/image-20220123154744098.png)
+
