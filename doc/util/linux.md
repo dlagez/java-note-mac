@@ -1,5 +1,25 @@
 ### linux查找命令
 
+#### find
+
+```
+find /var -name test.file
+	/roczhang/app/log.txt
+```
+
+#### locate
+
+```
+sudo updatedb
+locate log.txt
+	/roczhang/app/log.txt
+    /usr/share/doc/cloud-init/examples/cloud-config-rsyslog.txt
+    /usr/share/doc/util-linux/getopt_changelog.txt
+
+```
+
+#### grep
+
 ```
 ps -aux|grep redis  # 查询进程号
 ```
@@ -214,9 +234,9 @@ sudo ufw status verbose
 nohup表示后台运行，>log.txt表示输出到这个文件，不在窗口输出。
 
 ```
-nohup java -jar blog-0.0.1-SNAPSHOT.jar >log.txt &
+sudo nohup java -jar blog-0.0.1-SNAPSHOT.jar >log.txt &
 // s
-nohup java -jar blog-0.0.1-SNAPSHOT.jar &
+snohup java -jar blog-0.0.1-SNAPSHOT.jar &
 ```
 
 想把它停止的话，查找它的进程号即可

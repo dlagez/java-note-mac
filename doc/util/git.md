@@ -79,7 +79,7 @@ git reset --hard HEAD
 你修改了一个文件，但是发现改错了，想丢弃修改类容（使用分支保存已经做的工作是更好的方法）
 
 ```
-git checkout --readme.txt
+git checkout -- readme.txt
 ```
 
 ### 取消暂存commit的文件

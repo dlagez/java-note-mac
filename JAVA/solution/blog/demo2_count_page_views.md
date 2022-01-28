@@ -40,3 +40,5 @@ http://localhost:8080/visit?app=demo&ip=192.168.0.1&uri=http://hhui.top/home
 - 解耦问题，使用ajax异步请求
 - 传参问题
 - 元素获取问题
+
+出现问题：电脑和手机页面访问量不一致。log。

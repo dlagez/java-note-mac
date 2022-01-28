@@ -18,7 +18,7 @@ f.close()
 
 
 
-### list to txt
+### list to txt or text to list
 
 把列表以txt形式的保存与读取.[code](https://github.com/dlagez/bigdata/blob/master/demo3_/test.py)
 
