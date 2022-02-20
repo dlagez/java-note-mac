@@ -42,3 +42,7 @@ http://localhost:8080/visit?app=demo&ip=192.168.0.1&uri=http://hhui.top/home
 - 元素获取问题
 
 出现问题：电脑和手机页面访问量不一致。log。
+
+
+
+我觉得这个方案是有点问题的，redis存储的名字有点复杂，
