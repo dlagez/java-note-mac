@@ -130,6 +130,9 @@ ls -l /content/gan_resnet/data/faces | grep "^-" | wc -l
 
 ```
 su root # 切换用户
+sudo adduser roc
+cat /etc/group  // 查看所有用户组
+sudo cat /etc/shadow  // 查看所有用户
 ```
 
 ### apt使用
@@ -254,4 +257,17 @@ ubuntu@VM-16-10-ubuntu:/roczhang/app$ ps -ef | grep blog-0.0.1-SNAPSHOT.jar
 ubuntu    416681  415467  6 00:07 pts/0    00:00:20 java -jar blog-0.0.1-SNAPSHOT.jar
 ubuntu    417798  415467  0 00:12 pts/0    00:00:00 grep --color=auto blog-0.0.1-SNAPSHOT.jar
 ```
+
+
+
+### conda
+
+```
+cat  /usr/local/cuda/version.txt
+nvcc --version
+```
+
+
+
+### vim
 

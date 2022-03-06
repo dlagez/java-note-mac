@@ -11,6 +11,7 @@ conda config --set show_channel_urls yes
 
 ```
 conda create -n bigdata python=3.8
+
 ```
 
 ### 临时使用pip源

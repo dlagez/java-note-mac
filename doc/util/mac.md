@@ -21,3 +21,9 @@ conda install -c pytorch pytorch
 
 ### rar解压
 
+
+
+```
+opt + cmd + c 等于复制全路径
+```
+
