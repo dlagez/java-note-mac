@@ -62,3 +62,28 @@ STATE–OF–THE–ART AND GAPS FOR DEEP LEARNING ON LIMITED TRAINING DATA IN RE
 摘要：
 
 近年来，深度学习技术彻底改变了遥感数据的处理方式。高光谱数据的分类也不例外，但它具有内在的特殊性，这使得深度学习的应用不像其他光学数据那样简单。本文介绍了之前机器学习方法的最新技术，回顾了目前为高光谱分类提出的各种深度学习方法，并确定了为这项任务实施深度神经网络时出现的问题和困难。特别是，讨论了空间和光谱分辨率、数据量以及模型从多媒体图像传输到高光谱数据的问题。此外，还提供了对各种网络架构家族的比较研究，并公开发布了一个软件工具箱，以便对这些方法进行实验（https://github.com/nshaud/DeepHyperX）。本文既适用于对高光谱数据感兴趣的数据科学家，也适用于渴望将深度学习技术应用于自身数据的遥感专家
+
+
+
+看到一篇文章csdn，讲的是高光谱图像分类
+
+https://blog.csdn.net/qq_41683065/article/details/100748883
+
+
+
+Hyperspectral_classfication
+
+
+
+最后还是使用这个库进行实验。
+
+https://github.com/nshaud/DeepHyperX
+
+
+
+又是被这个库给卡住了。
+
+ERROR:root:Error [Errno 54] Connection reset by peer while downloading https://unpkg.com/react-dom@16.2.0/umd/react-dom.production.min.js
+
+
+

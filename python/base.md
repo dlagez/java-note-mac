@@ -20,6 +20,8 @@
 
 - `conda install matplotlib` 安装库
 
+- `conda uninstall xxx`删除库
+
 
 
 查看安装包的版本
