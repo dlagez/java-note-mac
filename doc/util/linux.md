@@ -220,6 +220,54 @@ redis-cli k
 
 
 
+#### nginx
+
+```
+sudo apt install nginx
+nginx -v  // 查看版本
+pm -ql nginx  // 查看安装目录
+systemctl start nginx //启动
+$sudo /etc/init.d/nginx stop //停止
+$sudo /etc/init.d/nginx restart //重启
+
+systemctl enable nginx  // 开机自启
+
+nginx -s reload  # 向主进程发送信号，重新加载配置文件，热重启
+nginx -s reopen	 # 重启 Nginx
+nginx -s stop    # 快速关闭
+nginx -s quit    # 等待工作进程处理完成后关闭
+nginx -T         # 查看当前 Nginx 最终的配置
+nginx -t -c <配置路径>    # 检查配置是否有问题，如果已经在配置目录，则不需要-c
+
+systemctl start nginx    # 启动 Nginx
+systemctl stop nginx     # 停止 Nginx
+systemctl restart nginx  # 重启 Nginx
+systemctl reload nginx   # 重新加载 Nginx，用于修改配置后
+systemctl enable nginx   # 设置开机启动 Nginx
+systemctl disable nginx  # 关闭开机启动 Nginx
+systemctl status nginx   # 查看 Nginx 运行状态
+
+如前面文件所示，Nginx的主配置文件为etc/nginx/nginx.conf,可以使用 cat命令命令进行查看cat -n nginx.conf
+```
+
+配置反向代理：ref:[link](https://dgideas.net/2020/configure-reverse-proxy-for-nginx-on-ubuntu-2004/)
+
+Nginx 的默认配置文件位于目录 `/etc/nginx/sites-enabled/` 中。
+
+Nginx 使用类似 JSON 的格式表示其配置文件。其中，对于网站的配置位于单独的 `server{}` 块中。一个典型示例如下：
+
+```
+server {
+    listen 80 default_server;
+    root /var/www/html;
+    server_name dgideas.net;
+    location / {
+    }
+}
+```
+
+![Untitled10](https://cdn.jsdelivr.net/gh/dlagez/img@master/Untitled10.png)
+
 ### 防火墙
 
 tenxun云的防火墙和ubuntu里面的ufw是两个防火墙。
@@ -260,6 +308,20 @@ ubuntu    417798  415467  0 00:12 pts/0    00:00:00 grep --color=auto blog-0.0.1
 
 
 
+github 图床key
+
+```
+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
+```
+
+gitee图床key
+
+```
+ed413552b224df7781ad8af5417b6d7a
+```
+
+
+
 ### conda
 
 ```
@@ -270,4 +332,30 @@ nvcc --version
 
 
 ### vim
+
+
+
+配置nginx的反向代理
+
+
+
+beian
+
+```HTML
+<p>
+				© 2022 ROC
+				&nbsp;
+				<a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备2022001317号-1</a>
+				&nbsp;
+				<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=鄂公网安备 42011202002050号" target="_blank">
+					<img src="//cdn.jsdelivr.net/gh/LIlGG/halo-theme-sakura@1.3.1/source/images/other/gongan.png">鄂公网安备 42011202002050号
+				</a>	
+			</p>
+```
+
+
+
+
+
+
 

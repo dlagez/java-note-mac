@@ -1,3 +1,11 @@
+论文
+
+| 论文题目                                                     | 论文连接                                              | 注                                   |
+| ------------------------------------------------------------ | ----------------------------------------------------- | ------------------------------------ |
+| Generating Hyperspectral Skin Cancer Imagery using Generative Adversarial Neural Network | https://ieeexplore.ieee.org/abstract/document/9176292 | 用生成对抗网络生成皮肤癌高光谱图像。 |
+|                                                              |                                                       |                                      |
+|                                                              |                                                       |                                      |
+
 gan的应用：
 
 - 生成照片
@@ -87,3 +95,12 @@ ERROR:root:Error [Errno 54] Connection reset by peer while downloading https://u
 
 
 
+看了这篇文献比较好
+
+今日求助第一篇：
+
+Generative Adversarial Networks and Conditional Random Fields for Hyperspectral Image Classification
+
+**DOI:** 10.1109/TCYB.2019.2915094
+
+但是不能下载
