@@ -311,7 +311,7 @@ ubuntu    417798  415467  0 00:12 pts/0    00:00:00 grep --color=auto blog-0.0.1
 github 图床key
 
 ```
-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
+ghp_nDA7Yb7n1oyfDihQ2dI---------------------dxpTwfcy1WH3JBePm
 ```
 
 gitee图床key
