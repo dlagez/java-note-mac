@@ -104,3 +104,24 @@ Generative Adversarial Networks and Conditional Random Fields for Hyperspectral 
 **DOI:** 10.1109/TCYB.2019.2915094
 
 但是不能下载
+
+
+
+看了这个人的介绍与发表的论文，感觉在高光谱这一块研究的很深。
+
+
+
+有一篇好文章不能下载
+
+https://ieeexplore.ieee.org/document/8661744
+
+Classification of Hyperspectral Images Based on Multiclass Spatial–Spectral Generative Adversarial Networks
+
+**DOI:** [10.1109/TGRS.2019.2899057](https://doi.org/10.1109/TGRS.2019.2899057)
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6954409989927492"
+     crossorigin="anonymous"></script>
