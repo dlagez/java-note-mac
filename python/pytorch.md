@@ -108,7 +108,7 @@ plt.show()
 
 ## pytorch
 
-### 整个网络定义训练的流程：
+### 网络训练流程：
 
 S下载数据集操作：注意`root`的路径，放到`data`文件夹下面。
 
@@ -350,7 +350,9 @@ summary(vgg, (3, 224, 224))
 
  
 
-### nn.Linear [link](http://www.sharetechnote.com/html/Python_PyTorch_nn_Linear_01.html)
+### pytorch method
+
+#### nn.Linear [link](http://www.sharetechnote.com/html/Python_PyTorch_nn_Linear_01.html)
 
 **Inputs and 1 output (1 neuron)**
 
@@ -380,7 +382,7 @@ This creates a network as shown below. Weight and Bias is set automatically.
 
 
 
-### nn.Sequential [link](http://www.sharetechnote.com/html/Python_PyTorch_nn_Sequential_01.html)
+#### nn.Sequential [link](http://www.sharetechnote.com/html/Python_PyTorch_nn_Sequential_01.html)
 
 **2 Inputs , 1 outputs and Activation Function**
 
@@ -393,7 +395,7 @@ net = torch.nn.Sequential(
 
 - ![img](https://cdn.jsdelivr.net/gh/dlagez/img@master/Python_Pytorch_nn_Sequential_i2_o1_sigmoid_01.png)
 
-### Activation Function
+#### Activation Function
 
 [link](https://machinelearningknowledge.ai/pytorch-activation-functions-relu-leaky-relu-sigmoid-tanh-and-softmax/)
 
@@ -440,7 +442,7 @@ This is the output: tensor([1.0720, 0.0000, 0.0000, 1.2851, 0.0000])
 
 
 
-### view function
+#### view function
 
 他只是改变了tensor的形状，并没有在内存中copy数据。这里的b和t共享底层数组。他们只是数据的两种不同展现形式。
 
@@ -457,7 +459,7 @@ True
 tensor(3.14)
 ```
 
-### np.random.normal
+#### np.random.normal
 
 从正太高斯分布中随机抽取样本
 
@@ -470,3 +472,26 @@ np.random.normal(0, 1, (imgs.shape[0], opt.latent_dim))
 第二个参数表示：宽度
 
 第三个参数表示：样本的形状 （行，列）
+
+
+
+#### BatchNorm2d  [link](https://pytorch.org/docs/stable/generated/torch.nn.BatchNorm2d.html)
+
+作用：使我们的一批feature map满足均值为0，方差为1的分布规律。
+
+参数：
+
+- num_features：一般输入参数为`batch_size*num_features*height*width`，即为其中特征的数量，即为输入BN层的通道数。
+- eps：分母中添加的一个值，目的是为了计算的稳定性。
+- momentum：一个用于运行过程中均值和方差的一个估计参数
+- affine：当设为true时，会给定可以学习的系数矩阵gamma和beta
+
+
+
+#### Upsample [link](https://pytorch.org/docs/stable/generated/torch.nn.Upsample.html#upsample) 
+
+Upsamples a given multi-channel 1D (temporal), 2D (spatial) or 3D (volumetric) data.
+
+Parameters：
+
+- **scale_factor** ([*float*](https://docs.python.org/3/library/functions.html#float) *or* *Tuple**[*[*float*](https://docs.python.org/3/library/functions.html#float)*] or* *Tuple**[*[*float*](https://docs.python.org/3/library/functions.html#float)*,* [*float*](https://docs.python.org/3/library/functions.html#float)*] or* *Tuple**[*[*float*](https://docs.python.org/3/library/functions.html#float)*,* [*float*](https://docs.python.org/3/library/functions.html#float)*,* [*float*](https://docs.python.org/3/library/functions.html#float)*]**,* *optional*) – multiplier for spatial size. Has to match input size if it is a tuple. 简单来说就是扩大多少倍，长宽都乘以这个倍数。

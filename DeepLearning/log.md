@@ -122,6 +122,3 @@ Classification of Hyperspectral Images Based on Multiclass Spatial–Spectral Ge
 
 
 
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6954409989927492"
-     crossorigin="anonymous"></script>
