@@ -16,7 +16,11 @@
 
 ### 论文原文详读：
 
-INTRODUCTION
+### ABSTRACT
+
+近年来，卷积网络（CNN）的监督学习在计算机视觉应用中得到了广泛采用。相比之下，CNN的无监督学习受到的关注较少。在这项工作中，我们希望帮助弥合CNN监督式学习和非超级学习成功之间的差距。我们引入了一类名为深度卷积生成对抗网络（DCGAN）的CNN，它们具有一定的架构约束，并证明它们是无监督学习的有力候选者。在各种图像数据集的培训中，我们展示了令人信服的证据，证明我们深层卷曲对抗对在生成器和鉴别器中学习了从对象部分到场景的表示层次结构。此外，我们将学到的功能用于新任务——证明它们作为一般图像表示的适用性。
+
+### INTRODUCTION
 
 从大型无标签数据集学习可重用特征表示一直是积极研究的一个领域。在计算机视觉方面，人们可以利用几乎无限量的无标签图像和视频来学习良好的中间表示，然后可用于图像分类等各种监督学习任务。我们建议，构建良好图像表示的一种方法是培训生成对抗网络（GAN）（Goodfellow等人，2014年），然后将生成器和鉴别器网络的部分内容重用为监督任务的特征提取器。GAN为最大可能性技术提供了一个有吸引力的替代方案。人们还可以争辩说，他们的学习过程和缺乏启发式成本函数（如像素独立的均方误差）对表示学习很有吸引力。众所周知，GAN在训练上不稳定，往往导致生成器产生无意义的输出。在试图理解和可视化GAN学到的东西以及多层GAN的中间表示方面，发表的研究非常有限。
 
@@ -29,15 +33,15 @@ In this paper, we make the following contributions
 
 
 
-RELATED WORK
+### RELATED WORK
 
-从无标签数据中学习表示
+#### 从无标签数据中学习表示
 
 无监督表示学习是一般计算机视觉研究中研究得相当好的问题，以及图像的上下文。无监督表示学习的经典方法是对数据进行聚类 `for example using K-means`，并利用集群来提高分类分数。在图像上下文中，您可以对图像补丁进行分层聚类去学习强大的图像表示，另一种流行的方法是训练自动编码器分离代码的内容和位置组件，将图像编码为紧凑的代码，并解码代码以尽可能准确地重建图像，这些方法还被证明可以从图像像素中学习良好的特征表示，事实证明，在学习分层表示方面深度置信网络也很有效。
 
 
 
-GENERATING NATURAL IMAGES
+#### GENERATING NATURAL IMAGES
 
 生成图像模型研究得很好，分为两类：参数和非参数。
 
@@ -49,13 +53,13 @@ GENERATING NATURAL IMAGES
 
 
 
-VISUALIZING THE INTERNALS OF CNNS
+#### VISUALIZING THE INTERNALS OF CNNS
 
 对使用神经网络的一个持续批评是，它们是黑盒方法，对网络以简单的人类消耗算法的形式做什么知之甚少。在CNN的背景下，Zeiler等人。（Zeiler & Fergus，2014年）表明，通过使用反卷积和过滤最大激活，可以找到网络中每个卷积过滤器的近似目的。同样，在输入上使用梯度下降可以让我们检查激活过滤器某些子集的理想图像（Mordvintsev等人）。
 
 
 
-APPROACH AND MODEL ARCHITECTURE
+### APPROACH AND MODEL ARCHITECTURE !!
 
 使用CNN来建模图像来扩展GAN的历史尝试没有成功。这促使LAPGAN（Denton等人，2015年）的作者开发了一种替代方法——可以更可靠地建模的高档低分辨率生成图像。我们还在尝试使用受监督文献中常用的CNN架构扩展GAN时遇到了困难。
 
@@ -65,7 +69,11 @@ APPROACH AND MODEL ARCHITECTURE
 
 第一个是全卷积网络（Springenberg et al., 2014），它用跨步卷积代替确定性空间池化函数（例如 maxpooling），允许网络学习自己的空间下采样。 我们在生成器中使用这种方法，使其能够学习自己的空间上采样和鉴别器。
 
+
+
 其次是在卷积特征之上消除全连接层的趋势。 最有力的例子是全局平均池化，它已被用于最先进的图像分类模型（Mordvintsev 等人）。 我们发现全局平均池化提高了模型稳定性，但损害了收敛速度。 将最高卷积特征分别直接连接到生成器和鉴别器的输入和输出的中间地带效果很好。 GAN 的第一层以均匀的噪声分布 Z 作为输入，可以称为全连接，因为它只是一个矩阵乘法，但结果被重新整形为 4 维张量并用作卷积堆栈的开始 . 对于鉴别器，最后一个卷积层被展平，然后馈入单个 sigmoid 输出。 有关示例模型架构的可视化，请参见图 1。
+
+
 
 第三是批量归一化（Ioffe & Szegedy，2015），它通过将每个单元的输入归一化以具有零均值和单元方差来稳定学习。 这有助于处理由于初始化不良而出现的训练问题，并有助于梯度在更深层次的模型中流动。 事实证明，这对于让深度生成器开始学习至关重要，防止生成器将所有样本崩溃到一个点，这是 GAN 中观察到的常见故障模式。 然而，直接将 batchnorm 应用于所有层会导致样本振荡和模型不稳定。 这通过不对生成器输出层和鉴别器输入层应用 batchnorm 来避免。
 
@@ -85,13 +93,13 @@ ReLU激活（Nair和Hinton，2010年）用于发电机，但使用Tanh函数的�
 
 
 
-DETAILS OF ADVERSARIAL TRAINING
+### DETAILS OF ADVERSARIAL TRAINING
 
 我们在三个数据集上培训了DCGAN，即大规模场景理解（LSUN）（Yu等人，2015年）、Imagenet-1k和新组装的Faces数据集。有关每个数据集使用情况的详细信息如下。
 
 除了缩放到tanh激活函数的范围[-1, 1]外，没有对训练图像进行预处理。所有模型都采用迷你批次随机梯度下降（SGD）进行了训练，迷你批次尺寸为128。所有权重都是从标准偏差0.02的零中心正态分布初始化的。在LeakyReLU中，所有型号的泄漏斜率都设置为0.2。虽然之前的GAN工作使用动量来加速训练，但我们使用带有调谐超参数的Adam优化器（Kingma和Ba，2014年）。我们发现建议的0.001学习率太高了，改用0.0002。另外，我们发现将动量项 β1 保留在建议值 0.9 会导致训练振荡和不稳定，而将其降低到 0.5 有助于稳定训练。
 
-
+![image-20220313210503496](https://cdn.jsdelivr.net/gh/dlagez/img@master/image-20220313210503496.png)
 
 LSUN
 
@@ -117,9 +125,9 @@ IMAGENET-1K
 
 
 
-EMPIRICAL VALIDATION OF DCGANS CAPABILITIES
+### EMPIRICAL VALIDATION OF DCGANS CAPABILITIES
 
-CLASSIFYING CIFAR-10 USING GANS AS A FEATURE EXTRACTOR
+#### CLASSIFYING CIFAR-10 USING GANS AS A FEATURE EXTRACTOR
 
 评估非监督表示学习算法rithms质量的一种常见技术是将它们用作受监督数据集上的特征提取器，并评估这些特征之上的线性模型的性能。
 
@@ -127,7 +135,7 @@ CLASSIFYING CIFAR-10 USING GANS AS A FEATURE EXTRACTOR
 
 
 
-CLASSIFYING SVHN DIGITS USING GANS AS A FEATURE EXTRACTOR
+#### CLASSIFYING SVHN DIGITS USING GANS AS A FEATURE EXTRACTOR
 
 在StreetView House Numbers数据集（SVHN）（Netzer等人，2011年）上，当标记数据稀缺时，我们将DCGAN鉴别器的功能用于监督目的。按照与CIFAR-10实验类似的数据集准备规则，我们从非额外集中拆分了10,000个示例的验证集，并将其用于所有超参数和模型选择。随机选择1000个统一类分布式训练示例，并用于在用于CIFAR-10的相同特征提取管道上训练正则化线性L2-SVM分类器。这达到了22.48%的测试误差（使用1000个标签进行分类），改进了旨在利用未标签数据的CNN的另一项修改（Zhao等人，2015年）。此外，我们验证DCGAN中使用的CNN架构不是模型性能的关键因素，方法是在相同的数据上训练具有相同架构的纯监督CNN，并通过64次超参数试验的随机搜索优化该模型（Bergstra和Bengio，2012年）。它实现了明显更高的28.87%的验证错误。
 

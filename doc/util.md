@@ -1,3 +1,281 @@
+## docker
+
+WIN
+
+下载安装包：[Empowering App Development for Developers | Docker](https://www.docker.com/)
+
+设置：win环境：[Manual installation steps for older versions of WSL | Microsoft Docs](https://docs.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package)
+
+
+
+### install sqlserver: 
+
+- articles:https://www.sqlservercentral.com/articles/docker-desktop-on-windows-10-for-sql-server-step-by-step
+- docker link: https://hub.docker.com/_/microsoft-mssql-server
+
+```
+// pull
+docker pull mcr.microsoft.com/mssql/server:2019-latest
+
+// run
+docker run --name sqlserver -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Dlagez3133.." -e "MSSQL_PID=Enterprise" -p 1433:1433 -d mcr.microsoft.com/mssql/server
+
+// test
+docker exec -it sqlserver /opt/mssql-tools/bin/sqlcmd -S localhost -U sa
+
+// exec
+exec -it sqlserver "bash"
+
+// can't into 
+docker exec -it sqlserver /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Dlagez3133..
+
+登录名是：sa 密码Dlagez3133..
+```
+
+
+
+### install mysql
+
+```
+docker pull mysql:8.0.27
+docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=password -d mysql:8.0.27 # run image
+docker exec -it mysql bash # inside a Docker container
+docker logs mysql # get log
+mysql -u root -p # inside m
+```
+
+
+
+### install postgresql 
+
+https://hub.docker.com/_/postgres
+
+```cmd
+docker pull postgres:9.4.26
+#  -e TZ=PRC 设置时区为中国
+docker run -p 15432:5432 --name postgres -e POSTGRES_PASSWORD=password -e TZ=PRC -d postgres:9.4.26
+
+# 默认用户名是postgres 密码password
+```
+
+
+
+### install elasticsearch
+
+```bash
+docker pull elasticsearch:7.6.2
+docker run -d --name elasticsearch  -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.6.2
+
+// docker run -d --name elasticsearch --net elasticsearch -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.6.2
+```
+
+
+
+### install redis
+
+```
+docker pull redis
+docker run -itd --name redis -p 6379:6379 redis
+docker exec -it redis /bin/bash
+
+```
+
+### install kibana
+
+```
+docker pull kibana:7.6.2
+docker run -d --name kibana -p 5601:5601 kibana:7.6.2
+```
+
+
+
+## git
+
+### 关联github
+
+```
+1.在github先创建一个空项目，不要任何设置。
+
+2. 将本地的项目git init 并将文件提交。
+3. 在项目文件夹内使用 
+git remote add origin git@github.com:dlagez/demo_JAVA.git
+
+// 把本地库的内容推送到远程，用git push命令，实际上是把当前分支master推送到远程。
+3.git push -u origin master
+注：由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
+
+//从现在起，只要本地作了提交，就可以通过命令：
+4.git push origin master
+
+// 查看远程仓库信息
+5. git remote -v
+
+// 删除和远程仓库的连接
+6. git remote rm origin
+```
+
+### add 加 commit
+
+```
+git commit -a -m 'made a change'
+```
+
+### 远程仓库的重命名与移除
+
+```   console
+git remote rename pb paul  # 重命名
+git remote remove paul     # 移除远程分支
+```
+
+### 从远程仓库抓取数据
+
+它只会抓取数据，并不会合并分支
+
+```console
+git fetch <remote>
+```
+
+自动抓取后合并该远程分支到当前分支
+
+```
+git pull 
+```
+
+### 已经提交到github的文件夹取消追踪,
+
+ 虽然会追踪, 但是还是需要在.gitignore里面设置一下,不然一直报红.
+
+```
+git rm -r --cached dir
+```
+
+### 合并提交
+
+这次的改动比较小, 和上次的提交合并, 这个message会覆盖上次的信息.
+
+```
+git commit -a --amend -m "my message here"
+```
+
+
+
+### 版本回退：
+
+```
+git reset --hard HEAD
+```
+
+会删除所有的修改，变成提交时的状态。
+
+### 撤销修改
+
+你修改了一个文件，但是发现改错了，想丢弃修改类容（使用分支保存已经做的工作是更好的方法）
+
+```
+git checkout -- readme.txt
+```
+
+### 取消暂存commit的文件
+
+```
+git reset HEAD readme.txt
+git commit --amend -m 'ad'
+```
+
+### 删除缓存区文件
+
+已经add到暂存区的文件移除：该文件从暂存区移除，本地不会删除。
+
+```
+git rm -r --cached src/
+或者
+use "git restore --staged <file>..." to unstage
+```
+
+使用了amend，推送不上去，这句话执行的后果就是在远程仓库中进行的相关修改会被删除，使远程仓库回到你本地仓库未修改之前的那个版本，   然后上传你基于本地仓库的修改。
+
+```
+git push -u origin master -f
+```
+
+
+
+### 查看修改
+
+此命令比较的是
+
+```console
+git diff 工作目录中当前文件和暂存区域快照之间的差异
+git diff --staged 查看已经add文件与暂存的文件差异：
+git diff branchNmae 工作区与某分支的差异
+git diff HEAD 工作区与HEAD指针指向的内容差异
+git diff branch1 branch2 查看两个分支的差异 显示branch1的不同，比如branch1多出数据会显示绿色++
+```
+
+### 查看提交历史
+
+```
+git log
+git log -p -2                      # 显示每次提交所引入的差异 -2 选项来只显示最近的两次提交
+git log --oneline --decorate       # 简单的查看提交记录
+git log --oneline --decorate --graph --all      # 查看提交记录图
+git log --stat                     # 查看每次提交的变化
+```
+
+
+
+### 分支
+
+```
+git branch testing           # 新建一个分只
+git checkout testing         #切换分支
+git checkout -b hotfix       # 新建并转换到这个分支
+git branch                   # 查看分支
+git branch -a                # c
+git merge testing            # 此时在分支master中，使用master分支合并其他分支
+git branch -d hotfix         # 删除分支
+```
+
+提交分支到github
+
+```
+# 先切换到分支中
+git branch testing
+# 再提交
+git push origin testing
+```
+
+
+
+图床使用token
+
+```
+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
+```
+
+
+
+加速：gh表示github，dlagez表示你的账户名，img表示仓库名。
+
+```
+https://cdn.jsdelivr.net/gh/dlagez/img@master
+```
+
+typora命令：
+
+```
+mac-- /usr/local/bin/node /usr/local/bin/picgo upload
+win-- picgo upload
+```
+
+cdn 加速
+
+```
+https://cdn.jsdelivr.net/gh/dlagez/img@master
+```
+
+## linux
+
 ### linux查找命令
 
 #### find
@@ -324,9 +602,57 @@ ed413552b224df7781ad8af5417b6d7a
 
 ### conda
 
+#### miniconda官网：[Miniconda — Conda documentation](https://docs.conda.io/en/latest/miniconda.html#)
+
+#### 换源
+
 ```
-cat  /usr/local/cuda/version.txt
-nvcc --version
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config --set show_channel_urls yes
+```
+
+#### 创建环境
+
+```
+conda create -n bigdata python=3.8
+
+```
+
+#### 临时使用pip源
+
+```
+-i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+#### 安装jupyter
+
+```
+conda install jupyter notebook
+```
+
+#### 修改根目录
+
+生成配置文件 
+
+```
+jupyter notebook --generate-config
+```
+
+修改配置文件jupyter_notebook_config.py中的 c.NotebookApp.notebook_dir = ‘’ 改为要修改的根目录把单引号换成双引号  c.NotebookApp.notebook_dir = "C:/roczhang"
+
+#### 将环境添加到kernel，
+
+```
+pip install ipykernel
+python -m ipykernel install --name bigdata --display-name "bigdata"
+```
+
+- `--display-name`指定jupyter notebook中显示的名字
+
+升级包
+
+```
+conda update package
 ```
 
 
@@ -355,7 +681,52 @@ beian
 
 
 
+## mac
+
+brew:
+
+```
+brew install go
+```
 
 
 
+下载的软件打不开：
+
+```
+sudo xattr -cr /Volumes/roczhang/download/V2RayX.app
+sudo xattr -cr /Applications/V2RayX.app
+```
+
+安装pytorch：
+
+```
+conda install -c pytorch pytorch
+```
+
+### rar解压
+
+
+
+```
+opt + cmd + c 等于复制全路径
+```
+
+
+
+图床配置：
+
+picgo ref： [link](https://picgo.github.io/PicGo-Doc/zh/guide/config.html#通过url上传)
+
+picgo core ref: [link](https://picgo.github.io/PicGo-Core-Doc/)
+
+cdn 加速：`https://cdn.jsdelivr.net/gh/dlagez/img@master`
+
+
+
+picgo 图床插件
+
+https://github.com/xlzy520/picgo-plugin-bilibili
+
+https://github.com/PicGo/Awesome-PicGo
 
