@@ -91,9 +91,111 @@ docker run -d --name kibana -p 5601:5601 kibana:7.6.2
 
 ## git
 
+ref：[link](https://mp.weixin.qq.com/s?__biz=MzAxODQxMDM0Mw==&mid=2247485544&idx=1&sn=afc9d9f72d811ec847fa64108d5c7412&scene=21#wechat_redirect)
+
+**需求一，如何把`work dir`中的修改加入`stage`**。
+
+这个是最简单，使用 **`git add`** 相关的命令就行了。顺便一提，`add`有个别名叫做`stage`，也就是说你可能见到`git stage`相关的命令，这个命令和`git add`命令是完全一样的。
+
+
+
+**需求二，如何把`stage`中的修改还原到`work dir`中**。
+
+这个需求很常见，也很重要，比如我先将当前`work dir`中的修改添加到`stage`中，然后又对`work dir`中的文件进行了修改，但是又后悔了，如何把`work dir`中的全部或部分文件还原成`stage`中的样子呢？
+
+注意：`work dir`的修改会全部丢失，但是新加的文件不会被删除。
+
+**风险等级：中风险。**
+
+理由：在`work dir`做出的「修改」会被`stage`覆盖，无法恢复。所以使用该命令你应该确定`work dir`中的修改可以抛弃。
+
+```bash
+git checkout a.txt
+git checkout .
+```
+
+
+
+**需求三，将`stage`区的文件添加到`history`区**。
+
+```bash
+git commit -m '一些描述'
+```
+
+再简单提一些常见场景， 比如说`commit`完之后，突然发现一些错别字需要修改，又不想为改几个错别字而新开一个`commit`到`history`区，那么就可以使用下面这个命令：
+
+```bash
+$ git commit --amend
+```
+
+
+
+**需求四，将`stage`区的文件还原到`work dir`区**。
+
+这个需求很常见，比如说我用了一个`git add .`一股脑把所有修改加入`stage`，但是突然想起来文件`a.txt`中的代码我还没写完，不应该把它`commit`到`history`区，所以我得把它从`stage`中撤销，等后面我写完了再提交。
+
+```bash
+$ echo aaa >> a.txt; echo bbb >> b.txt;
+$ git add .
+$ git status
+On branch master
+Changes to be committed:
+    modified:   a.txt
+    modified:   b.txt
+```
+
+如何把`a.txt`从`stage`区还原出来呢？可以使用 **`git reset`** 命令：
+
+```bash
+$ git reset a.txt
+
+$ git status
+On branch master
+Changes to be committed:
+    modified:   b.txt
+
+Changes not staged for commit:
+    modified:   a.txt
+```
+
+你看，这样就可以把`a.txt`文件从`stage`区移出，这时候进行`git commit`相关的操作就不会把这个文件一起提交到`history`区了。
+
+
+
+**需求六，将`history`区的历史提交还原到`work dir`中**。
+
+这个场景，我说一个极端一点的例子：比如我从 GitHub 上`clone`了一个项目，然后乱改了一通代码，结果发现我写的代码根本跑不通，于是后悔了，干脆不改了，我想恢复成最初的模样，怎么办？
+
+依然是使用`checkout`命令，但是和之前的使用方式有一些不同：
+
+```bash
+$ git checkout HEAD .
+Updated 12 paths from d480c4f
+```
+
+这样，`work dir`和`stage`中所有的「修改」都会被撤销，恢复成`HEAD`指向的那个`history commit`。
+
+注意，类似之前通过`stage`恢复`work dir`的`checkout`命令，这里撤销的也只是修改，新增的文件不会被撤销。
+
+当然，只要找到任意一个`commit`的 HASH 值，`checkout`命令可就以将文件恢复成任一个`history commit`中的样子：
+
+```bash
+$ git checkout 2bdf04a some_test.go
+Updated 1 path from 2bdf04a
+# 前文的用法显示 update from index
+```
+
+比如，我改了某个测试文件，结果发现测试跑不过了，所以就把该文件恢复到了它能跑过的那个历史版本……
+
+**风险等级：高风险。**
+
+理由：这个操作会将指定文件在`work dir`的数据恢复成指定`commit`的样子，且会删除该文件在`stage`中的数据，都无法恢复，所以应该慎重使用。
+
+
+
 ### 关联github
 
-```
+```bash
 1.在github先创建一个空项目，不要任何设置。
 
 2. 将本地的项目git init 并将文件提交。
@@ -149,16 +251,6 @@ git pull
 git rm -r --cached dir
 ```
 
-### 合并提交
-
-这次的改动比较小, 和上次的提交合并, 这个message会覆盖上次的信息.
-
-```
-git commit -a --amend -m "my message here"
-```
-
-
-
 ### 版本回退：
 
 ```
@@ -166,39 +258,6 @@ git reset --hard HEAD
 ```
 
 会删除所有的修改，变成提交时的状态。
-
-### 撤销修改
-
-你修改了一个文件，但是发现改错了，想丢弃修改类容（使用分支保存已经做的工作是更好的方法）
-
-```
-git checkout -- readme.txt
-```
-
-### 取消暂存commit的文件
-
-```
-git reset HEAD readme.txt
-git commit --amend -m 'ad'
-```
-
-### 删除缓存区文件
-
-已经add到暂存区的文件移除：该文件从暂存区移除，本地不会删除。
-
-```
-git rm -r --cached src/
-或者
-use "git restore --staged <file>..." to unstage
-```
-
-使用了amend，推送不上去，这句话执行的后果就是在远程仓库中进行的相关修改会被删除，使远程仓库回到你本地仓库未修改之前的那个版本，   然后上传你基于本地仓库的修改。
-
-```
-git push -u origin master -f
-```
-
-
 
 ### 查看修改
 
@@ -243,14 +302,6 @@ git branch -d hotfix         # 删除分支
 git branch testing
 # 再提交
 git push origin testing
-```
-
-
-
-图床使用token
-
-```
-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
 ```
 
 
@@ -706,13 +757,13 @@ conda install -c pytorch pytorch
 
 ### rar解压
 
-
-
 ```
 opt + cmd + c 等于复制全路径
 ```
 
-
+```
+cmd+shift+. 显示隐藏文件
+```
 
 图床配置：
 
@@ -730,3 +781,8 @@ https://github.com/xlzy520/picgo-plugin-bilibili
 
 https://github.com/PicGo/Awesome-PicGo
 
+
+
+共享文件夹：
+
+https://sspai.com/post/61388

@@ -346,9 +346,102 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 vgg = models.vgg19().to(device)
  
 summary(vgg, (3, 224, 224))
+
 ```
 
  
+
+```python
+import argparse
+import os
+import numpy as np
+import math
+
+import torchvision.transforms as transforms
+from torchvision.utils import save_image
+
+from torch.utils.data import DataLoader
+from torchvision import datasets
+from torch.autograd import Variable
+
+import torch.nn as nn
+import torch.nn.functional as F
+import torch
+from torchsummary import summary
+
+os.makedirs("images", exist_ok=True)
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--n_epochs", type=int, default=200, help="number of epochs of training")
+parser.add_argument("--batch_size", type=int, default=64, help="size of the batches")
+parser.add_argument("--lr", type=float, default=0.0002, help="adam: learning rate")
+parser.add_argument("--b1", type=float, default=0.5, help="adam: decay of first order momentum of gradient")
+parser.add_argument("--b2", type=float, default=0.999, help="adam: decay of first order momentum of gradient")
+parser.add_argument("--n_cpu", type=int, default=8, help="number of cpu threads to use during batch generation")
+parser.add_argument("--latent_dim", type=int, default=100, help="dimensionality of the latent space")
+parser.add_argument("--img_size", type=int, default=28, help="size of each image dimension")
+parser.add_argument("--channels", type=int, default=1, help="number of image channels")
+parser.add_argument("--sample_interval", type=int, default=400, help="interval betwen image samples")
+opt = parser.parse_args()
+print(opt)
+
+img_shape = (opt.channels, opt.img_size, opt.img_size)
+
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+class Generator(nn.Module):
+    def __init__(self):
+        super(Generator, self).__init__()
+
+        def block(in_feat, out_feat, normalize=True):
+            layers = [nn.Linear(in_feat, out_feat)]
+            if normalize:
+                layers.append(nn.BatchNorm1d(out_feat, 0.8))
+            layers.append(nn.LeakyReLU(0.2, inplace=True))
+            return layers
+
+        self.model = nn.Sequential(
+            *block(opt.latent_dim, 128, normalize=False),
+            *block(128, 256),
+            *block(256, 512),
+            *block(512, 1024),
+            nn.Linear(1024, int(np.prod(img_shape))),
+            nn.Tanh()
+        )
+
+    def forward(self, z):
+        img = self.model(z)
+        img = img.view(img.size(0), *img_shape)
+        return img
+
+
+class Discriminator(nn.Module):
+    def __init__(self):
+        super(Discriminator, self).__init__()
+
+        self.model = nn.Sequential(
+            nn.Linear(int(np.prod(img_shape)), 512),
+            nn.LeakyReLU(0.2, inplace=True),
+            nn.Linear(512, 256),
+            nn.LeakyReLU(0.2, inplace=True),
+            nn.Linear(256, 1),
+            nn.Sigmoid(),
+        )
+
+    def forward(self, img):
+        img_flat = img.view(img.size(0), -1)
+        validity = self.model(img_flat)
+
+        return validity
+
+
+G = Generator().to(device)
+D = Discriminator().to(device)
+summary(G)
+```
+
+
 
 ### pytorch method
 
@@ -395,6 +488,8 @@ net = torch.nn.Sequential(
 
 - ![img](https://cdn.jsdelivr.net/gh/dlagez/img@master/Python_Pytorch_nn_Sequential_i2_o1_sigmoid_01.png)
 
+
+
 #### Activation Function
 
 [link](https://machinelearningknowledge.ai/pytorch-activation-functions-relu-leaky-relu-sigmoid-tanh-and-softmax/)
@@ -405,44 +500,28 @@ net = torch.nn.Sequential(
 
 线性函数应该具有的性质：
 
-- **Non-Linearity –** Activation function should be able to add nonlinearity in neural networks especially in the neurons of hidden layers. This is because rarely you will see any real-world scenarios that can be explained with linear relationships.
-- **Differentiable** – The activation function should be differentiable. During the training phase, the neural network learns by back-propagating error from the output layer to hidden layers. The backpropagation algorithm uses the derivative of the activation function of neurons in hidden layers, to adjust their weights so that error in the next training epoch can be reduced.
+- **Non-Linearity –** 激活函数应该能够在神经网络中添加非线性，尤其是在隐藏层的神经元中。 这是因为您很少会看到任何可以用线性关系解释的真实场景。
+- **Differentiable** – 激活函数应该是可微的。 在训练阶段，神经网络通过将误差从输出层反向传播到隐藏层来学习。 反向传播算法利用隐藏层神经元激活函数的导数来调整它们的权重，从而减少下一个训练时期的误差。
+
+
+
+#### Sigmoid [link](https://pytorch.org/docs/stable/generated/torch.nn.Sigmoid.html)
+
+Sigmoid函数是一个在生物学中常见的S型函数，也称为S型生长曲线。 [1] 在信息科学中，由于其单增以及反函数单增等性质，Sigmoid函数常被用作神经网络的阈值函数，将变量映射到0,1之间。
 
 #### ReLU
 
-The **ReLU or Rectified Linear Activation Function** is a type of piecewise linear function.
+是一种分段线性函数。
 
-**Advantages of ReLU Activation Function**
+- ReLu 激活函数的计算速度很快，因此它能够更快地收敛神经网络的训练阶段。
+- 非线性和可微分都是激活函数的良好特性。
+- ReLU 不会像其他激活函数那样遭受梯度消失问题的困扰。 因此，在大型神经网络的隐藏层中它是一个不错的选择。
 
-- ReLu activation function is computationally fast hence it enables faster convergence of the training phase of the neural networks.
-- It is both non-linear and differentiable which are good characteristics for activation function.
-- ReLU does not suffer from the issue of Vanishing Gradient issue like other activation functions. Hence it is a good choice in hidden layers of large neural networks.
+ReLU激活函数的缺点
 
-**Disadvantages** **of ReLU Activation Function**
+- ReLU函数的主要缺点是它会导致死亡节点的问题。 每当输入为负时，它的导数变为零，因此无法执行反向传播，并且该神经元可能不会进行学习并且它会消失。
 
-- The main disadvantage of the ReLU function is that it can cause the problem of **Dying Neurons**. Whenever the inputs are negative, its derivative becomes zero, therefore backpropagation cannot be performed and learning may not take place for that neuron and it dies out.
-
-
-
-```
-m = nn.ReLU()
-input = torch.randn(5)
-output = m(input)
-
-print("This is the input:",input)
-print("This is the output:",output)
-```
-
-Output:
-
-```
-This is the input: tensor([ 1.0720, -1.4033, -0.6637,  1.2851, -0.5382])
-This is the output: tensor([1.0720, 0.0000, 0.0000, 1.2851, 0.0000])
-```
-
-
-
-#### view function
+#### view
 
 他只是改变了tensor的形状，并没有在内存中copy数据。这里的b和t共享底层数组。他们只是数据的两种不同展现形式。
 
@@ -486,6 +565,85 @@ np.random.normal(0, 1, (imgs.shape[0], opt.latent_dim))
 - momentum：一个用于运行过程中均值和方差的一个估计参数
 - affine：当设为true时，会给定可以学习的系数矩阵gamma和beta
 
+机器学习中，进行模型训练之前，需对数据做归一化处理，使其分布一致。在深度神经网络训练过程中，通常一次训练是一个batch，而非全体数据。每个batch具有不同的分布产生了internal covarivate shift问题——在训练过程中，数据分布会发生变化，对下一层网络的学习带来困难。Batch Normalization强行将数据拉回到均值为0，方差为1的正太分布上，一方面使得数据分布一致，另一方面避免梯度消失。
+
+
+
+example:
+
+BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+
+表示输入的通道数量为128层。即一个输入例子的形状为`128*hight*width`
+
+example
+
+```python
+import torch
+from torch import nn
+
+torch.manual_seed(123)
+
+a = torch.rand(3,2,3,3)
+print(a)
+
+print(nn.BatchNorm2d(2)(a))
+
+
+```
+
+```
+tensor([[[[0.2961, 0.5166, 0.2517],
+          [0.6886, 0.0740, 0.8665],
+          [0.1366, 0.1025, 0.1841]],
+
+         [[0.7264, 0.3153, 0.6871],
+          [0.0756, 0.1966, 0.3164],
+          [0.4017, 0.1186, 0.8274]]],
+
+
+        [[[0.3821, 0.6605, 0.8536],
+          [0.5932, 0.6367, 0.9826],
+          [0.2745, 0.6584, 0.2775]],
+
+         [[0.8573, 0.8993, 0.0390],
+          [0.9268, 0.7388, 0.7179],
+          [0.7058, 0.9156, 0.4340]]],
+
+
+        [[[0.0772, 0.3565, 0.1479],
+          [0.5331, 0.4066, 0.2318],
+          [0.4545, 0.9737, 0.4606]],
+
+         [[0.5159, 0.4220, 0.5786],
+          [0.9455, 0.8057, 0.6775],
+          [0.6087, 0.6179, 0.6932]]]])
+tensor([[[[-0.5621,  0.2574, -0.7273],
+          [ 0.8968, -1.3879,  1.5584],
+          [-1.1552, -1.2819, -0.9787]],
+
+         [[ 0.5369, -1.0117,  0.3888],
+          [-1.9141, -1.4584, -1.0073],
+          [-0.6859, -1.7524,  0.9171]]],
+
+
+        [[[-0.2425,  0.7925,  1.5103],
+          [ 0.5422,  0.7042,  1.9901],
+          [-0.6425,  0.7846, -0.6311]],
+
+         [[ 1.0298,  1.1880, -2.0520],
+          [ 1.2915,  0.5833,  0.5047],
+          [ 0.4593,  1.2495, -0.5645]]],
+
+
+        [[[-1.3761, -0.3375, -1.1132],
+          [ 0.3187, -0.1512, -0.8011],
+          [ 0.0269,  1.9569,  0.0493]],
+
+         [[-0.2561, -0.6096, -0.0199],
+          [ 1.3619,  0.8356,  0.3525],
+          [ 0.0933,  0.1281,  0.4116]]]], grad_fn=<NativeBatchNormBackward>)
+```
+
 
 
 #### Upsample [link](https://pytorch.org/docs/stable/generated/torch.nn.Upsample.html#upsample) 
@@ -495,3 +653,18 @@ Upsamples a given multi-channel 1D (temporal), 2D (spatial) or 3D (volumetric) d
 Parameters：
 
 - **scale_factor** ([*float*](https://docs.python.org/3/library/functions.html#float) *or* *Tuple**[*[*float*](https://docs.python.org/3/library/functions.html#float)*] or* *Tuple**[*[*float*](https://docs.python.org/3/library/functions.html#float)*,* [*float*](https://docs.python.org/3/library/functions.html#float)*] or* *Tuple**[*[*float*](https://docs.python.org/3/library/functions.html#float)*,* [*float*](https://docs.python.org/3/library/functions.html#float)*,* [*float*](https://docs.python.org/3/library/functions.html#float)*]**,* *optional*) – multiplier for spatial size. Has to match input size if it is a tuple. 简单来说就是扩大多少倍，长宽都乘以这个倍数。
+
+#### Conv2d [link](https://pytorch.org/docs/master/generated/torch.nn.Conv2d.html#torch.nn.Conv2d)
+
+对由多个输入平面组成的输入信号进行二维卷积
+
+- kernel_size ：卷积核大小
+- stride：卷积的跨度
+- padding：填充物已添加到输入的所有四边
+
+example
+
+```
+Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+```
+
