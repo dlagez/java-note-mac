@@ -1,207 +1,3 @@
-### conda
-
-- `conda --version` #查看conda版本，验证是否安装
-
-- `conda update conda` #更新至最新版本，也会更新其它相关包
-
-- `conda create -n package_name` #创建名为`env_name`的新环境，并在该环境下安装名为`package_name` 的包，可以指定新环境的版本号，
-
-  例如：`conda create -n python2 python=python2.7 numpy pandas`，创建了`python2`环境，`python`版本为2.7，同时还安装了`numpy pandas`包
-
-- `source activate env_name` #切换至`env_name`环境
-
-- `source deactivate` #退出环境
-
-- `conda info -e` #显示所有已经创建的环境
-
-- `conda remove --name env_name –all` #删除环境
-
-- `conda list` #查看所有已经安装的包
-
-- `conda install matplotlib` 安装库
-
-- `conda uninstall xxx`删除库
-
-
-
-查看安装包的版本
-
-```python
-python -m pip show scikit-learn  # to see which version and where scikit-learn is installed
-python -m pip freeze  # to see all packages installed in the active virtualenv
-python -c "import sklearn; sklearn.show_versions()"
-```
-
-
-
-
-
-不常用：
-
-- `conda config --set auto_activate_base false：`可以通过配置`auto_activate_base`关闭自动进入`conda`基础环境：`
-
-换源：
-
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
-conda config --set show_channel_urls yes 
-
-
-
-### matplotlib
-
-`pandas`格式画散点图
-
-```python
-import matplotlib.pyplot as plt
-import pandas as pd
-
-# 读取数据，Molecular_Descriptor.xlsx为自变量，ERα_activity.xlsx为因变量
-data = pd.read_excel("Molecular_Descriptor.xlsx", sheet_name=0)
-label = pd.read_excel("ERα_activity.xlsx", sheet_name=0)
-
-# 由于需要画出一个自变量和因变量的散点图，需要把他两合并。
-frames = [data, label]
-result = pd.concat(frames, axis=1)
-
-# 选出两列来画散点图。SsLi代表一列自变量， pIC50代表因变量
-result.plot.scatter(x='SsLi', y='pIC50')
-```
-
-折线图：
-
-```python
-index = [i for i in range(474)]
-plt.plot(index)
-plt.show()
-```
-
-
-
-### numpy
-
-`ndarray`是`numpy`的对象。
-
-- `np.random.randn(10, 10) ` 创建一个`10*10`的数组 
-
-#### 切片：
-
-删除第一列。逗号前面的是操作行，逗号后面的操作列。
-
-```
-data_numpy[:, 1:]
-```
-
-#### 数据的持久化
-
-```
-np.save('data', data)
-data = np.load('data.npy')
-```
-
-将`pandas`数据编程`numpy`数据：
-
-```python
-import pandas as pd
-data_numpy = data.values
-```
-
-
-
-选取前1500行数据
-
-```python
-train_data = data_num[:1500, :]
-```
-
-
-
-反转列表
-
-方法1：`list(reversed(a))        reversed(a)`返回的是迭代器，所以前面加个list转换为list
-
-方法2：`sorted(a,reverse=True)`
-
-方法3：`a[: :-1]`       其中`[::-1]`代表从后向前取值，每次步进值为1
-
-### pandas
-
-选择指定索引的列
-
-```python
-index = [585, 406, 659, 508, 652, 11, 525, 3, 718, 96, 293, 97, 4, 43, 98, 587, 44, 720, 728, 594]
-
-data = pd.read_excel("Molecular_Descriptor.xlsx", sheet_name=0, index_col='SMILES').astype(float)
-label = pd.read_excel("ERα_activity.xlsx", sheet_name=0, index_col='SMILES').astype(float)
-
-# 选取指定的一列，第五列
-data_4 = data.iloc[:, [4]]
-
-# 选取两列
-data_45 = data.iloc[:, [3, 4]]
-
-# 选取一个列表里面的列。列表里面的数据为索引，注意，索引以开始。
-data_20 = data.iloc[:, index_new]
-```
-
-
-
-### Jupyter Notebook
-
-安装与使用：
-
-```
-pip install notebook
-jupyter notebook
-```
-
-
-
-将环境添加到`notebook`的选择列表里面
-
-```
-python -m ipykernel install --user --name pytorch --display-name "pytorch"
-```
-
-
-
-总结：按h即可查看帮助。
-
-shortcuts ref: [link](https://towardsdatascience.com/jypyter-notebook-shortcuts-bf0101a98330)
-
-- `Shift + Enter` run the current cell, select below
-- `Ctrl + Enter` run selected cells
-- `Alt + Enter` run the current cell, insert below
-- `Ctrl + S` save and checkpoint
-
-
-
-While in command mode (press `Esc` to activate):
-
-- `Enter` take you into edit mode
-- `H` show all shortcuts
-- `Up` select cell above
-- `Down` select cell below
-- `Shift + Up` extend selected cells above
-- `Shift + Down` extend selected cells below
-- `A` insert cell above
-- `B` insert cell below
-- `X` cut selected cells
-- `C` copy selected cells
-- `V` paste cells below
-- `Shift + V` paste cells above
-- `D, D (press the key twice)` delete selected cells
-- `Z` undo cell deletion
-- `S` Save and Checkpoint
-- `Y` change the cell type to *Code*
-- `M` change the cell type to *Markdown*
-- `P` open the command palette. 
-- `Shift + Space` scroll notebook up
-- `Space` scroll notebook down
-
-
-
 ### 常用操作
 
 #### 加载`mat`类型的数据：
@@ -338,18 +134,467 @@ data = np.load('data.npy')
 
 ### python
 
-`@staticmethod`
+merge a
 
-`@staticmethod`是一个内置的装饰器，在`Python`的类中定义静态方法。静态方法不会收到任何引用参数，无论是由类的实例还是由类本身调用。
+#### fold txt to merged txt
 
-- 在类中声明静态方法。
+将一个文件夹的txt文本合并到一个文本里面。code
 
-- 它不能有cls或自参数。
+```python
+import os
+path = "/Volumes/roczhang/WHPU/zen/text2"
+file_list = os.listdir(path)
+f = open('/Volumes/roczhang/WHPU/zen/merged.txt', 'w')
+for filename in file_list:
+    filepath = path + '/' + filename
+    for line in open(filepath):
+        f.writelines(line)
+f.close()
+```
 
-- 静态方法无法访问类属性或实例属性。
 
-- 可以使用`ClassName.MethodName()`和`Object.MethodName()`调用静态方法。
 
-- 它可以返回类的对象。
+#### list to txt or text to list
 
-ref：[link](https://www.tutorialsteacher.com/python/staticmethod-decorator)
+把列表以txt形式的保存与读取.[code](https://github.com/dlagez/bigdata/blob/master/demo3_/test.py)
+
+```python
+key_list = ['环境保护', '环保']
+
+with open('/Volumes/roczhang/temp/list.txt', 'w') as f:
+    for i in key_list:
+        f.write(i+'\n')
+
+file = open('/Volumes/roczhang/temp/list.txt')
+lines = file.readlines()
+for line in lines:
+    line = line.strip('\n')
+    print(line)
+
+read_line = []
+for line in lines:
+    line = line.strip('\n')
+    read_line.append(line)
+```
+
+
+
+{} dict to txt
+
+```
+
+```
+
+
+
+#### word to txt
+
+把一个文件夹的word文档转换成相应的txt文件。只会读取文字。[code](https://github.com/dlagez/bigdata/blob/master/demo3_/word_to_txt.py)
+
+```python
+from docx import Document
+import os
+# 将一个文件夹的word文件转换称txt文件
+path = '/Volumes/roczhang/WHPU/zen/政策文本'
+path_txt = '/Volumes/roczhang/WHPU/zen/test'  # 这个文件夹用来装txt文件
+file_list = os.listdir(path)  # 读取出docx文件夹所有的文件名字
+
+for file in file_list:
+    file_path = path + '/' + file
+    # print(file_path)
+    doc = Document(file_path)  # 读取docx文件
+    f = open(path_txt + '/' + file.split('.')[0] + '.txt', 'a')  # 把.docx的后缀改成txt，并创建txt文件。
+    print(file_path + '\n')
+    for paragraph in doc.paragraphs:
+        f.write(paragraph.text)  # 将docx段落写入txt文件
+        print(paragraph.text + '\n')
+    f.close()  # txt文件使用完成后关闭
+
+# 更好的写法
+for file in file_list:
+    file_path = path + '/' + file
+    # print(file_path)
+    doc = Document(file_path)  # 读取docx文件
+    with open(path_txt + '/' + file.split('.')[0] + '.txt', 'a') as f:
+        for paragraph in doc.paragraphs:
+            f.write(paragraph.text)  # 将docx段落写入txt文件
+            print(paragraph.text + '\n')
+```
+
+
+
+#### 二维list to txt
+
+将二维list写入文件
+
+```python
+output = open('/Volumes/roczhang/WHPU/zen/result.txt', 'w')
+for i in range(len(result)):
+    output.write('第' + str(i) + '篇文章!' + '\n')  # 在每篇（每一行开始的时候做一个标记）
+    for j in range(len(result[i])):
+        # print(result[i][j])
+        output.write(str(result[i][j]))  # 写入一行数据
+        output.write(' ')
+    output.write('\n\n')  # 每写完一行数据之后按两次回撤键
+output.close()
+```
+
+效果是这样的
+
+![image-20220107162556713](https://cdn.jsdelivr.net/gh/dlagez/img@master/image-20220107162556713.png)
+
+#### list 统计元素个数
+
+```
+from collections import Counter
+a = [1, 2, 3, 1, 1, 2]
+result = Counter(a)
+```
+
+
+
+#### {} sorted
+
+按照key排序
+
+```
+my_dict = {'lilee':25, 'age':24, 'phone':12}
+sorted(my_dict.keys())
+输出结果为
+
+['age', 'lilee', 'phone']
+```
+
+key使用lambda匿名函数取value进行排序
+
+```
+d = {'lilee':25, 'wangyan':21, 'liqun':32, 'age':19}
+sorted(d.items(), key=lambda item:item[1])
+输出结果为
+
+[('age',19),('wangyan',21),('lilee',25),('liqun',32)]
+如果需要倒序则
+
+sorted(d.items(), key=lambda item:item[1], reverse=True)
+得到的结果就会是
+
+[('liqun',32),('lilee',25),('wangyan',21),('age',19)]
+```
+
+
+
+
+
+
+
+### conda
+
+- `conda --version` #查看conda版本，验证是否安装
+
+- `conda update conda` #更新至最新版本，也会更新其它相关包
+
+- `conda create -n package_name` #创建名为`env_name`的新环境，并在该环境下安装名为`package_name` 的包，可以指定新环境的版本号，
+
+  例如：`conda create -n python2 python=python2.7 numpy pandas`，创建了`python2`环境，`python`版本为2.7，同时还安装了`numpy pandas`包
+
+- `source activate env_name` #切换至`env_name`环境
+
+- `source deactivate` #退出环境
+
+- `conda info -e` #显示所有已经创建的环境
+
+- `conda remove --name env_name –all` #删除环境
+
+- `conda list` #查看所有已经安装的包
+
+- `conda install matplotlib` 安装库
+
+- `conda uninstall xxx`删除库
+
+
+
+查看安装包的版本
+
+```python
+python -m pip show scikit-learn  # to see which version and where scikit-learn is installed
+python -m pip freeze  # to see all packages installed in the active virtualenv
+python -c "import sklearn; sklearn.show_versions()"
+```
+
+
+
+
+
+不常用：
+
+- `conda config --set auto_activate_base false：`可以通过配置`auto_activate_base`关闭自动进入`conda`基础环境：`
+
+换源：
+
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config --set show_channel_urls yes 
+
+
+
+### matplotlib
+
+`pandas`格式画散点图
+
+```python
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# 读取数据，Molecular_Descriptor.xlsx为自变量，ERα_activity.xlsx为因变量
+data = pd.read_excel("Molecular_Descriptor.xlsx", sheet_name=0)
+label = pd.read_excel("ERα_activity.xlsx", sheet_name=0)
+
+# 由于需要画出一个自变量和因变量的散点图，需要把他两合并。
+frames = [data, label]
+result = pd.concat(frames, axis=1)
+
+# 选出两列来画散点图。SsLi代表一列自变量， pIC50代表因变量
+result.plot.scatter(x='SsLi', y='pIC50')
+```
+
+折线图：
+
+```python
+index = [i for i in range(474)]
+plt.plot(index)
+plt.show()
+```
+
+
+
+#### plt
+
+#### 图相关
+
+一个背景上画两个图。
+
+```python
+fig, axs = plt.subplots(2, 1)  # 参数为行列数，这里是两行一列。
+```
+
+设置标题
+
+```
+ax.set_title('Score by group and gender')
+```
+
+设置右上角的图例
+
+```python
+ax.legend()  # Place a legend on the Axes.
+```
+
+显示网格：
+
+```
+axs[0].grid(True)
+```
+
+调整子图之间和周围的填充。
+
+```python
+fig.tight_layout()
+```
+
+#### Y轴相关的设置
+
+设置y轴名：
+
+```python
+fig, ax = plt.subplots()
+ax.set_ylabel('Scores')set_ylabel
+```
+
+#### X轴相关的设置
+
+设置x轴的标签
+
+```python
+ax.set_xticks(x)  # Set the xaxis' tick locations.
+ax.set_xticklabels(labels)  # Set the xaxis' labels with list of string labels.
+```
+
+设置x轴试图限制
+
+```python
+axs[0].set_xlim(0, 2)
+```
+
+设置x轴的名字
+
+```python
+axs[0].set_xlabel('time')
+```
+
+设置柱形图上的标记 padding=3表示叫数字抬高一点，以免数字和柱形图重叠了。
+
+```python
+ax.bar_label(rects1, padding=3)  # 柱形图上面的数字
+ax.bar_label(rects2, padding=3)
+```
+
+
+
+#### example
+
+画柱形图：[doc](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.bar.html#matplotlib.axes.Axes.bar)
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+labels = ['G1', 'G2', 'G3', 'G4', 'G5']
+men_means = [20, 34, 30, 35, 27]
+women_means = [25, 32, 34, 20, 25]
+
+x = np.arange(len(labels)) # 标签的位置
+width = 0.35 # 柱的宽度
+
+fig, ax = plt.subplots()
+# x - width/2: 柱坐标开始的地方, width: 柱的宽度, 
+rects1 = ax.bar(x - width/2, men_means, width, label='Men')
+rects2 = ax.bar(x + width/2, women_means, width, label='Women')
+
+ax.set_ylabel('Scores')
+ax.set_title('Score by group and gender')
+ax.set_xticks(x)  # 用来显示x的标签
+ax.set_xticklabels(labels)
+ax.legend()  # 和上面的rects的labels对应。用来显示labels。
+
+
+ax.bar_label(rects1, padding=3)  # 柱形图上面的数字
+ax.bar_label(rects2, padding=3)
+
+
+fig.tight_layout()
+plt.show()
+```
+
+### numpy
+
+`ndarray`是`numpy`的对象。
+
+- `np.random.randn(10, 10) ` 创建一个`10*10`的数组 
+
+#### 切片：
+
+删除第一列。逗号前面的是操作行，逗号后面的操作列。
+
+```
+data_numpy[:, 1:]
+```
+
+#### 数据的持久化
+
+```
+np.save('data', data)
+data = np.load('data.npy')
+```
+
+将`pandas`数据编程`numpy`数据：
+
+```python
+import pandas as pd
+data_numpy = data.values
+```
+
+
+
+选取前1500行数据
+
+```python
+train_data = data_num[:1500, :]
+```
+
+
+
+反转列表
+
+方法1：`list(reversed(a))        reversed(a)`返回的是迭代器，所以前面加个list转换为list
+
+方法2：`sorted(a,reverse=True)`
+
+方法3：`a[: :-1]`       其中`[::-1]`代表从后向前取值，每次步进值为1
+
+### pandas
+
+选择指定索引的列
+
+```python
+index = [585, 406, 659, 508, 652, 11, 525, 3, 718, 96, 293, 97, 4, 43, 98, 587, 44, 720, 728, 594]
+
+data = pd.read_excel("Molecular_Descriptor.xlsx", sheet_name=0, index_col='SMILES').astype(float)
+label = pd.read_excel("ERα_activity.xlsx", sheet_name=0, index_col='SMILES').astype(float)
+
+# 选取指定的一列，第五列
+data_4 = data.iloc[:, [4]]
+
+# 选取两列
+data_45 = data.iloc[:, [3, 4]]
+
+# 选取一个列表里面的列。列表里面的数据为索引，注意，索引以开始。
+data_20 = data.iloc[:, index_new]
+```
+
+
+
+### Jupyter Notebook
+
+安装与使用：
+
+```
+pip install notebook
+jupyter notebook
+```
+
+
+
+将环境添加到`notebook`的选择列表里面
+
+```
+python -m ipykernel install --user --name pytorch --display-name "pytorch"
+```
+
+
+
+总结：按h即可查看帮助。
+
+shortcuts ref: [link](https://towardsdatascience.com/jypyter-notebook-shortcuts-bf0101a98330)
+
+- `Shift + Enter` run the current cell, select below
+- `Ctrl + Enter` run selected cells
+- `Alt + Enter` run the current cell, insert below
+- `Ctrl + S` save and checkpoint
+
+
+
+While in command mode (press `Esc` to activate):
+
+- `Enter` take you into edit mode
+- `H` show all shortcuts
+- `Up` select cell above
+- `Down` select cell below
+- `Shift + Up` extend selected cells above
+- `Shift + Down` extend selected cells below
+- `A` insert cell above
+- `B` insert cell below
+- `X` cut selected cells
+- `C` copy selected cells
+- `V` paste cells below
+- `Shift + V` paste cells above
+- `D, D (press the key twice)` delete selected cells
+- `Z` undo cell deletion
+- `S` Save and Checkpoint
+- `Y` change the cell type to *Code*
+- `M` change the cell type to *Markdown*
+- `P` open the command palette. 
+- `Shift + Space` scroll notebook up
+- `Space` scroll notebook down
+
+

@@ -87,9 +87,7 @@ Applies a linear transformation to the incoming data: y=xAT+b*y*=*x**A**T*+*b*
 
 
 
-`*block(opt.latent_dim, 128, normalize=False)`
 
-block前面带一个星号表示，block个方法，需要将方法执行完成后返回值用到`nn.Sequential`函数里面。*表示序列解包。
 
 ```python
 class Discriminator(nn.Module):
@@ -180,4 +178,64 @@ gen_imgs = generator(z)
 
 
 
-输入的形状：(imgs.shape[0], opt.latent_dim)
+训练过程：
+
+```python
+for epoch in range(opt.n_epochs):
+    for i, (imgs, _) in enumerate(dataloader):
+
+        # Adversarial ground truths
+        valid = Variable(Tensor(imgs.size(0), 1).fill_(1.0), requires_grad=False)
+        fake = Variable(Tensor(imgs.size(0), 1).fill_(0.0), requires_grad=False)
+
+        # 将真实的图片放入device中
+        real_imgs = Variable(imgs.type(Tensor))
+
+        # -----------------
+        #  Train Generator
+        # -----------------
+				# 将优化器的梯度置零
+        optimizer_G.zero_grad()
+
+        # z为64*100的形状
+        z = Variable(Tensor(np.random.normal(0, 1, (imgs.shape[0], opt.latent_dim))))
+
+        # 生成一个批次的图片 64*1*28*28 
+        gen_imgs = generator(z)
+
+        # Loss measures generator's ability to fool the discriminator
+        # 这里首先使用D网络测试G网络生成的图片。也就是说G网络的参数更新是根据D网络的性能来进行更新的
+        g_loss = adversarial_loss(discriminator(gen_imgs), valid)
+				
+        # 反向传播。优化网络的节点。
+        g_loss.backward()
+        # 
+        optimizer_G.step()
+
+        # ---------------------
+        #  Train Discriminator
+        # ---------------------
+
+        # 首先需要置零梯度
+        optimizer_D.zero_grad()
+
+        # Measure discriminator's ability to classify real from generated samples
+        # D网络首先检测真实图片，再检测生成图片。利用两个损失来更新D网络的参数。
+        real_loss = adversarial_loss(discriminator(real_imgs), valid)
+        fake_loss = adversarial_loss(discriminator(gen_imgs.detach()), fake)
+        d_loss = (real_loss + fake_loss) / 2
+
+        d_loss.backward()
+        optimizer_D.step()
+
+        print(
+            "[Epoch %d/%d] [Batch %d/%d] [D loss: %f] [G loss: %f]"
+            % (epoch, opt.n_epochs, i, len(dataloader), d_loss.item(), g_loss.item())
+        )
+
+        batches_done = epoch * len(dataloader) + i
+        if batches_done % opt.sample_interval == 0:
+            # 保存前25张图片
+            save_image(gen_imgs.data[:25], "images/%d.png" % batches_done, nrow=5, normalize=True)
+```
+

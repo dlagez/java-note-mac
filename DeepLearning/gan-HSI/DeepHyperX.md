@@ -1,7 +1,7 @@
 ### 执行命令：
 
 ```
-python main.py --model SVM --dataset IndianPines --training_sample 0.3 --epoch 1000 --cuda 0
+python main.py --model SVM --dataset IndianPines --training_sample 0.09 --epoch 300 --cuda 0
 ```
 
 --training_sample 0.3: using 30% of the samples for training and the rest for testing

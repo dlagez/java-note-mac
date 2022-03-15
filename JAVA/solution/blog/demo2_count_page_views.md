@@ -30,8 +30,6 @@ http://localhost:8080/visit?app=demo&ip=192.168.0.1&uri=http://hhui.top/home
 
 
 
-![image-20220121154156801](C:\Users\pzhang36\AppData\Roaming\Typora\typora-user-images\image-20220121154156801.png)
-
 
 
 实现方案：
