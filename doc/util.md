@@ -1303,6 +1303,40 @@ cdn 加速：`https://cdn.jsdelivr.net/gh/dlagez/img@master`
 
 
 
+上传文件以时间戳命名
+
+```
+picgo install super-prefix
+```
+
+并修改配置文件
+
+
+
+```
+roczhang@roczhang-mac .picgo % vim config.json
+roczhang@roczhang-mac .picgo % cat config.json 
+{
+  "picBed": {
+    "uploader": "github",
+    "current": "github",
+    "github": {
+      "repo": "dlagez/img",
+      "branch": "master",
+      "token": "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",
+      "path": "",
+      "customUrl": "https://cdn.jsdelivr.net/gh/dlagez/img@master"
+    }
+  },
+  "picgoPlugins": {
+    "picgo-plugin-super-prefix": true
+  },
+  "picgo-plugin-super-prefix": {
+     "fileFormat": "YYYYMMDDHHmmss"
+  } //super-prefix插件配置
+}
+```
+
 picgo 图床插件
 
 https://github.com/xlzy520/picgo-plugin-bilibili

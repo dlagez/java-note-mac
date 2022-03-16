@@ -1,3 +1,7 @@
+大家可以来我的博客串串门：[http://dlage.cn](http://dlage.cn)
+
+
+
 用户：ubuntu
 
 密码：Dlagez3133..
@@ -26,5 +30,22 @@ ssh -t ubuntu@175.24.172.220 -p 22
 ```
 ssh shujixueyuan@139.155.250.119 -p 8203
 223.76.241.174
+```
+
+
+
+实验室连接
+
+```
+ssh LOONGTR@192.168.31.102
+123456
+
+去d盘：
+cd /d d:
+cd D:\RocZhang\code\PyTorch-GAN\implementations\gan
+使用conda：
+conda activate detectron2
+
+直接看结果： http://192.168.31.102:8097
 ```
 

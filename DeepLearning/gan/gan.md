@@ -1,3 +1,5 @@
+论文翻译、网络模型解析、代码解析、debug查看前向传播参数变化
+
 Generative Adversarial Nets
 
 ### Abstract
@@ -114,6 +116,8 @@ class Discriminator(nn.Module):
 
 
 网络结构：G
+
+其实这个G网络比较简单，由于只有全链接层，没有卷积层。
 
 ```
 Namespace(b1=0.5, b2=0.999, batch_size=64, channels=1, img_size=28, latent_dim=100, lr=0.0002, n_cpu=8, n_epochs=200, sample_interval=400)
@@ -239,3 +243,53 @@ for epoch in range(opt.n_epochs):
             save_image(gen_imgs.data[:25], "images/%d.png" % batches_done, nrow=5, normalize=True)
 ```
 
+
+
+### debug
+
+为了弄清楚网络运行时的具体参数，比如输入G网络的噪声是什么形状什么样子，在经过G网络时是怎么前向传播的，我将代码进行了debug进行查看。首先我们需要在这几个地方打上断点：
+
+![image-20220315205601830](https://cdn.jsdelivr.net/gh/dlagez/img@master/image-20220315205601830.png)
+
+
+
+![image-20220315205619132](https://cdn.jsdelivr.net/gh/dlagez/img@master/image-20220315205619132.png)
+
+这样我们运行网络时可以直接进入到epoch循环中。在循环中如果使用到了G网络和D网络就会进入到网络的forward代码中。我们来看一看网络刚开始运行时初始参数是怎么设置的。
+
+
+
+![Untitled11](https://cdn.jsdelivr.net/gh/dlagez/img@master/Untitled11.png)
+
+其中需要格外注意的几个参数：
+
+- fake、valid：可以看到这两货的形状都是（64，1）。为什么是这个形状，因为他们代表的是数据的标签，可以看到fake的值都是0，valid的值都是1，对应着真和假。因为判别器只会识别出照片的真假。
+- img shape（1，28，28）：使用的mnist手写字体，一张图片的大小就是长宽为28*28.第一个参数1表示他的图层为1。（RGB图像的图层为3）
+- imgs（64，1，28，28）：表示一批次的图像，在设置参数时默认一批次图像的数量为64张。所以第一个参数为64。
+
+
+
+在生成器中，数据是怎么前向传播的：
+
+首先：进入模型时，传入的噪声为`64*100`，` 1*100`表示一张图片的噪声，一个噪声经过G网络之后生成一张`1*28*28`的图片。这里传入了64个噪声。
+
+第一步：全链接将`64*100`形状计算完之后变成`64*128`的形状。之后会经过一个激活层将非线性加入到网络节点之中。
+
+![Untitled12](https://cdn.jsdelivr.net/gh/dlagez/img@master/Untitled12.png)
+
+第二步：输入形状：`64*128`输出形状：`64*256`，并且经过了激活函数激活。
+
+由于都是全链接，所以后面的传播和这个类似。
+
+![Untitled](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220315215007.png)
+
+这里的*img_shape需要说明一下，
+*表示这个参数需要解码之后才会作为参数传入到函数中，也就是这行代码等价于下面的代码
+
+```python
+img = img.view(img.size(0), (1,28,28))
+```
+
+到这里就很清楚了：生成了64张图片。一个批次。
+
+![Untitled](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220315215831.png)
