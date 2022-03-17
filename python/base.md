@@ -132,6 +132,21 @@ data = np.load('data.npy')
 
 
 
+#### 时间
+
+```python
+import time
+
+time.time()  # Out[7]: 1647482601.638675
+type(time.time())  # Out[6]: float
+
+int(time.time())  # Out[5]: 1647482582
+
+str(int(time.time()))  # Out[8]: '1647482628'
+```
+
+
+
 ### python
 
 merge a
@@ -596,5 +611,4 @@ While in command mode (press `Esc` to activate):
 - `P` open the command palette. 
 - `Shift + Space` scroll notebook up
 - `Space` scroll notebook down
-
 

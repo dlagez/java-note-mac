@@ -2136,9 +2136,192 @@ Kappa: 0.417
 
 二：
 
+Accuracy : 72.697% 感觉虽然训练的很慢，但是效果并不好。但是这个损失曲线和准确率提升的很稳定。
 
+![image-20220316204338666](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220316204341.png)
 
 ```
 python main.py --model chen --dataset IndianPines --training_sample 0.3 --epoch 400 --cuda 0
+```
+
+```
+(detectron2) loongtr@DESKTOP-GCHQHDA D:\RocZhang\code\DeepHyperX>python main.py --model chen --dataset IndianPines --training_sample 0.3 --epoch 400 --cuda 0
+Computation on CUDA GPU device 0
+Setting up a new session...
+Image has dimensions 145x145 and 200 channels
+D:\RocZhang\code\DeepHyperX\utils.py:465: FutureWarning: Using a non-tuple sequence for multidimensional indexing is deprecated; use `arr[tuple(seq)]` instead of 
+`arr[seq]`. In the future this will be interpreted as an array index, `arr[np.array(seq)]`, which will result either in an error or a different result.
+  train_gt[train_indices] = gt[train_indices]
+D:\RocZhang\code\DeepHyperX\utils.py:466: FutureWarning: Using a non-tuple sequence for multidimensional indexing is deprecated; use `arr[tuple(seq)]` instead of 
+`arr[seq]`. In the future this will be interpreted as an array index, `arr[np.array(seq)]`, which will result either in an error or a different result.
+  test_gt[test_indices] = gt[test_indices]
+3074 samples selected (over 10249)
+Running an experiment with the chen model run 1/1
+D:\RocZhang\code\DeepHyperX\utils.py:465: FutureWarning: Using a non-tuple sequence for multidimensional indexing is deprecated; use `arr[tuple(seq)]` instead of 
+`arr[seq]`. In the future this will be interpreted as an array index, `arr[np.array(seq)]`, which will result either in an error or a different result.
+  train_gt[train_indices] = gt[train_indices]
+D:\RocZhang\code\DeepHyperX\utils.py:466: FutureWarning: Using a non-tuple sequence for multidimensional indexing is deprecated; use `arr[tuple(seq)]` instead of 
+`arr[seq]`. In the future this will be interpreted as an array index, `arr[np.array(seq)]`, which will result either in an error or a different result.
+  test_gt[test_indices] = gt[test_indices]
+{'dataset': 'IndianPines', 'model': 'chen', 'folder': './Datasets/', 'cuda': 0, 'runs': 1, 'training_sample': 0.3, 'sampling_mode': 'random', 'epoch': 400, 'class
+_balancing': False, 'test_stride': 1, 'flip_augmentation': False, 'radiation_augmentation': False, 'mixture_augmentation': False, 'with_exploration': False, 'n_cl
+asses': 17, 'n_bands': 200, 'ignored_labels': [0], 'device': device(type='cuda', index=0), 'weights': tensor([0., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 
+1., 1., 1., 1.],
+       device='cuda:0'), 'patch_size': 27, 'learning_rate': 0.003, 'batch_size': 100, 'scheduler': <torch.optim.lr_scheduler.ReduceLROnPlateau object at 0x000001B
+3A63C29C8>, 'supervision': 'full', 'center_pixel': True}
+Network :
+----------------------------------------------------------------
+        Layer (type)               Output Shape         Param #
+================================================================
+            Conv3d-1      [-1, 32, 169, 24, 24]          16,416
+         MaxPool3d-2      [-1, 32, 169, 12, 12]               0
+           Dropout-3      [-1, 32, 169, 12, 12]               0
+            Conv3d-4        [-1, 32, 138, 9, 9]         524,320
+         MaxPool3d-5        [-1, 32, 138, 4, 4]               0
+           Dropout-6        [-1, 32, 138, 4, 4]               0
+            Conv3d-7        [-1, 32, 107, 1, 1]         524,320
+           Dropout-8        [-1, 32, 107, 1, 1]               0
+            Linear-9                   [-1, 17]          58,225
+================================================================
+Total params: 1,123,281
+Trainable params: 1,123,281
+Non-trainable params: 0
+----------------------------------------------------------------
+Input size (MB): 0.56
+Forward/backward pass size (MB): 39.51
+Params size (MB): 4.28
+Estimated Total Size (MB): 44.35
+----------------------------------------------------------------
+
+Inference on the image: 142it [00:41,  3.43it/s]
+Confusion matrix :
+[[   0    0    0    0    0    0    0    0    0    0    0    0    0    0
+     0    0    0]
+ [   0   27    0    0    0    0    0    0    0    0    0    5    0    0
+     0    0    0]
+ [  57    0  728    3    0    0    0    0    0    0   25  184    3    0
+     0    0    0]
+ [ 317    0    0  240    0    1    0    0    0    0   10   13    0    0
+     0    0    0]
+ [  92    0    0    1   58    0    7    0    0    0    5    3    0    0
+     0    0    0]
+ [ 142    0    0    0    0  177    2    6    0    0    2    0    0    0
+     9    0    0]
+ [   0    0    0    0    0    0  505    0    0    0    0    4    0    0
+     2    0    0]
+ [   0    0    0    0    0    0    0   20    0    0    0    0    0    0
+     0    0    0]
+ [ 138    0    0    0    0    0    7    0  186    0    0    0    0    0
+     4    0    0]
+ [   0    0    0    0    0    0    5    0    0    9    0    0    0    0
+     0    0    0]
+ [ 104    0    0    0    0    0    0    0    0    0  573    0    3    0
+     0    0    0]
+ [ 184    0    0    0    0    0    1    0    0    0    3 1531    0    0
+     0    0    0]
+ [ 120    0   10    0    1    1    0    0    0    0   16    5  259    0
+     0    0    3]
+ [   0    0    0    0    0    2    3    0    0    0    0    0    0  138
+     0    0    0]
+ [ 220    0    0    0    0    0    0    0    0    0    0    4    0    0
+   662    0    0]
+ [ 198    0    0    0    0    0    1    0    0    1    2    1    0    0
+     6   61    0]
+ [   0    0    0    0    0    0    0    0    0    0    9    7    7    0
+     0    0   42]]---
+Accuracy : 72.697%
+---
+F1 scores :
+        Undefined: 0.000
+        Alfalfa: 0.915
+        Corn-notill: 0.838
+        Corn-mintill: 0.582
+        Corn: 0.516
+        Grass-pasture: 0.682
+        Grass-trees: 0.969
+        Grass-pasture-mowed: 0.870
+        Hay-windrowed: 0.714
+        Oats: 0.750
+        Soybean-notill: 0.865
+        Soybean-mintill: 0.881
+        Soybean-clean: 0.754
+        Wheat: 0.982
+        Woods: 0.844
+        Buildings-Grass-Trees-Drives: 0.369
+        Stone-Steel-Towers: 0.764
+---
+Kappa: 0.694
+
+```
+
+
+
+三：
+
+
+
+这个跑了几个小时，terminal连接断开了。
+
+```
+python main.py --model chen --dataset IndianPines --training_sample 0.6 --epoch 500 --cuda 0
+```
+
+
+
+由于前面的一个模型需要运行很多次来比较准确率，但是呢visdom画的图都在一个页面，导致页面及其的混乱。所以我在画图时加了一个时间戳，在保存文件时将每次运行的visdom画图都分离开。
+
+### li
+
+```
+Network :
+----------------------------------------------------------------
+        Layer (type)               Output Shape         Param #
+================================================================
+            Conv3d-1        [-1, 16, 196, 3, 3]           1,024
+            Conv3d-2        [-1, 32, 196, 1, 1]          13,856
+            Linear-3                   [-1, 17]         106,641
+================================================================
+Total params: 121,521
+Trainable params: 121,521
+Non-trainable params: 0
+----------------------------------------------------------------
+Input size (MB): 0.02
+Forward/backward pass size (MB): 0.26
+Params size (MB): 0.46
+Estimated Total Size (MB): 0.75
+```
+
+一：
+
+```
+python main.py --model li --dataset IndianPines --training_sample 0.4 --epoch 500 --cuda 0
+```
+
+结果：保存在：IndianPines_li_1647486666
+
+二：
+
+```
+python main.py --model li --dataset IndianPines --training_sample 0.5 --epoch 600 --cuda 0
+```
+
+结果保存在：IndianPines_li_1647487068
+
+
+
+感觉准确率还蛮高的：Accuracy : 93.385%
+
+
+
+### he
+
+一：
+
+这个损失曲线、准确率曲线很理想啊。
+
+![image-20220317121412240](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220317121414.png)
+
+```
+python main.py --model he --dataset IndianPines --training_sample 0.3 --epoch 600 --cuda 0
 ```
 

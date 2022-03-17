@@ -117,7 +117,7 @@ class Discriminator(nn.Module):
 
 网络结构：G
 
-其实这个G网络比较简单，由于只有全链接层，没有卷积层。
+其实这个G网络比较简单，由于只有全链接层，没有卷积层。后面在debug中我会将参数图给出来。
 
 ```
 Namespace(b1=0.5, b2=0.999, batch_size=64, channels=1, img_size=28, latent_dim=100, lr=0.0002, n_cpu=8, n_epochs=200, sample_interval=400)
@@ -147,7 +147,7 @@ Non-trainable params: 0
 
 
 
-D:
+D: 其实也不复杂，就是将一批次图像输入到网络，然后使用全链接层，直到输出层为一个数。此时输出的（）
 
 ```
 Namespace(b1=0.5, b2=0.999, batch_size=64, channels=1, img_size=28, latent_dim=100, lr=0.0002, n_cpu=8, n_epochs=200, sample_interval=400)
@@ -293,3 +293,43 @@ img = img.view(img.size(0), (1,28,28))
 到这里就很清楚了：生成了64张图片。一个批次。
 
 ![Untitled](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220315215831.png)
+
+至此生成器的流程走完了。我们来看一下像素的转换过程。（画图软件：[draw.io](https://drawio-app.com)）
+
+<img src="https://cdn.jsdelivr.net/gh/dlagez/img@master/20220316220130.png" alt="generate" style="zoom: 67%;" />
+
+
+
+
+
+判别器：
+
+首先我们看看判别器的输入数据：如下图。
+
+![Untitled](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220316212456.png)
+
+输入到D网络中的参数：
+
+
+
+![Untitled](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220316213204.png)
+
+流程也比较简单，直接上参数图：
+
+将一批次的数据送进D网络。然后输出一个数即可。0/1代表真假。在判别器的眼中，一张图像只有真假之分。
+
+注意：一个批次的D网络输出的数据形状为（64*1）
+
+
+
+<img src="https://cdn.jsdelivr.net/gh/dlagez/img@master/20220316220120.png" alt="Discriminator" style="zoom:67%;" />
+
+
+
+至此网络解析完成。
+
+
+
+原文连接：
+
+大家可以来我的博客串串门：[http://dlage.cn](http://dlage.cn)

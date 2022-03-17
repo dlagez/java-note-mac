@@ -36,7 +36,7 @@ ssh LOONGTR@192.168.31.102
 
 去d盘：
 cd /d d:
-cd D:\RocZhang\code\PyTorch-GAN\implementations\gan
+cd /d  D:\RocZhang\code\PyTorch-GAN\implementations\gan
 使用conda：
 conda activate detectron2
 

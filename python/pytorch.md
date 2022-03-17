@@ -341,6 +341,70 @@ summary(G)
 
 
 
+### Visdom
+
+#### 创建visdom环境
+
+```text
+vis = visdom.Visom(env='model_1')
+```
+
+这样就创建了一个环境，运行一下在浏览器中输入 *http://localhost:8097* 就能在Enviroument里面看到我们的环境。当然现在里面还什么都没有。
+
+![image-20220317094349693](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220317094351.png)
+
+#### 文字输出
+
+```text
+vis.text('Hello World', win='text1')
+```
+
+通过上面这句话，就会在刚刚浏览器地址下出现一个窗口(text1)，写着我们想要输出的文字。
+
+![image-20220317094438459](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220317094440.png)
+
+如果我们想要在这个窗口的文本后面进行追加，那么同样使用上面这句，只需要传入append=True这个参数即可。
+
+```text
+vis.text('Hi', win='text1', append=True)
+```
+
+
+
+#### 二维图像
+
+对于模型，我们常常会记录下输出的loss数值，用来观察训练情况。那么这个时候使用visdom来进行实时观测且可视化就非常方便了，visdom可以直接对Tensor进行操作。
+往往会像下面这样写：
+
+```text
+# 这里对 x^2 这个函数的0~9范围进行可视输出
+for i in range(10):  
+    vis.line(X=torch.FloatTensor([i]), Y=torch.FloatTensor([i**2]), win='loss', update='append' if i> 0 else None)
+```
+
+
+
+<img src="/Users/roczhang/Library/Application Support/typora-user-images/image-20220317094604442.png" alt="image-20220317094604442" style="zoom: 33%;" />
+
+参数X传入x轴的数值，Y轴中传入y轴数值。重点是这里传入的参数必须是Tensor或者是numpy类型的，更新参数的时候除了第一次后面都令update=‘append'即可。
+
+
+
+
+
+#### 远程监督训练
+
+很多时候，我们都会把程序丢到服务器上去进行训练，那么每次要进行观察的时候往往非常不方便，特别是使用的K80这种只能使用终端的显卡。 
+**这个时候我们可以通过浏览器访问远程服务器地址的8097（默认）端口来远程观察模型的训练情况！** 
+
+假设我服务器的ip地址为10.21.21.21。 
+那么我们打开 *[http://10.21.21.21:8097](https://link.zhihu.com/?target=http%3A//10.21.21.21%3A8097)* 即可观察到。
+可以说是非常方便了。
+
+
+
+
+
 ### pytorch method
 
 #### 序列解包

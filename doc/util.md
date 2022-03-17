@@ -93,6 +93,8 @@ docker run -d --name kibana -p 5601:5601 kibana:7.6.2
 
 ref：[link](https://mp.weixin.qq.com/s?__biz=MzAxODQxMDM0Mw==&mid=2247485544&idx=1&sn=afc9d9f72d811ec847fa64108d5c7412&scene=21#wechat_redirect)
 
+### 五种常用操作
+
 **需求一，如何把`work dir`中的修改加入`stage`**。
 
 这个是最简单，使用 **`git add`** 相关的命令就行了。顺便一提，`add`有个别名叫做`stage`，也就是说你可能见到`git stage`相关的命令，这个命令和`git add`命令是完全一样的。
@@ -190,6 +192,14 @@ Updated 1 path from 2bdf04a
 **风险等级：高风险。**
 
 理由：这个操作会将指定文件在`work dir`的数据恢复成指定`commit`的样子，且会删除该文件在`stage`中的数据，都无法恢复，所以应该慎重使用。
+
+#### 已经提交到github的文件夹取消追踪
+
+ 虽然会追踪, 但是还是需要在.gitignore里面设置一下,不然一直报红.
+
+```
+git rm -r --cached dir
+```
 
 
 
