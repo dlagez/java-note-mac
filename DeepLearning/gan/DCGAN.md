@@ -155,7 +155,7 @@ WALKING IN THE LATENT SPACE
 
 VISUALIZING THE DISCRIMINATOR FEATURES
 
-之前的工作表明，对CNN进行大型图像数据集的监督培训会产生非常强大的学习功能（Zeiler和Fergus，2014年）。此外，接受现场分类培训的受监督CNN学习物体探测器（Oquab等人，2014年）。我们证明，在大型图像数据集上训练的无监督DCGAN也可以学习有趣的功能层次结构。使用（Springenberg等人，2014年）提议的引导式反向传播，我们在图5中显示，鉴别器学到的功能在卧室的典型部分激活，如床和窗户。为了进行比较，在同一图中，我们给出了随机初始化功能的基线，这些功能没有在语义上相关或有趣的任何内容上激活。
+之前的工作表明，对`CNN`进行大型图像数据集的监督培训会产生非常强大的学习功能（`Zeiler`和`Fergus`，2014年）。此外，接受现场分类培训的受监督CNN学习物体探测器（`Oquab`等人，2014年）。我们证明，在大型图像数据集上训练的无监督`DCGAN`也可以学习有趣的功能层次结构。使用（`Springenberg`等人，2014年）提议的引导式反向传播，我们在图5中显示，鉴别器学到的功能在卧室的典型部分激活，如床和窗户。为了进行比较，在同一图中，我们给出了随机初始化功能的基线，这些功能没有在语义上相关或有趣的任何内容上激活。
 
 
 
@@ -385,53 +385,194 @@ for epoch in range(opt.n_epochs):
 
 ```
 
- 其中需要注意的是：
-
-网络结构：
+ 其中需要注意的是：网络结构，使用`torchsummary`查看
 
 ```txt
-Generator(
-  (l1): Sequential(
-    (0): Linear(in_features=100, out_features=8192, bias=True)
-  )
-  (conv_blocks): Sequential(
-    (0): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-    (1): Upsample(scale_factor=2.0, mode=nearest)
-    (2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
-    (3): BatchNorm2d(128, eps=0.8, momentum=0.1, affine=True, track_running_stats=True)
-    (4): LeakyReLU(negative_slope=0.2, inplace=True)
-    (5): Upsample(scale_factor=2.0, mode=nearest)
-    (6): Conv2d(128, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
-    (7): BatchNorm2d(64, eps=0.8, momentum=0.1, affine=True, track_running_stats=True)
-    (8): LeakyReLU(negative_slope=0.2, inplace=True)
-    (9): Conv2d(64, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
-    (10): Tanh()
-  )
-)
+(pytorch) roczhang@roczhang-mac dcgan % python show_network.py 
+G:
+Namespace(b1=0.5, b2=0.999, batch_size=64, channels=1, img_size=32, latent_dim=100, lr=0.0002, n_cpu=8, n_epochs=200, sample_interval=400)
+----------------------------------------------------------------
+        Layer (type)               Output Shape         Param #
+================================================================
+            Linear-1           [-1, 1, 1, 8192]         827,392
+       BatchNorm2d-2            [-1, 128, 8, 8]             256
+          Upsample-3          [-1, 128, 16, 16]               0
+            Conv2d-4          [-1, 128, 16, 16]         147,584
+       BatchNorm2d-5          [-1, 128, 16, 16]             256
+         LeakyReLU-6          [-1, 128, 16, 16]               0
+          Upsample-7          [-1, 128, 32, 32]               0
+            Conv2d-8           [-1, 64, 32, 32]          73,792
+       BatchNorm2d-9           [-1, 64, 32, 32]             128
+        LeakyReLU-10           [-1, 64, 32, 32]               0
+           Conv2d-11            [-1, 1, 32, 32]             577
+             Tanh-12            [-1, 1, 32, 32]               0
+================================================================
+Total params: 1,049,985
+Trainable params: 1,049,985
+Non-trainable params: 0
+----------------------------------------------------------------
+Input size (MB): 0.00
+Forward/backward pass size (MB): 3.64
+Params size (MB): 4.01
+Estimated Total Size (MB): 7.65
+----------------------------------------------------------------
 
-Discriminator(
-  (model): Sequential(
-    (0): Conv2d(1, 16, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
-    (1): LeakyReLU(negative_slope=0.2, inplace=True)
-    (2): Dropout2d(p=0.25, inplace=False)
-    (3): Conv2d(16, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
-    (4): LeakyReLU(negative_slope=0.2, inplace=True)
-    (5): Dropout2d(p=0.25, inplace=False)
-    (6): BatchNorm2d(32, eps=0.8, momentum=0.1, affine=True, track_running_stats=True)
-    (7): Conv2d(32, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
-    (8): LeakyReLU(negative_slope=0.2, inplace=True)
-    (9): Dropout2d(p=0.25, inplace=False)
-    (10): BatchNorm2d(64, eps=0.8, momentum=0.1, affine=True, track_running_stats=True)
-    (11): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
-    (12): LeakyReLU(negative_slope=0.2, inplace=True)
-    (13): Dropout2d(p=0.25, inplace=False)
-    (14): BatchNorm2d(128, eps=0.8, momentum=0.1, affine=True, track_running_stats=True)
-  )
-  (adv_layer): Sequential(
-    (0): Linear(in_features=512, out_features=1, bias=True)
-    (1): Sigmoid()
-  )
-)
+D:
+----------------------------------------------------------------
+        Layer (type)               Output Shape         Param #
+================================================================
+            Conv2d-1           [-1, 16, 16, 16]             160
+         LeakyReLU-2           [-1, 16, 16, 16]               0
+         Dropout2d-3           [-1, 16, 16, 16]               0
+            Conv2d-4             [-1, 32, 8, 8]           4,640
+         LeakyReLU-5             [-1, 32, 8, 8]               0
+         Dropout2d-6             [-1, 32, 8, 8]               0
+       BatchNorm2d-7             [-1, 32, 8, 8]              64
+            Conv2d-8             [-1, 64, 4, 4]          18,496
+         LeakyReLU-9             [-1, 64, 4, 4]               0
+        Dropout2d-10             [-1, 64, 4, 4]               0
+      BatchNorm2d-11             [-1, 64, 4, 4]             128
+           Conv2d-12            [-1, 128, 2, 2]          73,856
+        LeakyReLU-13            [-1, 128, 2, 2]               0
+        Dropout2d-14            [-1, 128, 2, 2]               0
+      BatchNorm2d-15            [-1, 128, 2, 2]             256
+           Linear-16                    [-1, 1]             513
+          Sigmoid-17                    [-1, 1]               0
+================================================================
+Total params: 98,113
+Trainable params: 98,113
+Non-trainable params: 0
+----------------------------------------------------------------
+
 
 ```
+
+
+
+### debug
+
+主要是两个网络流程的查看：
+
+#### generate
+
+从图中可以看到：输入网络的参数和原始`gan`相同，都是初始化一个一百个像素点的噪声。一个批次的数量为`64`。所以输入G网络的参数形状为：`（64，100）`，这个形状到底是长为64，还是宽为`64`，为此我专门去`pytorch`官网查看了一下。
+
+![width-height](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220317130057.png)
+
+> 参考连接：[link](https://pytorch.org/docs/stable/tensors.html)，下图可以看到输入G网络的数据是一个形状为（64，100）的tensor。
+>
+> 在官网又个示例代码：
+>
+> ```python
+> >>> torch.zeros([2, 4], dtype=torch.int32)
+> tensor([[ 0,  0,  0,  0],
+>         [ 0,  0,  0,  0]], dtype=torch.int32)
+> >>> cuda0 = torch.device('cuda:0')
+> >>> torch.ones([2, 4], dtype=torch.float64, device=cuda0)
+> tensor([[ 1.0000,  1.0000,  1.0000,  1.0000],
+>         [ 1.0000,  1.0000,  1.0000,  1.0000]], dtype=torch.float64, device='cuda:0')
+> ```
+
+
+
+参数输入到G网络之后，进入到了一个叫l1的Sequential。它将每个样本的100个像素点使用线形连接拉成了8192个像素点。
+
+返回了一个out变量：形状为（64，8192）
+
+然后，他将每个样本的8192个像素点reshape成（128， 8，8）的形状。最后的out形状为：（64， 128，8，8）。
+
+每个样本的形状大概是这个样子：
+
+![out](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220317132910.png)
+
+![image-20220317130504330](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220317130507.png)
+
+然后网络继续前向传播，到达一个叫`conv_blocks`的`Sequential`。
+
+后面的形状是每个前向传播节点的输出形状。
+
+```
+nn.BatchNorm2d(128),  （64，128， 8，8）
+nn.Upsample(scale_factor=2), （64，128， 16，16）
+nn.Conv2d(128, 128, 3, stride=1, padding=1),  （64，128， 16，16）
+nn.BatchNorm2d(128, 0.8),  （64，128， 16，16）
+nn.LeakyReLU(0.2, inplace=True),  （64，128， 16，16）
+nn.Upsample(scale_factor=2),  （64，128， 32，32）
+nn.Conv2d(128, 64, 3, stride=1, padding=1),  (64, 64, 32, 32)
+nn.BatchNorm2d(64, 0.8),  (64, 64, 32, 32)
+nn.LeakyReLU(0.2, inplace=True),  (64, 64, 32, 32)
+nn.Conv2d(64, opt.channels, 3, stride=1, padding=1), (64, 1, 32, 32)
+nn.Tanh(), (64, 1, 32, 32)
+```
+
+#### nn.BatchNorm2d(128)：
+
+就是批量归一化，使得输入的参数满足均值为0，方差为1的分布规律。这个参数128表示输入图像的通道数为128，对应上面out的第二个参数（64， 128，8，8）。
+
+注：并没有改变参数的大小和形状。
+
+
+
+#### nn.Upsample：
+
+将图像扩大（只针对长和宽），输出图像大概长这个样子。
+
+![out2](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220317143012.png)
+
+
+
+#### nn.Conv2d(128, 128, 3, stride=1, padding=1)
+
+可以看到这个卷积操作并不会改变通道数。输入通道和输出通道都是128。由于我还不知道怎么进入sequential去debug。所以我直接创建了一个和输入大小一样的变量，然后将这个前向传播过程复现出来。
+
+可以看到输入和输出的形状是一样的。所以这个卷积操作并不会改变图像的大小和形状。
+
+![image-20220317141741240](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220317141743.png)
+
+nn.BatchNorm2d(128, 0.8),
+nn.LeakyReLU(0.2, inplace=True),
+
+这两个操作并不会改变图像的大小，第一个应用了批量归一化，第二个应用了激活函数，引入了非线性因素。
+
+
+
+#### nn.Upsample(scale_factor=2),
+
+将图像的长宽扩大两倍。扩大之后长这个样子：
+
+![out3](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220317143058.png)
+
+
+
+之后的操作并不会改变图像的大小和形状。
+
+nn.Conv2d(128, 64, 3, stride=1, padding=1),  (64, 64, 32, 32)
+nn.BatchNorm2d(64, 0.8),  (64, 64, 32, 32)
+nn.LeakyReLU(0.2, inplace=True),  (64, 64, 32, 32)
+
+
+
+#### nn.Conv2d(64, opt.channels, 3, stride=1, padding=1), 
+
+最后一个卷积操作是将输出的通道变成一，因为mnist数据集的通道数是一。输出的形状为(64, 1, 32, 32)
+
+这里我都是做的一个模拟操作。因为sequential 我现在还没有找到方法进去debug。
+
+![image-20220317143817361](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220317143820.png)
+
+最后输出的形状和批量训练的图像的形状是一样的。
+
+
+
+![out4](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220317144245.png)
+
+至此：生成器G的流程走完了。
+
+
+
+### D网络的流程
+
+D网络使用了多个自定义block块。
+
+![Untitled](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220317152338.png)
 

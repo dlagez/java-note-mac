@@ -10,6 +10,12 @@
 
 内网ip：10.0.16.10
 
+mac
+
+```
+192.168.31.231
+```
+
 
 
 mac登陆服务器
@@ -37,8 +43,12 @@ ssh LOONGTR@192.168.31.102
 去d盘：
 cd /d d:
 cd /d  D:\RocZhang\code\PyTorch-GAN\implementations\gan
+cd /d  D:\RocZhang\code\DeepHyperX
 使用conda：
 conda activate detectron2
+conda activate zjb
+
+
 
 直接看结果： http://192.168.31.102:8097
 ```

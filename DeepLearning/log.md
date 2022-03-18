@@ -122,3 +122,13 @@ Classification of Hyperspectral Images Based on Multiclass Spatial–Spectral Ge
 
 
 
+
+如何查看网络结构：debug、torchsummary。
+
+需要弄懂dataloader、
+
+需要将acgan这篇论文看完。并将网络搞清楚。
+
+
+
+visdom怎么画损失曲线需要移植到acgan中。

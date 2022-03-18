@@ -405,6 +405,101 @@ for i in range(10):
 
 
 
+### Torch-summary
+
+install
+
+```
+pip install torchsummary 
+```
+
+usage
+
+```
+from torchsummary import summary
+summary(your_model, input_size=(channels, H, W))
+```
+
+result
+
+```bash
+(pytorch) roczhang@roczhang-mac dcgan % python show_network.py 
+Namespace(b1=0.5, b2=0.999, batch_size=64, channels=1, img_size=32, latent_dim=100, lr=0.0002, n_cpu=8, n_epochs=200, sample_interval=400)
+----------------------------------------------------------------
+        Layer (type)               Output Shape         Param #
+================================================================
+            Linear-1           [-1, 1, 1, 8192]         827,392
+       BatchNorm2d-2            [-1, 128, 8, 8]             256
+          Upsample-3          [-1, 128, 16, 16]               0
+            Conv2d-4          [-1, 128, 16, 16]         147,584
+       BatchNorm2d-5          [-1, 128, 16, 16]             256
+         LeakyReLU-6          [-1, 128, 16, 16]               0
+          Upsample-7          [-1, 128, 32, 32]               0
+            Conv2d-8           [-1, 64, 32, 32]          73,792
+       BatchNorm2d-9           [-1, 64, 32, 32]             128
+        LeakyReLU-10           [-1, 64, 32, 32]               0
+           Conv2d-11            [-1, 1, 32, 32]             577
+             Tanh-12            [-1, 1, 32, 32]               0
+================================================================
+Total params: 1,049,985
+Trainable params: 1,049,985
+Non-trainable params: 0
+----------------------------------------------------------------
+Input size (MB): 0.00
+Forward/backward pass size (MB): 3.64
+Params size (MB): 4.01
+Estimated Total Size (MB): 7.65
+----------------------------------------------------------------
+
+```
+
+
+
+### dataloader
+
+ref:[link](https://pytorch.org/docs/stable/data.html#dataset-types)
+
+#### 理解：
+
+使用这个方法可以创建dataloader，签名如下：
+
+```
+DataLoader(dataset, batch_size=1, shuffle=False, sampler=None,
+           batch_sampler=None, num_workers=0, collate_fn=None,
+           pin_memory=False, drop_last=False, timeout=0,
+           worker_init_fn=None, *, prefetch_factor=2,
+           persistent_workers=False)
+```
+
+最重要的一个参数是：dataset，它支持两种不同类型的数据集。
+
+- [map-style datasets](https://pytorch.org/docs/stable/data.html#map-style-datasets),
+- [iterable-style datasets](https://pytorch.org/docs/stable/data.html#iterable-style-datasets).
+
+#### Map-style datasets
+
+A map-style dataset is one that implements the `__getitem__()` and `__len__()` protocols, and represents a map from (possibly non-integral) indices/keys to data samples.
+
+For example, such a dataset, when accessed with `dataset[idx]`, could read the `idx`-th image and its corresponding label from a folder on the disk.
+
+#### Iterable-style datasets
+
+An iterable-style dataset is an instance of a subclass of [`IterableDataset`](https://pytorch.org/docs/stable/data.html#torch.utils.data.IterableDataset) that implements the `__iter__()`protocol, and represents an iterable over data samples. This type of datasets is particularly suitable for cases where **random reads are expensive or even improbable**, and where the batch size depends on the fetched data.
+
+For example, such a dataset, when called `iter(dataset)`, could return a stream of data reading from a **database**, **a remote server**, or even **logs generated in real time**.
+
+理解：就是迭代数据集适合随机读取很难实现的时候，就是数据集在读取的时候可能会发生变化。
+
+#### Loading Batched and Non-Batched Data
+
+This is the most common case, and corresponds to fetching a minibatch of data and collating them into batched samples, i.e., containing Tensors with one dimension being the batch dimension 
+
+#### example [link](https://pytorch.org/tutorials/beginner/data_loading_tutorial.html)
+
+
+
+
+
 ### pytorch method
 
 #### 序列解包
@@ -520,7 +615,9 @@ np.random.normal(0, 1, (imgs.shape[0], opt.latent_dim))
 
 第三个参数表示：样本的形状 （行，列）
 
+比如（64， 100）指的是64行100列。如下图：就是长这个样子。
 
+![width-height](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220317130057.png)
 
 #### BatchNorm2d  [link](https://pytorch.org/docs/stable/generated/torch.nn.BatchNorm2d.html)
 
@@ -622,6 +719,35 @@ Parameters：
 
 - **scale_factor** ([*float*](https://docs.python.org/3/library/functions.html#float) *or* *Tuple**[*[*float*](https://docs.python.org/3/library/functions.html#float)*] or* *Tuple**[*[*float*](https://docs.python.org/3/library/functions.html#float)*,* [*float*](https://docs.python.org/3/library/functions.html#float)*] or* *Tuple**[*[*float*](https://docs.python.org/3/library/functions.html#float)*,* [*float*](https://docs.python.org/3/library/functions.html#float)*,* [*float*](https://docs.python.org/3/library/functions.html#float)*]**,* *optional*) – multiplier for spatial size. Has to match input size if it is a tuple. 简单来说就是扩大多少倍，长宽都乘以这个倍数。
 
+```python
+input = torch.arange(1, 5, dtype=torch.float32).view(1, 1, 2, 2)
+input
+
+m = nn.Upsample(scale_factor=2, mode='nearest')
+m(input)
+
+m = nn.Upsample(scale_factor=2, mode='bilinear')  # align_corners=False
+m(input)
+
+m = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
+m(input)
+
+# Try scaling the same data in a larger tensor
+input_3x3 = torch.zeros(3, 3).view(1, 1, 3, 3)
+input_3x3[:, :, :2, :2].copy_(input)
+input_3x3
+
+m = nn.Upsample(scale_factor=2, mode='bilinear')  # align_corners=False
+# Notice that values in top left corner are the same with the small input (except at boundary)
+m(input_3x3)
+
+m = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
+# Notice that values in top left corner are now changed
+m(input_3x3)
+```
+
+
+
 #### Conv2d [link](https://pytorch.org/docs/master/generated/torch.nn.Conv2d.html#torch.nn.Conv2d)
 
 对由多个输入平面组成的输入信号进行二维卷积
@@ -635,6 +761,7 @@ example
 ```
 Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
 ```
+
 
 
 
@@ -669,3 +796,53 @@ print(x)#其实查询的是x.data,是个tensor
 
 
 #### Tensor
+
+
+
+#### type [link](https://pytorch.org/docs/stable/generated/torch.Tensor.type.html?highlight=type#torch.Tensor.type)
+
+他的作用是将数据放入到CPU或者GPU中。
+
+```
+在这里定义Tensor是放入cpu还是gpu
+Tensor = torch.cuda.FloatTensor if cuda else torch.FloatTensor
+
+for epoch in range(opt.n_epochs):
+    for i, (imgs, _) in enumerate(dataloader):
+
+        # Adversarial ground truths
+        valid = Variable(Tensor(imgs.shape[0], 1).fill_(1.0), requires_grad=False)
+        fake = Variable(Tensor(imgs.shape[0], 1).fill_(0.0), requires_grad=False)
+
+        # 将dataloader中读取出来的数据放入到设备中。
+        real_imgs = Variable(imgs.type(Tensor))
+```
+
+
+
+#### linear [link](https://pytorch.org/docs/stable/generated/torch.nn.Linear.html?highlight=nn%20linear#torch.nn.Linear)
+
+Applies a linear transformation to the incoming data: y=xAT+b*y*=*x**A**T*+*b*
+
+```
+>>> m = nn.Linear(20, 30)
+>>> input = torch.randn(128, 20)
+>>> output = m(input)
+>>> print(output.size())
+torch.Size([128, 30])
+```
+
+
+
+Embedding [link](https://pytorch.org/docs/stable/generated/torch.nn.Embedding.html?highlight=embedding#torch.nn.Embedding)
+
+
+
+#### torch.mul [link](https://pytorch.org/docs/stable/generated/torch.mul.html#torch-mul)
+
+将输入乘以其他。
+
+(3,1) mul 10 => (3, 1)
+
+(3,1) nul (1, 3) => (3, 3)
+

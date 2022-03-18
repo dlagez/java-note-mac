@@ -498,9 +498,19 @@ sudo vim /sys/devices/pci0000:00/
 
 ### vim
 
+ref: [link](https://scaron.info/blog/vim-keyboard-shortcuts.html)
+
 可在normal模式下直接按“/”进入查找模式，输入要查找的字符并按下回车，vim会跳到第一个匹配的位置。
 
 按n查找下一个，按Shift+n查找上一个。
+
+
+
+y: copy line
+
+p: paste 
+
+
 
 ### 命令行下载文件
 
@@ -1293,7 +1303,7 @@ sudo xattr -cr /Applications/V2RayX.app
 conda install -c pytorch pytorch
 ```
 
-### rar解压
+rar解压
 
 ```
 opt + cmd + c 等于复制全路径
@@ -1302,6 +1312,10 @@ opt + cmd + c 等于复制全路径
 ```
 cmd+shift+. 显示隐藏文件
 ```
+
+
+
+### picgo
 
 图床配置：
 
@@ -1358,3 +1372,23 @@ https://github.com/PicGo/Awesome-PicGo
 共享文件夹：
 
 https://sspai.com/post/61388
+
+
+
+### terminal
+
+ref：[link](https://support.apple.com/zh-cn/guide/terminal/trmlshtcts/mac)
+
+
+
+| 操作                   | 快捷键                                               | 备注 |
+| ---------------------- | ---------------------------------------------------- | ---- |
+| 中断                   | 键入 Command-句点键 (.) 等于在命令行上输入 Control-C |      |
+| 查找                   | Command-F                                            |      |
+| 查找下一个             | Command-G                                            |      |
+| 查找上一个             | Command-Shift-G                                      |      |
+| 选择矩形块             | 按住 Option 键并拖移来选择文本                       |      |
+| 将窗口拆分为两个面板   | Command-D                                            |      |
+| 关闭拆分面板           | Shift-Command-D                                      |      |
+| 使用相同命令新建标签页 | Control-Command-T                                    |      |
+

@@ -53,6 +53,43 @@ python main.py --model SVM --dataset IndianPines --training_sample 0.09 --epoch 
 
 
 
+### 实验结果总结：
+
+目前只做了IndianPines数据集的实验
+
+| method | epochs   | 训练集百分比 | 准确率  |      |
+| ------ | -------- | ------------ | ------- | ---- |
+| SVM    | 300      | 0.09         | 50.509% |      |
+|        | 300      | 0.30         | 52.432% |      |
+|        | 300      | 0.40         | 53.236% |      |
+|        | 300      | 0.75         | 56.067% |      |
+| nn     | 300      | 0.09         | 77.592% |      |
+|        | 300      | 0.20         | 83.415% |      |
+|        | 500      | 0.40         | 90.780% |      |
+| hu     | 300      | 0.09         | 42.243% |      |
+|        | 300      | 0.20         | 46.549% |      |
+|        | 500      | 0.50         | 57.580% |      |
+|        | 1000     | 0.60         | 76.122% |      |
+| hamida | 300      | 0.09         | 66.870% |      |
+|        | 500      | 0.20         | 84.037% |      |
+|        | 1000     | 0.40         | 92.797% |      |
+| lee    | 300      | 0.09         | 59.033% |      |
+|        | 400      | 0.20         | 78.780% |      |
+|        | 1000     | 0.40         | 93.675% |      |
+| chen   | 300      | 0.09         | 47.325% |      |
+|        | 400      | 0.30         | 72.697% |      |
+| li     | 500      | 0.40         | 72.697% |      |
+|        | 600      | 0.50         | 93.385% |      |
+| he     | 600      | 0.30         | 92.920% |      |
+| luo    | 1000     | 0.40         | 45.707% |      |
+| liu    | 代码报错 |              |         |      |
+|        |          |              |         |      |
+|        |          |              |         |      |
+
+后面的几个3d网络运行的太慢了，1000个epochs跑了一上午还没跑完。
+
+
+
 实验室电脑上运行：
 
 ### SVM  
@@ -398,7 +435,7 @@ Kappa: 0.468
 
 ### nn
 
-一：
+#### 一：
 
 只用百分之九的训练集。
 
@@ -500,7 +537,7 @@ F1 scores :
 Kappa: 0.745
 ```
 
-二：
+#### 二：
 
 用百分之二十的训练集。看了下迭代的曲线，感觉是应该可以再多训练几个epoch。准确率到了Accuracy : 83.415%，和一些论文里面的结果相近了。
 
@@ -599,7 +636,7 @@ Kappa: 0.810
 
 ```
 
-三：
+#### 三：
 
 使用百分之四十的数据作为训练集，迭代500轮。训练准确率为90.78%
 
@@ -2134,7 +2171,7 @@ F1 scores :
 Kappa: 0.417
 ```
 
-二：
+#### 二：
 
 Accuracy : 72.697% 感觉虽然训练的很慢，但是效果并不好。但是这个损失曲线和准确率提升的很稳定。
 
@@ -2256,7 +2293,7 @@ Kappa: 0.694
 
 
 
-三：
+#### 三：
 
 
 
@@ -2291,7 +2328,7 @@ Params size (MB): 0.46
 Estimated Total Size (MB): 0.75
 ```
 
-一：
+#### 一：
 
 ```
 python main.py --model li --dataset IndianPines --training_sample 0.4 --epoch 500 --cuda 0
@@ -2299,7 +2336,7 @@ python main.py --model li --dataset IndianPines --training_sample 0.4 --epoch 50
 
 结果：保存在：IndianPines_li_1647486666
 
-二：
+#### 二：
 
 ```
 python main.py --model li --dataset IndianPines --training_sample 0.5 --epoch 600 --cuda 0
@@ -2315,7 +2352,7 @@ python main.py --model li --dataset IndianPines --training_sample 0.5 --epoch 60
 
 ### he
 
-一：
+#### 一：
 
 这个损失曲线、准确率曲线很理想啊。
 
@@ -2325,3 +2362,96 @@ python main.py --model li --dataset IndianPines --training_sample 0.5 --epoch 60
 python main.py --model he --dataset IndianPines --training_sample 0.3 --epoch 600 --cuda 0
 ```
 
+IndianPines_he_1647487861
+
+### luo
+
+#### 一：
+
+```
+python main.py --model luo --dataset IndianPines --training_sample 0.4 --epoch 1000 --cuda 0
+```
+
+IndianPines_luo_1647566577  
+
+#### 二：
+
+```
+python main.py --model luo --dataset IndianPines --training_sample 0.6 --epoch 2000 --cuda 0
+```
+
+IndianPines_luo_1647567970
+
+
+
+### sharma
+
+#### 一：
+
+```
+python main.py --model sharma --dataset IndianPines --training_sample 0.2 --epoch 300 --cuda 0
+```
+
+这个命令搞错了，重新运行了。
+
+IndianPines_sharma_1647569408    Accuracy : 42.390%
+
+#### 二：
+
+```
+python main.py --model sharma --dataset IndianPines --training_sample 0.4 --epoch 500 --cuda 0
+```
+
+IndianPines_sharma_1647569204   Accuracy : 43.106%
+
+#### 三
+
+```
+python main.py --model sharma --dataset IndianPines --training_sample 0.5 --epoch 1000 --cuda 0
+```
+
+IndianPines_sharma_1647569242  42.712%
+
+
+
+### liu
+
+一：
+
+```
+python main.py --model liu --dataset IndianPines --training_sample 0.2 --epoch 300 --cuda 0
+```
+
+
+
+二：
+
+```
+python main.py --model liu --dataset IndianPines --training_sample 0.4 --epoch 500 --cuda 0
+```
+
+ 
+
+三：
+
+```
+python main.py --model liu --dataset IndianPines --training_sample 0.6 --epoch 1000 --cuda 0
+```
+
+
+
+
+
+### boulch
+
+一：
+
+Accuracy : 71.110%  网络比较大，训练的比较慢
+
+![image-20220318162005934](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220318162008.png)
+
+```
+python main.py --model boulch --dataset IndianPines --training_sample 0.2 --epoch 300 --cuda 0
+```
+
+Accuracy : 71.110%

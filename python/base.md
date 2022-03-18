@@ -578,7 +578,52 @@ python -m ipykernel install --user --name pytorch --display-name "pytorch"
 
 
 
-总结：按h即可查看帮助。
+
+
+#### config working dir
+
+`~/.jupyter/jupyter_notebook_config.py` modify config row
+
+![image-20220318131245177](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220318131248.png)
+
+it works
+
+![image-20220318131428359](https://cdn.jsdelivr.net/gh/dlagez/img@master/20220318131430.png)
+
+#### lan access jn
+
+ref: [link](https://stackoverflow.com/questions/39155953/exposing-python-jupyter-on-lan)
+
+In macOS, the following worked for me
+
+0. Generate configure file using
+
+```
+jupyter notebook --generate-config
+```
+
+1. Set in configure file and add
+
+```py
+c.NotebookApp.ip = '0.0.0.0' # listen on all IPs
+c.NotebookApp.token = ''     # disable authentication
+c.NotebookApp.allow_origin = '*' # allow access from anywhere
+c.NotebookApp.disable_check_xsrf = True # allow cross-site requests
+```
+
+都已经改了，并且没有备份。
+
+2. Run:
+
+```py
+jupyter notebook --ip <your_LAN_ip> --port 8888
+```
+
+
+
+
+
+#### help
 
 shortcuts ref: [link](https://towardsdatascience.com/jypyter-notebook-shortcuts-bf0101a98330)
 
